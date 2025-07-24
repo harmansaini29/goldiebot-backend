@@ -1,0 +1,4 @@
+timestamp,symbol,direction,entry_price,stop_loss,take_profit,trade_mode,indicators
+2025-07-23 16:32:25.051155,XAUUSD.d,SELL,3421.31,3423.34963,3417.23074,ATR_LOW,{'atr': np.float64(2.03963)}
+2025-07-23 16:33:25.231425,XAUUSD.d,SELL,3422.02,3424.05963,3417.94074,ATR_LOW,{'atr': np.float64(2.03963)}
+2025-07-23 16:34:25.332450,XAUUSD.d,SELL,3423.0,3425.07392,3418.85217,ATR_LOW,{'atr': np.float64(2.07392)}
