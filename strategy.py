@@ -1,6 +1,6 @@
 # =============================================================================
 #
-#   STRATEGY ENGINE (UPDATED)
+#   STRATEGY ENGINE (TREND LEVELS ENTRY)
 #
 # =============================================================================
 
@@ -13,19 +13,21 @@ import indicators
 import configs as config
 from logger import log, log_trade
 from risk_manager import calculate_atr_sl_tp
+import state_manager as sm
 
 class TradingStrategy:
     """
-    Encapsulates the trading logic, from signal generation to execution.
+    This strategy uses the 'Trend Levels' indicator for trade entries.
+    Exit logic is handled separately by the risk manager.
     """
     def __init__(self, trade_manager: TradeManager):
         self.tm = trade_manager
-        log.info("TradingStrategy initialized and ready.")
+        log.info("TradingStrategy (Trend Levels Entry) initialized.")
 
     def look_for_new_trade(self):
         """
-        The main decision-making function. Fetches data, runs indicators,
-        and triggers a trade if conditions are met.
+        Fetches data, calculates the Trend Levels indicator, and executes
+        a trade immediately if a BUY or SELL signal is found.
         """
         log.info("Looking for a new trade signal...")
 
@@ -37,67 +39,57 @@ class TradingStrategy:
         # --- Primary Signal Generation ---
         df_with_signals = indicators.calculate_trend_levels(df, length=config.TREND_LEVELS_LENGTH)
         latest_signal = df_with_signals.iloc[-1]['signal']
-        log.info(f"Latest Signal from Trend Levels: {latest_signal}")
+        log.info(f"Signal from Trend Levels: {latest_signal}")
 
         if latest_signal in ['BUY', 'SELL']:
-            # Pass the DataFrame with all indicator data to the execution function
-            self.execute_trade(latest_signal, df_with_signals)
-        else:
-            # Signal is 'HOLD', do nothing.
-            pass
-
+            self.execute_trade(latest_signal, df)
 
     def execute_trade(self, signal: str, df: pd.DataFrame):
         """
-        Handles the process of entering a trade once a signal is confirmed.
-        This includes risk calculation, logging, and placing the order.
+        Calculates an initial SL/TP and executes the trade.
         """
-        # --- Safety Check: Ensure no other trade is already open by this bot ---
-        if self.tm.get_open_positions():
-            log.info(f"Signal '{signal}' received, but a trade is already open. Skipping.")
-            return
-
-        log.info(f"Actionable Signal Found: {signal}! Preparing to enter trade.")
-
-        side = 'buy' if signal == 'BUY' else 'sell'
+        log.info(f"Actionable Signal Found: {signal}! Executing trade.")
         
-        # CORRECTED: Pass the 'side' to get the correct bid/ask price.
+        side = 'buy' if signal == 'BUY' else 'sell'
         current_price = self.tm.get_current_price(side)
         if current_price == 0.0:
-            log.error("Could not retrieve a valid current price (0.0). Aborting trade.")
+            log.error("Could not retrieve a valid current price. Aborting trade.")
             return
 
-        # 1. Calculate SL/TP using the ATR-based risk manager.
+        # 1. Calculate an initial SL/TP using ATR for order placement
         risk_results = calculate_atr_sl_tp(df, current_price, side)
-
-        if not risk_results or risk_results.get('sl') == 0.0:
-            log.error("Failed to calculate valid SL/TP from risk manager. Aborting trade.")
+        if not risk_results:
+            log.error("Failed to calculate initial SL/TP. Aborting trade.")
             return
-
+            
         stop_loss = risk_results['sl']
-        take_profit = risk_results['tp']
+        # Set initial TP based on Gann if available, otherwise use ATR
+        df_daily = self.tm.fetch_ohlcv('1d', limit=5)
+        gann_levels = indicators.calculate_gann_levels(df_daily, config.GANN_CALCULATION_BASIS)
+        
+        take_profit = risk_results['tp'] # Default to ATR TP
+        if gann_levels:
+            gann_side = 'buy_side' if side == 'buy' else 'sell_side'
+            initial_tp_key = config.INITIAL_GANN_TP_TARGET
+            if initial_tp_key in gann_levels[gann_side]:
+                 take_profit = gann_levels[gann_side][initial_tp_key]
+                 log.info(f"Setting initial TP to Gann Target '{initial_tp_key}': {take_profit:.2f}")
 
-        log.info(f"ATR Zone: {risk_results['zone']}. SL Multiplier: {risk_results['sl_mult']}, TP Multiplier: {risk_results['tp_mult']}.")
+        log.info(f"Initial Risk - ATR Zone: {risk_results['zone']}. SL: {stop_loss:.2f}, TP: {take_profit:.2f}")
 
-        # 2. Log the trade decision to the CSV file if enabled.
         if config.LOG_TRADES_TO_CSV:
-            indicators_snapshot = {"atr": risk_results['atr_value']}
             log_trade(
-                symbol=config.TRADING_PAIR,
-                direction=side.upper(),
-                price=current_price,
-                sl=stop_loss,
-                tp=take_profit,
-                mode=f"ATR_{risk_results['zone'].upper()}",
-                indicators=indicators_snapshot
+                symbol=config.TRADING_PAIR, direction=side.upper(), price=current_price,
+                sl=stop_loss, tp=take_profit, mode="TREND_LEVELS_ENTRY",
+                indicators={"atr": risk_results['atr_value']}
             )
 
-        # 3. Execute the trade via the TradeManager.
-        # CORRECTED: The parameter name now matches the function definition.
-        self.tm.enter_trade(
-            side=side,
-            lot_size=config.LOT_SIZE,
-            stop_loss=stop_loss,
-            take_profit=take_profit,
-            filling_type_str=config.ORDER_FILLING_TYPE
+        # 2. Execute the trade
+        trade_result = self.tm.enter_trade(
+            side=side, lot_size=config.LOT_SIZE, stop_loss=stop_loss,
+            take_profit=take_profit, filling_type_str=config.ORDER_FILLING_TYPE
         )
+
+        # 3. Save the trade to the state manager if successful
+        if trade_result and trade_result.get('order'):
+            sm.save_trade_state(trade_result['order'], {'entry_price': current_price})
