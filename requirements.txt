@@ -1,0 +1,6 @@
+pandas
+numpy
+MetaTrader5
+openpyxl
+python-dotenv
+requests

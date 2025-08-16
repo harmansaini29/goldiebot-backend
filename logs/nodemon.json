@@ -1,0 +1,11 @@
+{
+  "watch": ["*.py"],
+  "ext": "py",
+  "ignore": [
+    "logs/*",
+    "*.json",
+    "*.csv",
+    "*.xlsx"
+  ],
+  "exec": "python main.py"
+}
