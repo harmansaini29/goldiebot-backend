@@ -1,101 +1,82 @@
+# FILE: state_manager.py (Improved & Efficient)
 # =============================================================================
 #
-#   TRADE STATE MANAGER
-#
-# -----------------------------------------------------------------------------
-#   This module manages the persistent state of open trades, saving them
-#   to a JSON file. This allows the bot to track its trades and recover
-#   its state after a restart. It is thread-safe.
+#   ROBUST & ATOMIC STATE MANAGEMENT ENGINE
 #
 # =============================================================================
 
 import json
+import shutil
 import threading
 from pathlib import Path
-from typing import Dict, Any, List, Optional
-
-# --- Core Application Imports ---
+from datetime import datetime  # <-- IMPORT DATETIME INSTEAD OF PANDAS
 from logger import log
 
 # --- Constants ---
 STATE_FILE = Path("trade_state.json")
-STATE_LOCK = threading.Lock() # Ensures thread-safe file access
+# Use a threading lock to prevent race conditions during file access
+LOCK = threading.Lock()
 
-def _load_state() -> Dict[str, Any]:
-    """
-    Loads the entire state from the JSON file in a thread-safe manner.
-    Returns an empty dictionary if the file doesn't exist or is corrupt.
-    """
-    with STATE_LOCK:
-        if not STATE_FILE.exists():
-            return {}
+def _read_state_file():
+    """Safely reads the entire state file."""
+    if not STATE_FILE.exists() or STATE_FILE.stat().st_size == 0:
+        return {}
+    try:
+        with open(STATE_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        log.critical(f"STATE CORRUPTION: '{STATE_FILE}' is corrupt. A backup will be attempted, and a new state file will be created.")
+        # --- THIS IS THE CORRECTED LINE ---
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        corrupt_backup_path = STATE_FILE.with_name(f"{STATE_FILE.stem}_corrupt_{timestamp}.json")
+        # --- END OF CORRECTION ---
+        
+        # Check if the file exists before trying to move it
+        if STATE_FILE.exists():
+            shutil.move(STATE_FILE, corrupt_backup_path)
+            log.info(f"Backed up corrupt state file to '{corrupt_backup_path}'")
+        return {}
+    except Exception as e:
+        log.error(f"Failed to read state file: {e}", exc_info=True)
+        return {}
+
+def save_trade_state(ticket, data):
+    """Atomically saves the state of a single trade to the JSON file."""
+    with LOCK:
+        current_state = _read_state_file()
+        current_state[str(ticket)] = data
+        
+        temp_filepath = STATE_FILE.with_suffix('.json.tmp')
         try:
-            with STATE_FILE.open('r') as f:
-                # Handle case where file is empty
-                content = f.read()
-                if not content:
-                    return {}
-                return json.loads(content)
-        except (json.JSONDecodeError, IOError) as e:
-            log.error(f"Error loading state file '{STATE_FILE}': {e}. A new one will be created.")
-            return {}
+            with open(temp_filepath, 'w', encoding='utf-8') as f:
+                json.dump(current_state, f, indent=4)
+            shutil.move(temp_filepath, STATE_FILE)
+        except Exception as e:
+            log.critical(f"Failed to save state to '{STATE_FILE}': {e}", exc_info=True)
 
-def _save_state(state: Dict[str, Any]):
-    """Saves the entire state to the JSON file in a thread-safe manner."""
-    with STATE_LOCK:
-        try:
-            with STATE_FILE.open('w') as f:
-                json.dump(state, f, indent=4)
-        except IOError as e:
-            log.error(f"Could not save state to file '{STATE_FILE}': {e}")
+def get_trade_state(ticket):
+    """Retrieves the state for a single trade ticket."""
+    with LOCK:
+        state = _read_state_file()
+        return state.get(str(ticket))
 
-def save_trade_state(ticket: int, data: Dict[str, Any]):
-    """
-    Saves or updates the state for a specific trade ticket.
+def get_all_managed_trades():
+    """Returns a list of all trade tickets currently being managed."""
+    with LOCK:
+        state = _read_state_file()
+        return [int(ticket) for ticket in state.keys()]
 
-    Args:
-        ticket (int): The trade ticket ID from MT5.
-        data (Dict[str, Any]): A dictionary of metadata to save for the trade.
-    """
-    state = _load_state()
-    state[str(ticket)] = data
-    _save_state(state)
-    log.info(f"State saved for ticket {ticket}.")
-
-def get_trade_state(ticket: int) -> Optional[Dict[str, Any]]:
-    """
-    Retrieves the state for a specific trade ticket.
-
-    Args:
-        ticket (int): The trade ticket ID.
-
-    Returns:
-        Optional[Dict[str, Any]]: The stored data for the trade, or None if not found.
-    """
-    state = _load_state()
-    return state.get(str(ticket))
-
-def clear_trade_state(ticket: int):
-    """
-    Removes a trade from state tracking, typically after it has been closed.
-
-    Args:
-        ticket (int): The trade ticket ID to remove.
-    """
-    state = _load_state()
-    if str(ticket) in state:
-        del state[str(ticket)]
-        _save_state(state)
-        log.info(f"State cleared for closed ticket {ticket}.")
-
-def get_all_managed_trades() -> List[int]:
-    """
-    Returns a list of all trade ticket IDs currently being managed.
-
-    Returns:
-        List[int]: A list of integer ticket IDs.
-    """
-    state = _load_state()
-    # Convert string keys back to integers
-    return [int(ticket) for ticket in state.keys()]
-
+def clear_trade_state(ticket):
+    """Atomically removes a trade ticket from the state file."""
+    with LOCK:
+        current_state = _read_state_file()
+        if str(ticket) in current_state:
+            del current_state[str(ticket)]
+            
+            temp_filepath = STATE_FILE.with_suffix('.json.tmp')
+            try:
+                with open(temp_filepath, 'w', encoding='utf-8') as f:
+                    json.dump(current_state, f, indent=4)
+                shutil.move(temp_filepath, STATE_FILE)
+            except Exception as e:
+                log.critical(f"Failed to clear state for ticket {ticket}: {e}", exc_info=True)
