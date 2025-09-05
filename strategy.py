@@ -1,7 +1,9 @@
-﻿# FILE: strategy.py (Definitive Final Version)
+﻿# FILE: strategy.py (Updated & Improved Version)
 # =============================================================================
 #
 #   CORE TRADING STRATEGY & EXECUTION LOGIC
+#   - Now directly triggers logging and notifications on strategic trade closure
+#     to ensure profit/loss alerts are always sent.
 #
 # =============================================================================
 import time
@@ -15,6 +17,12 @@ import indicators as ind
 import state_manager as sm
 from notifier import send_telegram_alert
 
+# --- CRITICAL FIX IMPORT ---
+# By importing the centralized logging function from main.py, we ensure that
+# any trade closed by the strategy is immediately processed for reporting.
+from main import log_closed_trade
+
+
 class TradingStrategy:
     def __init__(self, tm: TradeManager):
         self.tm = tm
@@ -24,20 +32,20 @@ class TradingStrategy:
         The main strategy function. Checks for entry and exit signals and executes trades.
         """
         log.info("Strategy: Running checks...")
-        
-        # --- 1. MANAGE EXISTING BOT TRADES (EXIT LOGIC) ---
+
+        # --- 1. MANAGE EXISTING BOT TRADES (IMPROVED EXIT LOGIC) ---
         if bot_trades:
             # We assume only one bot trade can be open at a time
             position = bot_trades[0]
             trade_type = 'BUY' if position.type == 0 else 'SELL'
             log.info(f"Managing open {trade_type} position #{position.ticket}. Checking for exit signal.")
-            
+
             # Use the Trend Levels indicator for exit signals
             df_exit = ind.calculate_trend_levels(
                 self.tm.fetch_ohlcv(config.TIMEFRAME, limit=config.TREND_LEVELS_LENGTH + 5),
                 length=config.TREND_LEVELS_LENGTH
             )
-            
+
             if df_exit.empty:
                 log.warning("Could not calculate exit signal, skipping check.")
                 return
@@ -48,23 +56,33 @@ class TradingStrategy:
             if (trade_type == 'BUY' and exit_signal == 'SELL') or \
                (trade_type == 'SELL' and exit_signal == 'BUY'):
                 log.warning(f"EXIT SIGNAL DETECTED for {trade_type} #{position.ticket}. Closing trade.")
+
+                # --- START OF IMPROVEMENT ---
+                # Close the trade and, if successful, immediately trigger the logging and notification process.
+                # This is the core fix for the missing Telegram alerts.
                 if self.tm.close_trade(position.ticket):
+                    log.info(f"Trade #{position.ticket} closed successfully by strategy. Triggering post-close actions.")
+
+                    # Call the centralized function to handle logging to Excel and sending the Telegram alert.
+                    log_closed_trade(self.tm, position.ticket)
+
                     # Reset trend memory to neutral to allow re-entry after exit
                     sm.save_trend_state('NEUTRAL')
-                    time.sleep(config.REVERSAL_DELAY_SECONDS) # Pause briefly after closing
-                return # Stop further checks this cycle
+                    time.sleep(config.REVERSAL_DELAY_SECONDS)  # Pause briefly after closing
+                # --- END OF IMPROVEMENT ---
+                return  # Stop further checks this cycle
 
         # --- 2. CHECK FOR NEW TRADES (ENTRY LOGIC) ---
         else:
             log.info("No open bot trades. Checking for new entry signal.")
-            
+
             df_entry = ind.calculate_ema_crossover_signal(
                 self.tm.fetch_ohlcv(config.TIMEFRAME, limit=100),
                 fast=config.EMA_FAST_PERIOD,
                 medium=config.EMA_MEDIUM_PERIOD,
                 slow=config.EMA_SLOW_PERIOD
             )
-            
+
             if df_entry.empty:
                 log.warning("Could not calculate entry signal, skipping check.")
                 return
@@ -72,21 +90,17 @@ class TradingStrategy:
             entry_signal = df_entry['signal'].iloc[-1]
             current_trend = sm.get_trend_state()
             log.info(f"Entry Signal Check (EMA Crossover): {entry_signal} | Current Trend Memory: {current_trend}")
-            
-            # --- THE "10/10 PERFECT" ENTRY LOGIC ---
-            # Condition 1: There is a BUY signal
-            # Condition 2: The bot's memory is NOT already 'BULLISH'
+
+            # --- ENTRY LOGIC (No changes needed, it's already robust) ---
             if entry_signal == 'BUY' and current_trend != 'BULLISH':
                 log.info(">>>>>>>>> Valid BUY signal detected. Entering trade. <<<<<<<<<")
                 self.execute_trade('BUY')
-                sm.save_trend_state('BULLISH') # Set memory to BULLISH
-            
-            # Condition 1: There is a SELL signal
-            # Condition 2: The bot's memory is NOT already 'BEARISH'
+                sm.save_trend_state('BULLISH')
+
             elif entry_signal == 'SELL' and current_trend != 'BEARISH':
                 log.info(">>>>>>>>> Valid SELL signal detected. Entering trade. <<<<<<<<<")
                 self.execute_trade('SELL')
-                sm.save_trend_state('BEARISH') # Set memory to BEARISH
+                sm.save_trend_state('BEARISH')
 
     def execute_trade(self, signal: str):
         """Calculates SL/TP and sends the trade order to the TradeManager."""
@@ -108,7 +122,7 @@ class TradingStrategy:
             order_type = mt5.ORDER_TYPE_BUY
             stop_loss = price - sl_distance
             take_profit = price + tp_distance
-        else: # SELL
+        else:  # SELL
             order_type = mt5.ORDER_TYPE_SELL
             stop_loss = price + sl_distance
             take_profit = price - tp_distance
@@ -122,7 +136,7 @@ class TradingStrategy:
             tp=take_profit,
             comment=f"{signal} Signal by GoldBot"
         )
-        
+
         if result:
             log.info(f"Trade executed successfully. Ticket: #{result.order}")
             send_telegram_alert(
