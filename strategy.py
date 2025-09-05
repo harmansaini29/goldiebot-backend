@@ -1,18 +1,17 @@
-# FILE: strategy.py
+﻿# FILE: strategy.py (Definitive Final Version)
 # =============================================================================
 #
-#   CORE TRADING STRATEGY LOGIC (FINAL)
+#   CORE TRADING STRATEGY & EXECUTION LOGIC
 #
 # =============================================================================
-
-import MetaTrader5 as mt5
 import time
+import MetaTrader5 as mt5
 
 # --- Core Application Imports ---
-from logger import log
 import configs as config
+from logger import log
 from trade_manager import TradeManager
-import indicators
+import indicators as ind
 import state_manager as sm
 from notifier import send_telegram_alert
 
@@ -20,104 +19,116 @@ class TradingStrategy:
     def __init__(self, tm: TradeManager):
         self.tm = tm
 
-    def check_and_execute(self, open_positions):
+    def check_and_execute(self, bot_trades: list):
         """
-        The core logic unit. Fetches data, calculates indicators, and decides
-        whether to open, close, or reverse a trade.
+        The main strategy function. Checks for entry and exit signals and executes trades.
         """
         log.info("Strategy: Running checks...")
         
-        df = self.tm.fetch_ohlcv(config.TIMEFRAME, limit=100)
-        if df is None or df.empty:
-            log.warning("Strategy: Could not fetch data for analysis. Skipping cycle.")
-            return
-
-        df = indicators.calculate_trend_levels(df, config.TREND_LEVELS_LENGTH)
-        latest_candle = df.iloc[-2]
-        signal = latest_candle['signal']
-        
-        has_open_position = bool(open_positions)
-        current_position = open_positions[0] if has_open_position else None
-
-        log.info(f"Strategy: Has open position: {has_open_position}. Latest Signal: {signal}")
-
-        if not has_open_position and signal in ['BUY', 'SELL']:
-            self._execute_new_trade(signal)
-
-        elif has_open_position:
-            is_buy_position = current_position.type == mt5.ORDER_TYPE_BUY
+        # --- 1. MANAGE EXISTING BOT TRADES (EXIT LOGIC) ---
+        if bot_trades:
+            # We assume only one bot trade can be open at a time
+            position = bot_trades[0]
+            trade_type = 'BUY' if position.type == 0 else 'SELL'
+            log.info(f"Managing open {trade_type} position #{position.ticket}. Checking for exit signal.")
             
-            if is_buy_position and signal == 'SELL':
-                log.info(f"Reversal Signal: Closing BUY position #{current_position.ticket} to open a SELL.")
-                self.tm.close_trade(current_position, comment="Reversal to SELL")
-                time.sleep(config.REVERSAL_DELAY_SECONDS)
-                self._execute_new_trade('SELL')
-
-            elif not is_buy_position and signal == 'BUY':
-                log.info(f"Reversal Signal: Closing SELL position #{current_position.ticket} to open a BUY.")
-                self.tm.close_trade(current_position, comment="Reversal to BUY")
-                time.sleep(config.REVERSAL_DELAY_SECONDS)
-                self._execute_new_trade('BUY')
-
-    def _execute_new_trade(self, signal: str):
-        """Handles the logic for opening a single new trade."""
-        df_daily = self.tm.fetch_ohlcv('1d', limit=5)
-        if df_daily is None or df_daily.empty:
-            log.error("Strategy: Could not fetch daily data for Gann levels. Aborting trade.")
-            return
+            # Use the Trend Levels indicator for exit signals
+            df_exit = ind.calculate_trend_levels(
+                self.tm.fetch_ohlcv(config.TIMEFRAME, limit=config.TREND_LEVELS_LENGTH + 5),
+                length=config.TREND_LEVELS_LENGTH
+            )
             
-        gann_levels = indicators.calculate_gann_levels(df_daily, config.GANN_CALCULATION_BASIS)
-        if not gann_levels:
-            log.error("Strategy: Gann levels could not be calculated. Aborting trade.")
+            if df_exit.empty:
+                log.warning("Could not calculate exit signal, skipping check.")
+                return
+
+            exit_signal = df_exit['signal'].iloc[-1]
+            log.info(f"Exit Signal Check (Trend Levels): {exit_signal}")
+
+            if (trade_type == 'BUY' and exit_signal == 'SELL') or \
+               (trade_type == 'SELL' and exit_signal == 'BUY'):
+                log.warning(f"EXIT SIGNAL DETECTED for {trade_type} #{position.ticket}. Closing trade.")
+                if self.tm.close_trade(position.ticket):
+                    # Reset trend memory to neutral to allow re-entry after exit
+                    sm.save_trend_state('NEUTRAL')
+                    time.sleep(config.REVERSAL_DELAY_SECONDS) # Pause briefly after closing
+                return # Stop further checks this cycle
+
+        # --- 2. CHECK FOR NEW TRADES (ENTRY LOGIC) ---
+        else:
+            log.info("No open bot trades. Checking for new entry signal.")
+            
+            df_entry = ind.calculate_ema_crossover_signal(
+                self.tm.fetch_ohlcv(config.TIMEFRAME, limit=100),
+                fast=config.EMA_FAST_PERIOD,
+                medium=config.EMA_MEDIUM_PERIOD,
+                slow=config.EMA_SLOW_PERIOD
+            )
+            
+            if df_entry.empty:
+                log.warning("Could not calculate entry signal, skipping check.")
+                return
+
+            entry_signal = df_entry['signal'].iloc[-1]
+            current_trend = sm.get_trend_state()
+            log.info(f"Entry Signal Check (EMA Crossover): {entry_signal} | Current Trend Memory: {current_trend}")
+            
+            # --- THE "10/10 PERFECT" ENTRY LOGIC ---
+            # Condition 1: There is a BUY signal
+            # Condition 2: The bot's memory is NOT already 'BULLISH'
+            if entry_signal == 'BUY' and current_trend != 'BULLISH':
+                log.info(">>>>>>>>> Valid BUY signal detected. Entering trade. <<<<<<<<<")
+                self.execute_trade('BUY')
+                sm.save_trend_state('BULLISH') # Set memory to BULLISH
+            
+            # Condition 1: There is a SELL signal
+            # Condition 2: The bot's memory is NOT already 'BEARISH'
+            elif entry_signal == 'SELL' and current_trend != 'BEARISH':
+                log.info(">>>>>>>>> Valid SELL signal detected. Entering trade. <<<<<<<<<")
+                self.execute_trade('SELL')
+                sm.save_trend_state('BEARISH') # Set memory to BEARISH
+
+    def execute_trade(self, signal: str):
+        """Calculates SL/TP and sends the trade order to the TradeManager."""
+        symbol_info = self.tm.get_symbol_info(config.TRADING_PAIR)
+        if not symbol_info:
+            log.error("Could not execute trade: Symbol info not found.")
             return
 
-        side_key = 'buy_side' if signal == 'BUY' else 'sell_side'
-        order_type = mt5.ORDER_TYPE_BUY if signal == 'BUY' else mt5.ORDER_TYPE_SELL
-        price = self.tm.get_current_price('buy' if signal == 'BUY' else 'sell')
-
-        if price == 0.0:
-            log.error("Strategy: Could not retrieve current price. Aborting trade.")
+        point = symbol_info.point
+        price = self.tm.get_current_price(signal)
+        if price is None:
+            log.error("Could not execute trade: Failed to get current price.")
             return
 
-        try:
-            take_profit = gann_levels[side_key]['target_1']
-        except KeyError:
-            log.error(f"Strategy: Gann levels are missing for '{side_key}'. Cannot place trade.")
-            return
-        
-        comment = f"{signal} by Trend Reversal"
-        
-        trade_result = self.tm.open_trade(
+        sl_distance = config.STOP_LOSS_PIPS * config.PIP_TO_POINT_MULTIPLIER * point
+        tp_distance = config.TAKE_PROFIT_PIPS * config.PIP_TO_POINT_MULTIPLIER * point
+
+        if signal == 'BUY':
+            order_type = mt5.ORDER_TYPE_BUY
+            stop_loss = price - sl_distance
+            take_profit = price + tp_distance
+        else: # SELL
+            order_type = mt5.ORDER_TYPE_SELL
+            stop_loss = price + sl_distance
+            take_profit = price - tp_distance
+
+        result = self.tm.open_trade(
             order_type=order_type,
             symbol=config.TRADING_PAIR,
             volume=config.LOT_SIZE,
             price=price,
-            sl=0.0, # No Stop Loss as per your requirement
+            sl=stop_loss,
             tp=take_profit,
-            comment=comment
+            comment=f"{signal} Signal by GoldBot"
         )
-
-        if trade_result:
-            # --- CORRECTED LOGIC ---
-            # The trade's unique Ticket ID is in the .order field of the result.
-            ticket_id = trade_result.order 
-            
-            sm.save_trade_state(ticket_id, {
-                'entry_price': price,
-                'signal': signal,
-                'entry_type': 'Trend Reversal',
-                'tp_level': take_profit,
-                'sl_level': 0.0
-            })
-            
-            log.info(f"TRADE EXECUTED and state saved for ticket #{ticket_id}.")
+        
+        if result:
+            log.info(f"Trade executed successfully. Ticket: #{result.order}")
             send_telegram_alert(
                 f"🚀 <b>NEW TRADE OPENED</b> 🚀\n\n"
-                f"<b>Ticket:</b> #{ticket_id}\n"
                 f"<b>Type:</b> {signal}\n"
-                f"<b>Entry Price:</b> {price:.5f}\n"
-                f"<b>Take Profit:</b> {take_profit:.5f}"
+                f"<b>Symbol:</b> {config.TRADING_PAIR}\n"
+                f"<b>Price:</b> ${price:,.2f}\n"
+                f"<b>Ticket:</b> #{result.order}"
             )
-        else:
-            log.critical(f"STRATEGY ALERT: FAILED to execute {signal} trade. The broker rejected the order.")
-            send_telegram_alert(f"🚨 <b>TRADE FAILED</b> 🚨\n\nBroker rejected {signal} order for {config.TRADING_PAIR}. Check logs.")

@@ -1,4 +1,4 @@
-# FILE: logger.py
+# FILE: logger.py (Corrected Version)
 
 import logging
 from pathlib import Path
@@ -41,9 +41,6 @@ def setup_logger() -> logging.Logger:
 
     # --- Excel Handler for Activity Log ---
     excel_handler = ExcelHandler(reporter=EXCEL_REPORTER)
-    # CHANGED: Raise the level to WARNING. This will stop INFO messages like
-    # "Scheduled check running..." from being logged to the Excel ActivityLog.
-    # It will still log important warnings and errors.
     excel_handler.setLevel(logging.WARNING)
     excel_formatter = logging.Formatter('%(message)s') # Keep messages clean for Excel
     excel_handler.setFormatter(excel_formatter)
