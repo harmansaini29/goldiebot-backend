@@ -53,7 +53,7 @@ PIP_TO_POINT_MULTIPLIER = 10
 # --- Advanced Trailing Stop-Loss Settings ---
 USE_TRAILING_STOP = True
 TRAILING_ACTIVATION_PERCENT = 40.0
-TRAILING_STOP_PIPS = 30
+TRAILING_STOP_PIPS = 40
 
 # =============================================================================
 # SECTION 3: OPERATIONAL SETTINGS
