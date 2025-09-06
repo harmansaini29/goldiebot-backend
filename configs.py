@@ -26,7 +26,7 @@ load_dotenv()
 MT5_PATH = "C:\\Program Files\\MetaTrader 5\\terminal64.exe"
 
 # --- Symbol & Timeframe ---
-TRADING_PAIR = "XAUUSD.d"
+TRADING_PAIR = "BTCUSD"
 TIMEFRAME = "30m"
 
 # --- Order Execution Settings ---
@@ -58,7 +58,7 @@ TRAILING_STOP_PIPS = 40
 # =============================================================================
 # SECTION 3: OPERATIONAL SETTINGS
 # =============================================================================
-CHECK_MARKET_HOURS = True
+CHECK_MARKET_HOURS = False
 EXCEL_REPORT_FILENAME = "trading_report.xlsx"
 REVERSAL_DELAY_SECONDS = 2
 
