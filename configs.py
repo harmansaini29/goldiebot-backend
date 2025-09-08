@@ -26,7 +26,7 @@ load_dotenv()
 MT5_PATH = "C:\\Program Files\\MetaTrader 5\\terminal64.exe"
 
 # --- Symbol & Timeframe ---
-TRADING_PAIR = "BTCUSD"
+TRADING_PAIR = "XAUUSD.d"
 TIMEFRAME = "30m"
 
 # --- Order Execution Settings ---
@@ -46,8 +46,8 @@ EMA_SLOW_PERIOD = 13
 TREND_LEVELS_LENGTH = 30
 
 # --- Fixed Stop-Loss and Take-Profit Settings ---
-TAKE_PROFIT_PIPS = 100
-STOP_LOSS_PIPS = 110
+TAKE_PROFIT_PIPS = 90
+STOP_LOSS_PIPS = 80
 PIP_TO_POINT_MULTIPLIER = 10
 
 # --- Advanced Trailing Stop-Loss Settings ---
@@ -58,7 +58,7 @@ TRAILING_STOP_PIPS = 40
 # =============================================================================
 # SECTION 3: OPERATIONAL SETTINGS
 # =============================================================================
-CHECK_MARKET_HOURS = False
+CHECK_MARKET_HOURS = True
 EXCEL_REPORT_FILENAME = "trading_report.xlsx"
 REVERSAL_DELAY_SECONDS = 2
 
