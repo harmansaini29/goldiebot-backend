@@ -36,6 +36,9 @@ class TradeManager:
             self._is_connected = True
             log.info(f"MT5 initialized successfully on account #{account_info.login}")
             
+            # --- FIX: Add a 2-second pause to allow the terminal to sync ---
+            time.sleep(2)
+            
         except Exception as e:
             log.critical(f"An exception occurred during MT5 initialization: {e}", exc_info=True)
             self._is_connected = False
@@ -201,10 +204,16 @@ class TradeManager:
     def get_trade_history_for_position(self, position_id: int) -> pd.DataFrame | None:
         """Fetches all historical deals related to a specific position ID."""
         try:
-            history_deals = mt5.history_deals_get(0, datetime.now(tz=pytz.timezone("Etc/UTC")))
+            # Fetch deals from the last 90 days, which should be sufficient
+            from_date = datetime.now(tz=pytz.timezone("Etc/UTC")) - pd.Timedelta(days=90)
+            history_deals = mt5.history_deals_get(from_date, datetime.now(tz=pytz.timezone("Etc/UTC")))
+            
             if history_deals is None:
                 log.warning("Could not get trade history from MT5.")
                 return None
+            
+            if len(history_deals) == 0:
+                return pd.DataFrame() # Return empty DataFrame if no deals
             
             deals_df = pd.DataFrame(list(history_deals), columns=history_deals[0]._asdict().keys())
             position_deals = deals_df[deals_df['position_id'] == position_id]
