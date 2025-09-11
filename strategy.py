@@ -17,14 +17,14 @@ class TradingStrategy:
         if not self.symbol_info:
             raise ValueError("Strategy could not initialize: Failed to get symbol info.")
 
-    # --- REFACTOR 1: Separate the exit logic into its own function ---
     def _manage_open_trades(self):
         """Checks all open bot positions for an exit signal."""
         open_positions = self.tm.get_open_positions(magic=config.MAGIC_NUMBER)
         if not open_positions:
             return
 
-        position = open_positions[0] # Still assumes one trade at a time
+        # This logic still assumes the bot only manages one trade at a time.
+        position = open_positions[0] 
         trade_type = 'BUY' if position.type == mt5.ORDER_TYPE_BUY else 'SELL'
         log.info(f"Managing open {trade_type} position #{position.ticket}. Checking for exit.")
 
@@ -42,7 +42,6 @@ class TradingStrategy:
                 sm.save_trend_state('NEUTRAL')
                 time.sleep(config.REVERSAL_DELAY_SECONDS)
 
-    # --- REFACTOR 2: Separate the entry logic into its own function ---
     def _check_for_new_trades(self):
         """Checks for a new entry signal if no bot trades are open."""
         if self.tm.get_open_positions(magic=config.MAGIC_NUMBER):
@@ -50,7 +49,7 @@ class TradingStrategy:
 
         log.info("No open bot trades. Checking for new entry signal.")
         
-        # --- UPGRADE: Use the ATR Volatility Filter ---
+        # --- ATR Volatility Filter ---
         if config.USE_ATR_FILTER:
             ohlcv_for_atr = self.tm.fetch_ohlcv(config.TIMEFRAME, limit=config.ATR_PERIOD + 5)
             current_atr = ind.calculate_atr(ohlcv_for_atr, config.ATR_PERIOD, self.symbol_info.point)
@@ -80,8 +79,8 @@ class TradingStrategy:
                 sm.save_trend_state('BEARISH')
 
     def check_and_execute(self):
-        """The main strategy function, now decoupled for professional logic."""
-        log.info("Strategy: Running checks...")
+        """The main strategy function with decoupled professional logic."""
+        log.info("Strategy: Running main cycle...")
         self._manage_open_trades()
         self._check_for_new_trades()
 
@@ -98,7 +97,7 @@ class TradingStrategy:
 
         result = self.tm.open_trade(
             order_type=order_type, symbol=config.TRADING_PAIR, volume=config.LOT_SIZE,
-            price=price, sl=stop_loss, tp=take_profit, comment="GoldBot_v10"
+            price=price, sl=stop_loss, tp=take_profit, comment="GoldBot vPRO"
         )
         if result:
             log.info(f"Trade executed successfully. Ticket: #{result.order}")

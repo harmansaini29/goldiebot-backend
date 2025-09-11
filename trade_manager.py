@@ -1,235 +1,214 @@
 # FILE: trade_manager.py
 # =============================================================================
 #
-#   ROBUST METATRADER 5 CONNECTION & TRADE EXECUTION ENGINE (PROFESSIONAL & FINAL)
+#   METATRADER 5 CONNECTION & EXECUTION ENGINE
 #
 # =============================================================================
 
 import MetaTrader5 as mt5
+from datetime import datetime
 import pandas as pd
-from datetime import datetime, timedelta
-from typing import List, Optional, Any
+import pytz
+import time
 
 # --- Core Application Imports ---
-from logger import log
 import configs as config
+from logger import log
 
 class TradeManager:
-    """
-    Manages the connection and all trade operations with MetaTrader 5
-    using a robust context manager pattern.
-    """
+    """Handles all interactions with the MetaTrader 5 terminal."""
     def __init__(self):
-        """Initializes the TradeManager."""
-        self.mt5_path = config.MT5_PATH
-        self._connected = False
+        self._is_connected = False
 
     def __enter__(self):
-        """Initializes the connection when entering the 'with' block."""
-        log.info("Connecting to MetaTrader 5...")
-        if not mt5.initialize(path=self.mt5_path):
-            log.critical(f"MT5 initialize() failed, error code={mt5.last_error()}")
-            raise ConnectionError("Could not connect to MetaTrader 5 Terminal.")
-        
-        terminal_info = mt5.terminal_info()
-        if terminal_info:
-            log.info(f"Connected to {terminal_info.name} on {terminal_info.company}'s server.")
-            log.info(f"Trade allowed: {'Yes' if terminal_info.trade_allowed else 'No'}")
-            self._connected = True
+        """Context manager for establishing the MT5 connection."""
+        try:
+            if not mt5.initialize(path=config.MT5_PATH, timeout=20):
+                log.critical(f"MT5 initialize() failed, error code = {mt5.last_error()}")
+                raise ConnectionError("Failed to initialize MT5")
+            
+            account_info = mt5.account_info()
+            if not account_info:
+                log.critical("Failed to get account info from MT5.")
+                mt5.shutdown()
+                raise ConnectionError("Failed to connect to trading account")
+
+            self._is_connected = True
+            log.info(f"MT5 initialized successfully on account #{account_info.login}")
+            
+        except Exception as e:
+            log.critical(f"An exception occurred during MT5 initialization: {e}", exc_info=True)
+            self._is_connected = False
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Shuts down the connection when exiting the 'with' block."""
-        log.info("Shutting down MetaTrader 5 connection.")
-        mt5.shutdown()
-        self._connected = False
+        """Context manager for shutting down the MT5 connection."""
+        if self._is_connected:
+            mt5.shutdown()
+            log.info("MT5 connection shut down.")
+        self._is_connected = False
 
     def is_connected(self) -> bool:
-        """
-        Public method to check the connection status.
-        Crucial for the initial cleanup process in main.py.
-        """
-        return self._connected and mt5.terminal_info() is not None
+        return self._is_connected
 
-    def _ensure_connection(self) -> bool:
-        """Checks if the MT5 terminal is still connected and attempts to reconnect if not."""
-        if self.is_connected():
-            return True
-            
-        log.warning("MT5 connection lost. Attempting to reconnect...")
-        if mt5.initialize(path=self.mt5_path):
-            log.info("Reconnected to MT5 successfully.")
-            self._connected = True
-            return True
-        else:
-            log.critical(f"Failed to reconnect to MT5. Error code={mt5.last_error()}")
-            self._connected = False
-            return False
-
-    def get_symbol_info(self, symbol: str) -> Optional[Any]:
-        """Fetches information for a specific trading symbol."""
-        if not self._ensure_connection(): return None
-        
-        info = mt5.symbol_info(symbol)
-        if not info:
-            log.error(f"Failed to find symbol {symbol}")
-            return None
-        return info
-
-    def fetch_ohlcv(self, timeframe_str: str, limit: int = 200) -> Optional[pd.DataFrame]:
-        """Fetches OHLCV data for the configured trading pair."""
-        if not self._ensure_connection(): return None
-        
-        timeframe_map = {
-            '1m': mt5.TIMEFRAME_M1, '5m': mt5.TIMEFRAME_M5, '15m': mt5.TIMEFRAME_M15,
-            '30m': mt5.TIMEFRAME_M30, '1h': mt5.TIMEFRAME_H1, '4h': mt5.TIMEFRAME_H4,
-            '1d': mt5.TIMEFRAME_D1
-        }
-        timeframe = timeframe_map.get(timeframe_str.lower())
-        if timeframe is None:
-            log.error(f"Unsupported timeframe: {timeframe_str}")
-            return None
-            
+    def get_symbol_info(self, symbol: str):
         try:
-            rates = mt5.copy_rates_from_pos(config.TRADING_PAIR, timeframe, 0, limit)
-            if rates is None: return None
-            
+            info = mt5.symbol_info(symbol)
+            if info is None:
+                log.error(f"Failed to get info for symbol {symbol}, it may not be visible in Market Watch.")
+                return None
+            return info
+        except Exception as e:
+            log.error(f"Error getting symbol info for {symbol}: {e}")
+            return None
+
+    def fetch_ohlcv(self, timeframe: str, limit: int) -> pd.DataFrame:
+        """Fetches OHLCV data and returns a pandas DataFrame."""
+        try:
+            tf_map = {
+                "1m": mt5.TIMEFRAME_M1, "5m": mt5.TIMEFRAME_M5, "15m": mt5.TIMEFRAME_M15,
+                "30m": mt5.TIMEFRAME_M30, "1h": mt5.TIMEFRAME_H1, "4h": mt5.TIMEFRAME_H4,
+            }
+            mt5_timeframe = tf_map.get(timeframe)
+            if mt5_timeframe is None:
+                log.error(f"Unsupported timeframe: {timeframe}")
+                return pd.DataFrame()
+
+            rates = mt5.copy_rates_from_pos(config.TRADING_PAIR, mt5_timeframe, 0, limit)
+            if rates is None or len(rates) == 0:
+                log.warning("Could not fetch OHLCV data from MT5.")
+                return pd.DataFrame()
+                
             df = pd.DataFrame(rates)
             df['time'] = pd.to_datetime(df['time'], unit='s')
             return df
         except Exception as e:
             log.error(f"Error fetching OHLCV data: {e}")
-            return None
+            return pd.DataFrame()
 
-    # --- UPDATED & REFACTORED METHOD ---
-    def get_open_positions(self, magic: Optional[int] = None) -> List[Any]:
-        """
-        Retrieves open positions. If magic is None, returns all positions for the symbol.
-        If magic is specified, it filters by that magic number.
-        """
-        if not self._ensure_connection(): 
-            return []
-        
+    def get_open_positions(self, symbol: str = None, magic: int = None) -> list:
+        """Retrieves all open positions, with optional filters."""
         try:
-            positions = mt5.positions_get(symbol=config.TRADING_PAIR)
-            
+            positions = mt5.positions_get(symbol=symbol)
             if positions is None:
-                log.error(f"Failed to get positions for {config.TRADING_PAIR}, error code={mt5.last_error()}")
+                log.warning("positions_get() returned None. Possible connection issue.")
                 return []
-
-            # If a magic number is specified, filter the results in Python
             if magic is not None:
                 return [p for p in positions if p.magic == magic]
-            
-            # Otherwise, return all positions for the symbol
             return list(positions)
-
         except Exception as e:
-            log.error(f"An exception occurred while getting open positions: {e}", exc_info=True)
+            log.error(f"Error getting open positions: {e}")
             return []
+
+    def get_current_price(self, signal: str) -> float | None:
+        """Gets the current ask for a BUY or bid for a SELL."""
+        try:
+            tick = mt5.symbol_info_tick(config.TRADING_PAIR)
+            if tick:
+                return tick.ask if signal == 'BUY' else tick.bid
+            log.error("Could not get current tick price.")
+            return None
+        except Exception as e:
+            log.error(f"Error getting current price: {e}")
+            return None
 
     def open_trade(self, order_type, symbol, volume, price, sl, tp, comment):
         """Places a new market order."""
-        if not self._ensure_connection(): return None
-        
         request = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
-            "volume": volume,
+            "volume": float(volume),
             "type": order_type,
             "price": price,
-            "sl": sl,
-            "tp": tp,
+            "sl": float(sl),
+            "tp": float(tp),
             "deviation": config.DEVIATION,
             "magic": config.MAGIC_NUMBER,
             "comment": comment,
             "type_time": mt5.ORDER_TIME_GTC,
-            "type_filling": mt5.ORDER_FILLING_FOK,
+            "type_filling": mt5.ORDER_FILLING_IOC,
         }
-        
-        result = mt5.order_send(request)
-        if result.retcode != mt5.TRADE_RETCODE_DONE:
-            log.error(f"Order send failed, retcode={result.retcode}, comment={result.comment}")
+        try:
+            result = mt5.order_send(request)
+            if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+                log.info(f"Order #{result.order} sent successfully.")
+                return result
+            else:
+                error_code = mt5.last_error()
+                log.error(f"Order send failed. Result: {result}. Error code: {error_code}")
+                return None
+        except Exception as e:
+            log.error(f"Exception during order_send: {e}")
             return None
-        return result
 
-    # --- UPDATED METHOD TO BE SAFER ---
     def close_trade(self, ticket: int) -> bool:
-        """Closes an open position by its ticket number."""
-        if not self._ensure_connection(): return False
-        
-        positions = mt5.positions_get(ticket=ticket)
-        if not positions:
-            log.warning(f"Attempted to close ticket #{ticket}, but it was not found (already closed).")
-            return True 
-            
-        position = positions[0]
-        order_type = mt5.ORDER_TYPE_SELL if position.type == mt5.ORDER_TYPE_BUY else mt5.ORDER_TYPE_BUY
-        
-        # Explicitly check for price retrieval failure
-        price = self.get_current_price('SELL' if order_type == mt5.ORDER_TYPE_SELL else 'BUY')
-        if price is None:
-            log.error(f"Cannot close ticket #{ticket} because the current price could not be fetched.")
+        """Closes a position by its ticket number."""
+        try:
+            positions = self.get_open_positions()
+            position_to_close = next((p for p in positions if p.ticket == ticket), None)
+            if not position_to_close:
+                log.warning(f"Attempted to close ticket #{ticket}, but it was not found.")
+                return True # Treat as success if already closed
+
+            order_type = mt5.ORDER_TYPE_SELL if position_to_close.type == mt5.ORDER_TYPE_BUY else mt5.ORDER_TYPE_BUY
+            price = self.get_current_price('SELL' if order_type == mt5.ORDER_TYPE_SELL else 'BUY')
+            if price is None: return False
+
+            request = {
+                "action": mt5.TRADE_ACTION_DEAL,
+                "position": position_to_close.ticket,
+                "symbol": position_to_close.symbol,
+                "volume": position_to_close.volume,
+                "type": order_type,
+                "price": price,
+                "deviation": config.DEVIATION,
+                "magic": config.MAGIC_NUMBER,
+                "comment": "Closed by Bot",
+                "type_time": mt5.ORDER_TIME_GTC,
+                "type_filling": mt5.ORDER_FILLING_IOC,
+            }
+            result = mt5.order_send(request)
+            if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+                log.info(f"Close order for ticket #{ticket} sent successfully.")
+                return True
+            else:
+                log.error(f"Failed to close ticket #{ticket}. Result: {result}. Error: {mt5.last_error()}")
+                return False
+        except Exception as e:
+            log.error(f"Exception while closing trade #{ticket}: {e}")
             return False
-        
-        request = {
-            "action": mt5.TRADE_ACTION_DEAL,
-            "position": ticket,
-            "symbol": position.symbol,
-            "volume": position.volume,
-            "type": order_type,
-            "price": price,
-            "deviation": config.DEVIATION,
-            "magic": position.magic, # Use the original magic number for closure
-            "comment": "Close Position",
-            "type_time": mt5.ORDER_TIME_GTC,
-            "type_filling": mt5.ORDER_FILLING_FOK,
-        }
-        
-        result = mt5.order_send(request)
-        if result.retcode != mt5.TRADE_RETCODE_DONE:
-            log.error(f"Failed to close ticket #{ticket}, retcode={result.retcode}, comment={result.comment}")
-            return False
-        return True
 
     def modify_sl_tp(self, ticket: int, new_sl: float, new_tp: float) -> bool:
-        """Modifies the Stop Loss and/or Take Profit of an open position."""
-        if not self._ensure_connection(): return False
-        
+        """Modifies the SL and TP of an open position."""
         request = {
             "action": mt5.TRADE_ACTION_SLTP,
             "position": ticket,
-            "sl": new_sl,
-            "tp": new_tp,
+            "sl": float(new_sl),
+            "tp": float(new_tp),
         }
-        
-        result = mt5.order_send(request)
-        if result.retcode != mt5.TRADE_RETCODE_DONE:
-            log.error(f"Failed to modify SL/TP for ticket #{ticket}, retcode={result.retcode}, comment={result.comment}")
-            return False
-        return True
-
-    def get_trade_history_for_position(self, position_ticket: int) -> Optional[pd.DataFrame]:
-        """Directly fetches all deals related to a specific position ticket."""
-        if not self._ensure_connection(): return None
-        
         try:
-            deals = mt5.history_deals_get(position=position_ticket)
-            if deals is None or len(deals) == 0:
-                return None
-            return pd.DataFrame(list(deals), columns=deals[0]._asdict().keys())
+            result = mt5.order_send(request)
+            if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+                log.info(f"Successfully modified SL/TP for ticket #{ticket}.")
+                return True
+            else:
+                log.error(f"Failed to modify SL/TP for #{ticket}. Error: {mt5.last_error()}")
+                return False
         except Exception as e:
-            log.error(f"Error fetching history for ticket #{position_ticket}: {e}")
-            return None
-
-    # --- UPDATED METHOD TO RETURN NONE ON FAILURE ---
-    def get_current_price(self, side: str) -> Optional[float]:
-        """Gets the current bid or ask price for the trading pair. Returns None on failure."""
-        if not self._ensure_connection(): return None
-        
-        tick = mt5.symbol_info_tick(config.TRADING_PAIR)
-        if tick:
-            return tick.ask if side.upper() == 'BUY' else tick.bid
+            log.error(f"Exception during SL/TP modification for #{ticket}: {e}")
+            return False
             
-        log.warning(f"Could not retrieve latest tick data for {config.TRADING_PAIR}.")
-        return None
+    def get_trade_history_for_position(self, position_id: int) -> pd.DataFrame | None:
+        """Fetches all historical deals related to a specific position ID."""
+        try:
+            history_deals = mt5.history_deals_get(0, datetime.now(tz=pytz.timezone("Etc/UTC")))
+            if history_deals is None:
+                log.warning("Could not get trade history from MT5.")
+                return None
+            
+            deals_df = pd.DataFrame(list(history_deals), columns=history_deals[0]._asdict().keys())
+            position_deals = deals_df[deals_df['position_id'] == position_id]
+            return position_deals if not position_deals.empty else None
+        except Exception as e:
+            log.error(f"Error fetching trade history for position #{position_id}: {e}")
+            return None
