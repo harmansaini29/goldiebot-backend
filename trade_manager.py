@@ -1,4 +1,4 @@
-# FILE: trade_manager.py (Corrected with Connection Health Check)
+# FILE: trade_manager.py (Corrected & Professional)
 # =============================================================================
 #
 #   METATRADER 5 CONNECTION & EXECUTION ENGINE
@@ -14,6 +14,7 @@ import time
 # --- Core Application Imports ---
 import configs as config
 from logger import log
+from typing import List, Optional
 
 class TradeManager:
     """Handles all interactions with the MetaTrader 5 terminal."""
@@ -23,7 +24,7 @@ class TradeManager:
     def __enter__(self):
         """Context manager for establishing and VERIFYING the MT5 connection."""
         try:
-            if not mt5.initialize(path=config.MT5_PATH, timeout=30): # Increased timeout slightly
+            if not mt5.initialize(path=config.MT5_PATH, timeout=30):
                 log.critical(f"MT5 initialize() failed, error code = {mt5.last_error()}")
                 raise ConnectionError("Failed to initialize MT5")
             
@@ -35,7 +36,6 @@ class TradeManager:
 
             log.info(f"MT5 initialized successfully on account #{account_info.login}")
             
-            # --- NEW: Robust Connection Health Check ---
             log.info("Verifying connection health...")
             max_retries = 5
             for i in range(max_retries):
@@ -43,19 +43,17 @@ class TradeManager:
                 if terminal_info:
                     log.info("Connection health verified. Terminal is responsive.")
                     self._is_connected = True
-                    break # Exit loop on success
+                    break
                 else:
                     log.warning(f"Connection not fully established. Retrying in 3 seconds... ({i+1}/{max_retries})")
                     time.sleep(3)
             
             if not self._is_connected:
                 raise ConnectionError(f"Failed to verify terminal connection after {max_retries} retries.")
-            # --- End of New Logic ---
             
         except Exception as e:
-            log.critical(f"An exception occurred during MT5 initialization: {e}", exc_info=True)
+            log.critical(f"An exception occurred during MT5 initialization: {e}", exc_info=False)
             self._is_connected = False
-            # Ensure shutdown happens on any error during __enter__
             if mt5.terminal_info():
                  mt5.shutdown()
         return self
@@ -107,24 +105,27 @@ class TradeManager:
             log.error(f"Error fetching OHLCV data: {e}")
             return pd.DataFrame()
 
-    def get_open_positions(self, symbol: str = None, magic: int = None) -> list:
-        """Retrieves all open positions, with optional filters."""
-        if not self._is_connected: return []
+    def get_open_positions(self, symbol: str = None, magic: int = None) -> Optional[List]:
+        """
+        Retrieves all open positions, with optional filters.
+        Returns a list of positions on success, or None on connection failure.
+        """
+        if not self._is_connected: return None
         try:
             positions = mt5.positions_get(symbol=symbol)
             if positions is None:
-                # This warning is now a more reliable indicator of a true connection drop
-                log.warning("positions_get() returned None. The connection may have been lost.")
-                return []
+                # A None result from positions_get indicates a connection issue.
+                log.warning("positions_get() returned None. The connection has been lost.")
+                return None # <<< THE CRITICAL FIX: Propagate the failure signal.
+            
             if magic is not None:
                 return [p for p in positions if p.magic == magic]
             return list(positions)
         except Exception as e:
             log.error(f"Error getting open positions: {e}")
-            return []
-    
-    # ... (the rest of the file remains the same) ...
-    def get_current_price(self, signal: str) -> float | None:
+            return None
+
+    def get_current_price(self, signal: str) -> Optional[float]:
         if not self._is_connected: return None
         try:
             tick = mt5.symbol_info_tick(config.TRADING_PAIR)
@@ -169,6 +170,11 @@ class TradeManager:
         if not self._is_connected: return False
         try:
             positions = self.get_open_positions()
+            # Handle potential connection loss during the operation
+            if positions is None:
+                log.error(f"Cannot close ticket #{ticket}, connection lost.")
+                return False
+
             position_to_close = next((p for p in positions if p.ticket == ticket), None)
             if not position_to_close:
                 log.warning(f"Attempted to close ticket #{ticket}, but it was not found.")
@@ -222,7 +228,7 @@ class TradeManager:
             log.error(f"Exception during SL/TP modification for #{ticket}: {e}")
             return False
             
-    def get_trade_history_for_position(self, position_id: int) -> pd.DataFrame | None:
+    def get_trade_history_for_position(self, position_id: int) -> Optional[pd.DataFrame]:
         if not self._is_connected: return None
         try:
             from_date = datetime.now(tz=pytz.timezone("Etc/UTC")) - pd.Timedelta(days=90)

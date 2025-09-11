@@ -8,9 +8,8 @@
 import time
 from datetime import datetime
 import traceback
-import os
 import MetaTrader5 as mt5
-import pandas as pd
+from typing import Optional
 
 # --- Core Application Imports ---
 from logger import log, EXCEL_REPORTER
@@ -21,7 +20,6 @@ from notifier import send_telegram_alert
 import risk_manager as rm
 from strategy import TradingStrategy
 
-# (All functions before main_loop remain the same: get_timeframe_seconds, is_market_open, etc.)
 def get_timeframe_seconds(tf_string: str) -> int:
     """Converts timeframe string to seconds."""
     unit = tf_string[-1].lower()
@@ -36,13 +34,18 @@ def is_market_open() -> bool:
     """A simple check to avoid trading on weekends (Saturday=5, Sunday=6)."""
     return datetime.utcnow().weekday() < 5
 
-def sync_positions_with_state(tm: TradeManager):
-    """Adopts new manual trades and processes trades closed manually on the terminal."""
+def sync_positions_with_state(tm: TradeManager) -> Optional[bool]:
+    """
+    Adopts new manual trades and processes trades closed manually.
+    Returns True on success, False on logical failure, None on connection loss.
+    """
     try:
         open_positions = tm.get_open_positions()
-        # --- Self-Healing Check ---
-        if open_positions is None: # Indicates a connection drop
-            return None # Propagate the error up
+        
+        # --- CRITICAL HEALTH CHECK ---
+        # This now correctly detects the propagated error from the TradeManager.
+        if open_positions is None: 
+            return None # Propagate connection loss signal up to the main loop
 
         managed_tickets = sm.get_all_managed_trades()
         open_tickets = {p.ticket for p in open_positions}
@@ -58,7 +61,7 @@ def sync_positions_with_state(tm: TradeManager):
         return True # Success
     except Exception as e:
         log.error(f"Error during position sync: {e}", exc_info=True)
-        return False # Failure
+        return False # Logical Failure
 
 def adopt_manual_trade(tm: TradeManager, position):
     """Adds a manually opened trade to the state file and sets a default SL/TP."""
@@ -121,7 +124,7 @@ def main_loop(tm: TradeManager):
     """The main execution loop with self-healing connection logic."""
     strategy = TradingStrategy(tm)
     last_candle_time = None
-    connection_lost_counter = 0 # NEW: Circuit breaker counter
+    connection_lost_counter = 0
     
     while True:
         try:
@@ -144,7 +147,10 @@ def main_loop(tm: TradeManager):
             connection_lost_counter = 0 # Reset counter on successful sync
             
             # Continue with normal logic
-            managed_positions = [p for p in tm.get_open_positions() if p.ticket in sm.get_all_managed_trades()]
+            open_positions = tm.get_open_positions()
+            if open_positions is None: continue # Re-check connection before proceeding
+            
+            managed_positions = [p for p in open_positions if p.ticket in sm.get_all_managed_trades()]
             if managed_positions:
                 rm.manage_trailing_stop_loss(tm, managed_positions)
 
@@ -175,6 +181,8 @@ def main_loop(tm: TradeManager):
             
             # 4. Check for new entry signal
             bot_positions = tm.get_open_positions(magic=config.MAGIC_NUMBER)
+            if bot_positions is None: continue # Re-check connection
+            
             if not bot_positions:
                 entry_signal = strategy.get_entry_signal()
                 if entry_signal in ['BUY', 'SELL']:
@@ -194,7 +202,7 @@ def main_loop(tm: TradeManager):
 
 def main():
     """The main entry point, now with a reconnection loop."""
-    while True: # NEW: Loop to allow for automatic reconnection
+    while True:
         try:
             log.info("="*50)
             log.info("STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)")
@@ -205,7 +213,7 @@ def main():
 
             with TradeManager() as tm:
                 if tm.is_connected():
-                    main_loop(tm) # Enter the main logic loop
+                    main_loop(tm)
                 else:
                     log.critical("Could not establish connection to MetaTrader 5 on startup.")
             
@@ -216,7 +224,7 @@ def main():
         except KeyboardInterrupt:
             log.info("Bot shutdown requested by user.")
             send_telegram_alert("⚪️ <b>Bot Shut Down Manually</b> ⚪️")
-            break # Exit the reconnection loop
+            break
         except Exception as e:
             log.critical(f"A fatal error occurred: {e}", exc_info=True)
             error_details = traceback.format_exc()
