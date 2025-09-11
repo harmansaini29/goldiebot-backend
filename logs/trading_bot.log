@@ -18850,3 +18850,121 @@ ConnectionError: Failed to initialize MT5
 2025-09-11 13:15:09,788 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
 2025-09-11 13:15:11,190 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
 2025-09-11 13:15:13,190 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 14:26:28,825 - TradingBot - INFO - ==================================================
+2025-09-11 14:26:28,825 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 14:26:28,825 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 14:26:28,825 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 14:26:28,825 - TradingBot - INFO - ==================================================
+2025-09-11 14:26:29,825 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 14:26:34,372 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 14:26:37,294 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Documents\GitHub\goldiebot-backend\trade_manager.py", line 28, in __enter__
+    raise ConnectionError("Failed to initialize MT5")
+ConnectionError: Failed to initialize MT5
+2025-09-11 14:26:39,591 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
+2025-09-11 14:26:41,294 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 14:26:43,778 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 14:26:58,778 - TradingBot - INFO - ==================================================
+2025-09-11 14:26:58,778 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 14:26:58,778 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 14:26:58,778 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 14:26:58,778 - TradingBot - INFO - ==================================================
+2025-09-11 14:30:18,184 - TradingBot - INFO - ==================================================
+2025-09-11 14:30:18,184 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 14:30:18,184 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 14:30:18,184 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 14:30:18,184 - TradingBot - INFO - ==================================================
+2025-09-11 14:30:19,122 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 14:30:20,388 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 14:30:22,622 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Documents\GitHub\goldiebot-backend\trade_manager.py", line 28, in __enter__
+    raise ConnectionError("Failed to initialize MT5")
+ConnectionError: Failed to initialize MT5
+2025-09-11 14:30:24,060 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
+2025-09-11 14:30:25,450 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 14:30:27,700 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 14:30:42,711 - TradingBot - INFO - ==================================================
+2025-09-11 14:30:42,711 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 14:30:42,711 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 14:30:42,711 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 14:30:42,711 - TradingBot - INFO - ==================================================
+2025-09-11 14:30:43,625 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 14:30:43,625 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 14:30:43,625 - TradingBot - INFO - Verifying connection health...
+2025-09-11 14:30:43,641 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 14:30:43,641 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:30:44,954 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:30:46,493 - TradingBot - INFO - New 30m candle detected at 2025-09-11 12:00:00. Running strategy checks.
+2025-09-11 14:30:46,493 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:30:47,713 - TradingBot - INFO - Volatility Check: Current ATR = 48.88 pips, Required = 3.0 pips.
+2025-09-11 14:30:47,729 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-11 14:30:52,744 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:30:53,979 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:00,341 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:01,747 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:08,293 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:09,588 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:15,854 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:16,979 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:23,182 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:24,416 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:30,698 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:31,995 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:38,229 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:39,463 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:45,582 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:46,644 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:52,864 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:31:53,942 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:00,068 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:01,349 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:07,724 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:09,005 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:15,161 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:16,458 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:22,661 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:23,833 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:29,927 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:31,193 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:37,302 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:38,490 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:44,662 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:46,021 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:52,349 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:53,395 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:32:59,443 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:00,989 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:07,568 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:08,818 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:14,974 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:16,192 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:22,364 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:23,536 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:29,849 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:30,880 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:36,912 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:38,067 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:44,224 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:45,302 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:51,364 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:52,396 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:58,489 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:33:59,724 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:05,865 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:07,099 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:13,365 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:14,443 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:20,552 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:21,661 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:27,802 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:28,911 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:35,130 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:36,380 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:42,427 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:43,568 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:49,771 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:51,933 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:34:59,231 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 14:35:00,575 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
