@@ -4,6 +4,7 @@
 #   MAIN TRADING BOT EXECUTABLE
 #   - Solves circular import error with a local import.
 #   - Fixes missed trade logs with a robust retry mechanism.
+#   - Corrects SL/TP calculation for adopted trades.
 #
 # =============================================================================
 
@@ -13,40 +14,42 @@ import traceback
 import os
 
 # --- Core Application Imports ---
-import configs as config
 from logger import log, EXCEL_REPORTER
+import configs as config
 from trade_manager import TradeManager
-# The strategy import is now moved into main_loop() to prevent circular dependency
 import state_manager as sm
 from notifier import send_telegram_alert
 import risk_manager as rm
 
 def initial_cleanup():
     """Cleans up the state file on first run if no trades are open to prevent ghost trades."""
-    if not os.path.exists(sm.STATE_FILE):
+    if os.path.exists(sm.STATE_FILE):
         return
     try:
         with TradeManager() as tm:
             if tm.is_connected() and not tm.get_open_positions():
-                log.info("Initial cleanup: No open trades found. Clearing state file to prevent ghosts.")
+                log.info("Initial cleanup: No open trades found. Clearing state file.")
                 if os.path.exists(sm.STATE_FILE):
                     os.remove(sm.STATE_FILE)
     except Exception as e:
         log.warning(f"Could not perform initial cleanup: {e}")
 
 def is_market_open() -> bool:
-    """A simple check to avoid trading on weekends (Monday=0, Friday=4)."""
-    return datetime.today().weekday() < 5
+    """A simple check to avoid trading on weekends (Friday=4, Saturday=5, Sunday=6)."""
+    return datetime.utcnow().weekday() < 5
 
 def sync_positions_with_state(tm: TradeManager):
     """Adopts new manual trades and logs trades that were closed on the terminal."""
     open_positions = tm.get_open_positions()
     managed_tickets = sm.get_all_managed_trades()
     
-    closed_tickets = [t for t in managed_tickets if t not in [p.ticket for p in open_positions]]
+    # Log trades that were managed but are now closed
+    open_tickets = [p.ticket for p in open_positions]
+    closed_tickets = [t for t in managed_tickets if t not in open_tickets]
     for ticket in closed_tickets:
         log_closed_trade(tm, ticket)
 
+    # Adopt trades that are open but not managed (i.e., manual trades)
     for pos in open_positions:
         if pos.ticket not in managed_tickets and pos.magic == 0:
             adopt_manual_trade(tm, pos)
@@ -58,6 +61,7 @@ def adopt_manual_trade(tm: TradeManager, position):
     
     current_sl, current_tp = position.sl, position.tp
     
+    # If SL or TP is not set, apply default values from config
     if current_sl == 0.0 or current_tp == 0.0:
         log.info(f"Manual trade #{position.ticket} is missing SL/TP. Setting default values.")
         symbol_info = tm.get_symbol_info(config.TRADING_PAIR)
@@ -66,12 +70,13 @@ def adopt_manual_trade(tm: TradeManager, position):
             return
 
         point, price = symbol_info.point, position.price_open
-        sl_distance = config.STOP_LOSS_PIPS * config.PIP_TO_POINT_MULTIPLIER * point
-        tp_distance = config.TAKE_PROFIT_PIPS * config.PIP_TO_POINT_MULTIPLIER * point
+        sl_distance = config.STOP_LOSS_PIPS * config.POINTS_PER_PIP * point
+        tp_distance = config.TAKE_PROFIT_PIPS * config.POINTS_PER_PIP * point
         
+        # --- BUG FIX: Correct take_profit calculation for SELL trades ---
         stop_loss = price - sl_distance if trade_type == 'BUY' else price + sl_distance
         take_profit = price + tp_distance if trade_type == 'BUY' else price - tp_distance
-            
+        
         if tm.modify_sl_tp(position.ticket, new_sl=stop_loss, new_tp=take_profit):
             current_sl, current_tp = stop_loss, take_profit
     
@@ -81,9 +86,6 @@ def adopt_manual_trade(tm: TradeManager, position):
     })
     send_telegram_alert(f"🤖 <b>ADOPTED MANUAL TRADE</b> 🤖\n\nNow managing ticket #{position.ticket} with full risk management.")
 
-# =============================================================================
-# BUG FIX: ROBUST TRADE LOGGING WITH RETRY MECHANISM
-# =============================================================================
 def log_closed_trade(tm: TradeManager, ticket: int):
     """
     Fetches history for a closed trade, logs it, and sends alerts.
@@ -98,20 +100,18 @@ def log_closed_trade(tm: TradeManager, ticket: int):
     history_df = None
     is_history_complete = False
     
-    # Retry up to 5 times to get complete trade history
     for attempt in range(5):
         history_df = tm.get_trade_history_for_position(ticket)
         
         if history_df is not None and not history_df.empty:
-            # Check for both an entry (0) and an exit (1) deal
             has_entry = 0 in history_df['entry'].values
             has_exit = 1 in history_df['entry'].values
             if has_entry and has_exit:
                 is_history_complete = True
                 log.info(f"Attempt {attempt + 1}: Successfully fetched complete history for ticket #{ticket}.")
-                break # Exit loop on success
+                break
         
-        log.warning(f"Attempt {attempt + 1}: History for ticket #{ticket} is incomplete or unavailable. Retrying in 2 seconds...")
+        log.warning(f"Attempt {attempt + 1}: History for ticket #{ticket} is incomplete. Retrying in 2s...")
         time.sleep(2)
 
     if is_history_complete:
@@ -125,16 +125,14 @@ def log_closed_trade(tm: TradeManager, ticket: int):
             f"<b>Ticket:</b> #{ticket}\n"
             f"<b>Profit:</b> ${profit:,.2f}"
         )
+        sm.clear_trade_state(ticket)
+        log.info(f"Cleared state for closed ticket #{ticket}.")
     else:
-        log.error(f"Failed to retrieve complete history for closed ticket #{ticket} after multiple attempts. Skipping log.")
+        log.error(f"Failed to retrieve complete history for closed ticket #{ticket}. State will not be cleared, will retry next cycle.")
         
-    sm.clear_trade_state(ticket)
-    log.info(f"Cleared state for closed ticket #{ticket}.")
-
 def main_loop(tm: TradeManager):
     """The main execution loop."""
-    # --- FIX: Local import to prevent circular dependency ---
-    from strategy import TradingStrategy
+    from strategy import TradingStrategy # Local import to prevent circular dependency
     strategy = TradingStrategy(tm)
     
     while True:
@@ -149,14 +147,16 @@ def main_loop(tm: TradeManager):
             all_open_positions = tm.get_open_positions()
             bot_trades = [p for p in all_open_positions if p.magic == config.MAGIC_NUMBER]
             
-            log.info(f"Applying core strategy to {len(bot_trades)} bot trade(s).")
-            strategy.check_and_execute(bot_trades)
+            # Run strategy only if no bot trades are currently open
+            if not bot_trades:
+                strategy.check_and_execute()
             
-            if all_open_positions:
-                log.info(f"Applying risk management to {len(all_open_positions)} total trade(s).")
-                rm.manage_trailing_stop_loss(tm, all_open_positions)
+            # Apply risk management to all managed trades (bot + adopted)
+            managed_positions = [p for p in all_open_positions if p.ticket in sm.get_all_managed_trades()]
+            if managed_positions:
+                rm.manage_trailing_stop_loss(tm, managed_positions)
 
-            time.sleep(1)
+            time.sleep(5) # Check every 5 seconds
 
         except Exception as e:
             log.critical(f"An unexpected error occurred in the main loop: {e}", exc_info=True)

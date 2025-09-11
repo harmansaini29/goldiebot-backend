@@ -30,30 +30,41 @@ def manage_trailing_stop_loss(tm: TradeManager, open_positions: List[Any]):
         current_sl = pos.sl
         trade_type = pos.type  # 0 for BUY, 1 for SELL
 
-        # Determine target take profit in pips
-        if trade_type == 0:  # BUY
-            potential_profit_pips = (current_price_bid - entry_price) / (config.PIP_TO_POINT_MULTIPLIER * point)
-            take_profit_pips = (pos.tp - entry_price) / (config.PIP_TO_POINT_MULTIPLIER * point) if pos.tp > 0 else config.TAKE_PROFIT_PIPS
-        else:  # SELL
-            potential_profit_pips = (entry_price - current_price_ask) / (config.PIP_TO_POINT_MULTIPLIER * point)
-            take_profit_pips = (entry_price - pos.tp) / (config.PIP_TO_POINT_MULTIPLIER * point) if pos.tp > 0 else config.TAKE_PROFIT_PIPS
-
+        # Determine the target TP in pips to calculate profit percentage
+        if pos.tp > 0:
+            if trade_type == 0: # BUY
+                take_profit_pips = (pos.tp - entry_price) / (config.POINTS_PER_PIP * point)
+            else: # SELL
+                take_profit_pips = (entry_price - pos.tp) / (config.POINTS_PER_PIP * point)
+        else:
+            take_profit_pips = config.TAKE_PROFIT_PIPS
+        
+        # Prevent ZeroDivisionError if TP is somehow zero or invalid
         if take_profit_pips <= 0:
             continue
 
+        # Calculate current unrealized profit in pips
+        if trade_type == 0:  # BUY
+            potential_profit_pips = (current_price_bid - entry_price) / (config.POINTS_PER_PIP * point)
+        else:  # SELL
+            potential_profit_pips = (entry_price - current_price_ask) / (config.POINTS_PER_PIP * point)
+        
         profit_percentage = (potential_profit_pips / take_profit_pips) * 100
 
         # Activate trailing stop if profit reaches the activation percentage
         if profit_percentage >= config.TRAILING_ACTIVATION_PERCENT:
-            trailing_distance = config.TRAILING_STOP_PIPS * config.PIP_TO_POINT_MULTIPLIER * point
+            # --- FIX: Use corrected POINTS_PER_PIP for accurate distance ---
+            trailing_distance = config.TRAILING_STOP_PIPS * config.POINTS_PER_PIP * point
             
             if trade_type == 0:  # BUY
                 new_sl = current_price_bid - trailing_distance
+                # Only move the stop loss up
                 if new_sl > current_sl:
                     log.info(f"TRAILING SL (BUY) #{pos.ticket}: Adjusting SL from {current_sl:.5f} to {new_sl:.5f}")
                     tm.modify_sl_tp(pos.ticket, new_sl=new_sl, new_tp=pos.tp)
             else:  # SELL
                 new_sl = current_price_ask + trailing_distance
+                # Only move the stop loss down
                 if new_sl < current_sl or current_sl == 0:
                     log.info(f"TRAILING SL (SELL) #{pos.ticket}: Adjusting SL from {current_sl:.5f} to {new_sl:.5f}")
                     tm.modify_sl_tp(pos.ticket, new_sl=new_sl, new_tp=pos.tp)

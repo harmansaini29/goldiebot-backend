@@ -1,118 +1,111 @@
-﻿# FILE: strategy.py (Updated Version)
+﻿# FILE: strategy.py
 # =============================================================================
-#
-#   CORE TRADING STRATEGY & EXECUTION LOGIC
-#
-# =============================================================================
+
 import time
 import MetaTrader5 as mt5
-
-# --- Core Application Imports ---
 import configs as config
 from logger import log
 from trade_manager import TradeManager
 import indicators as ind
 import state_manager as sm
 from notifier import send_telegram_alert
-# This import now works correctly because of the fix in main.py
-from main import log_closed_trade
-
 
 class TradingStrategy:
     def __init__(self, tm: TradeManager):
         self.tm = tm
+        self.symbol_info = self.tm.get_symbol_info(config.TRADING_PAIR)
+        if not self.symbol_info:
+            raise ValueError("Strategy could not initialize: Failed to get symbol info.")
 
-    def check_and_execute(self, bot_trades: list):
-        """
-        The main strategy function. Checks for entry and exit signals and executes trades.
-        """
-        log.info("Strategy: Running checks...")
+    # --- REFACTOR 1: Separate the exit logic into its own function ---
+    def _manage_open_trades(self):
+        """Checks all open bot positions for an exit signal."""
+        open_positions = self.tm.get_open_positions(magic=config.MAGIC_NUMBER)
+        if not open_positions:
+            return
 
-        # --- 1. MANAGE EXISTING BOT TRADES (EXIT LOGIC) ---
-        if bot_trades:
-            position = bot_trades[0]
-            trade_type = 'BUY' if position.type == 0 else 'SELL'
-            log.info(f"Managing open {trade_type} position #{position.ticket}. Checking for exit signal.")
+        position = open_positions[0] # Still assumes one trade at a time
+        trade_type = 'BUY' if position.type == mt5.ORDER_TYPE_BUY else 'SELL'
+        log.info(f"Managing open {trade_type} position #{position.ticket}. Checking for exit.")
 
-            df_exit = ind.calculate_trend_levels(
-                self.tm.fetch_ohlcv(config.TIMEFRAME, limit=config.TREND_LEVELS_LENGTH + 5),
-                length=config.TREND_LEVELS_LENGTH
-            )
+        df_exit = ind.calculate_trend_levels(
+            self.tm.fetch_ohlcv(config.TIMEFRAME, limit=config.TREND_LEVELS_LENGTH + 5),
+            length=config.TREND_LEVELS_LENGTH
+        )
+        if df_exit.empty: return
 
-            if df_exit.empty:
-                log.warning("Could not calculate exit signal, skipping check.")
+        exit_signal = df_exit['signal'].iloc[-1]
+        if (trade_type == 'BUY' and exit_signal == 'SELL') or \
+           (trade_type == 'SELL' and exit_signal == 'BUY'):
+            log.warning(f"EXIT SIGNAL DETECTED for {trade_type} #{position.ticket}. Closing.")
+            if self.tm.close_trade(position.ticket):
+                sm.save_trend_state('NEUTRAL')
+                time.sleep(config.REVERSAL_DELAY_SECONDS)
+
+    # --- REFACTOR 2: Separate the entry logic into its own function ---
+    def _check_for_new_trades(self):
+        """Checks for a new entry signal if no bot trades are open."""
+        if self.tm.get_open_positions(magic=config.MAGIC_NUMBER):
+            return # Don't check for new trades if one is already open
+
+        log.info("No open bot trades. Checking for new entry signal.")
+        
+        # --- UPGRADE: Use the ATR Volatility Filter ---
+        if config.USE_ATR_FILTER:
+            ohlcv_for_atr = self.tm.fetch_ohlcv(config.TIMEFRAME, limit=config.ATR_PERIOD + 5)
+            current_atr = ind.calculate_atr(ohlcv_for_atr, config.ATR_PERIOD, self.symbol_info.point)
+            log.info(f"Volatility Check: Current ATR = {current_atr:.2f} pips, Required = {config.ATR_THRESHOLD_PIPS} pips.")
+            if current_atr < config.ATR_THRESHOLD_PIPS:
+                log.info("Trade filtered: Market volatility is too low.")
                 return
 
-            exit_signal = df_exit['signal'].iloc[-1]
-            log.info(f"Exit Signal Check (Trend Levels): {exit_signal}")
+        df_entry = ind.calculate_ema_crossover_signal(
+            self.tm.fetch_ohlcv(config.TIMEFRAME, limit=100),
+            fast=config.EMA_FAST_PERIOD, medium=config.EMA_MEDIUM_PERIOD,
+            slow=config.EMA_SLOW_PERIOD, point=self.symbol_info.point
+        )
+        if df_entry.empty: return
 
-            if (trade_type == 'BUY' and exit_signal == 'SELL') or \
-               (trade_type == 'SELL' and exit_signal == 'BUY'):
-                log.warning(f"EXIT SIGNAL DETECTED for {trade_type} #{position.ticket}. Closing trade.")
+        entry_signal = df_entry['signal'].iloc[-1]
+        current_trend = sm.get_trend_state()
+        log.info(f"Entry Signal Check: '{entry_signal}' | Trend Memory: '{current_trend}'")
 
-                if self.tm.close_trade(position.ticket):
-                    log.info(f"Trade #{position.ticket} closed successfully by strategy. Triggering post-close actions.")
-                    # Call the robust logging function from main.py
-                    log_closed_trade(self.tm, position.ticket)
-                    sm.save_trend_state('NEUTRAL')
-                    time.sleep(config.REVERSAL_DELAY_SECONDS)
-                return
-
-        # --- 2. CHECK FOR NEW TRADES (ENTRY LOGIC) ---
-        else:
-            log.info("No open bot trades. Checking for new entry signal.")
-            df_entry = ind.calculate_ema_crossover_signal(
-                self.tm.fetch_ohlcv(config.TIMEFRAME, limit=100),
-                fast=config.EMA_FAST_PERIOD, medium=config.EMA_MEDIUM_PERIOD, slow=config.EMA_SLOW_PERIOD
-            )
-
-            if df_entry.empty:
-                log.warning("Could not calculate entry signal, skipping check.")
-                return
-
-            entry_signal = df_entry['signal'].iloc[-1]
-            current_trend = sm.get_trend_state()
-            log.info(f"Entry Signal Check (EMA Crossover): {entry_signal} | Current Trend Memory: {current_trend}")
-
-            if entry_signal == 'BUY' and current_trend != 'BULLISH':
-                log.info(">>>>>>>>> Valid BUY signal detected. Entering trade. <<<<<<<<<")
-                self.execute_trade('BUY')
+        if entry_signal == 'BUY' and current_trend != 'BULLISH':
+            log.info(">>>>>>>>> Valid BUY signal detected. Entering trade. <<<<<<<<<")
+            if self.execute_trade('BUY'):
                 sm.save_trend_state('BULLISH')
-
-            elif entry_signal == 'SELL' and current_trend != 'BEARISH':
-                log.info(">>>>>>>>> Valid SELL signal detected. Entering trade. <<<<<<<<<")
-                self.execute_trade('SELL')
+        elif entry_signal == 'SELL' and current_trend != 'BEARISH':
+            log.info(">>>>>>>>> Valid SELL signal detected. Entering trade. <<<<<<<<<")
+            if self.execute_trade('SELL'):
                 sm.save_trend_state('BEARISH')
 
-    def execute_trade(self, signal: str):
-        """Calculates SL/TP and sends the trade order to the TradeManager."""
-        symbol_info = self.tm.get_symbol_info(config.TRADING_PAIR)
-        if not symbol_info:
-            log.error("Could not execute trade: Symbol info not found.")
-            return
+    def check_and_execute(self):
+        """The main strategy function, now decoupled for professional logic."""
+        log.info("Strategy: Running checks...")
+        self._manage_open_trades()
+        self._check_for_new_trades()
 
-        point = symbol_info.point
+    def execute_trade(self, signal: str) -> bool:
+        """Calculates SL/TP and sends the trade order."""
         price = self.tm.get_current_price(signal)
-        if price is None:
-            log.error("Could not execute trade: Failed to get current price.")
-            return
+        if price is None: return False
 
-        sl_distance = config.STOP_LOSS_PIPS * config.PIP_TO_POINT_MULTIPLIER * point
-        tp_distance = config.TAKE_PROFIT_PIPS * config.PIP_TO_POINT_MULTIPLIER * point
-
+        sl_distance = config.STOP_LOSS_PIPS * config.POINTS_PER_PIP * self.symbol_info.point
+        tp_distance = config.TAKE_PROFIT_PIPS * config.POINTS_PER_PIP * self.symbol_info.point
         order_type = mt5.ORDER_TYPE_BUY if signal == 'BUY' else mt5.ORDER_TYPE_SELL
         stop_loss = price - sl_distance if signal == 'BUY' else price + sl_distance
         take_profit = price + tp_distance if signal == 'BUY' else price - tp_distance
 
         result = self.tm.open_trade(
             order_type=order_type, symbol=config.TRADING_PAIR, volume=config.LOT_SIZE,
-            price=price, sl=stop_loss, tp=take_profit, comment=f"{signal} Signal by GoldBot"
+            price=price, sl=stop_loss, tp=take_profit, comment="GoldBot_v10"
         )
-
         if result:
             log.info(f"Trade executed successfully. Ticket: #{result.order}")
             send_telegram_alert(
-                f"🚀 <b>NEW TRADE OPENED</b> 🚀\n\n"
-                f"<b>Type:</b> {signal}\n<b>Symbol:</b> {config.TRADING_PAIR}\n"
-                f"<b>Price:</b> ${price:,.2f}\n<b>Ticket:</b> #{result.order}"
+                f"🚀 <b>NEW TRADE OPENED ({signal})</b> 🚀\n\n"
+                f"<b>Symbol:</b> {config.TRADING_PAIR}\n<b>Price:</b> ${price:,.2f}\n"
+                f"<b>Ticket:</b> #{result.order}"
             )
+            return True
+        return False

@@ -14,7 +14,7 @@ import zipfile
 import traceback
 import os
 import shutil
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 class ExcelReporter:
     def __init__(self, filepath: Path):
@@ -33,15 +33,18 @@ class ExcelReporter:
             os.remove(temp_file)
 
     def _create_empty_workbook(self, path: Path):
-        with pd.ExcelWriter(path, engine='openpyxl') as writer:
-            pd.DataFrame().to_excel(writer, sheet_name='TradeHistory', index=False)
-            pd.DataFrame().to_excel(writer, sheet_name='ActivityLog', index=False)
-            pd.DataFrame().to_excel(writer, sheet_name='MonthlySummary', index=False)
+        try:
+            with pd.ExcelWriter(path, engine='openpyxl') as writer:
+                pd.DataFrame().to_excel(writer, sheet_name='TradeHistory', index=False)
+                pd.DataFrame().to_excel(writer, sheet_name='ActivityLog', index=False)
+                pd.DataFrame().to_excel(writer, sheet_name='MonthlySummary', index=False)
+        except Exception as e:
+            print(f"[CRITICAL] Could not create empty workbook: {e}")
 
     def _read_and_heal(self) -> Dict[str, pd.DataFrame]:
         try:
             return pd.read_excel(self.filepath, sheet_name=None)
-        except (zipfile.BadZipFile, FileNotFoundError) as e:
+        except (zipfile.BadZipFile, FileNotFoundError, ValueError) as e:
             print(f"[RECOVERY] Excel file '{self.filepath.name}' is corrupt or missing. Attempting to heal. Error: {e}")
             backup_path = self.filepath.with_suffix(f".{datetime.now().strftime('%Y%m%d_%H%M%S')}.bak")
             if self.filepath.exists():
@@ -69,6 +72,11 @@ class ExcelReporter:
             if formatted_history is None: return
 
             trade_history_df = all_sheets.get('TradeHistory', pd.DataFrame())
+            # Ensure Deal # column is of a consistent type to avoid merge errors
+            if 'Deal #' in trade_history_df.columns:
+                trade_history_df['Deal #'] = trade_history_df['Deal #'].astype(str)
+            formatted_history['Deal #'] = formatted_history['Deal #'].astype(str)
+
             all_sheets['TradeHistory'] = pd.concat([trade_history_df, formatted_history], ignore_index=True).drop_duplicates(subset=['Deal #'], keep='last')
             all_sheets['MonthlySummary'] = self._calculate_summary(all_sheets['TradeHistory'])
             self._atomic_write(all_sheets)
@@ -81,18 +89,31 @@ class ExcelReporter:
             all_sheets['ActivityLog'] = pd.concat([activity_log_df, new_log_entry], ignore_index=True)
             self._atomic_write(all_sheets)
 
-    def _format_trade_history(self, deals_df: pd.DataFrame):
+    def _format_trade_history(self, deals_df: pd.DataFrame) -> Optional[pd.DataFrame]:
+        """
+        --- ROBUST REWRITE ---
+        Correctly processes a full trade history, including partial closes. It finds
+        the first 'in' deal for entry data and the last 'out' deal for exit data.
+        """
+        if deals_df.empty:
+            return None
+            
         deals_df['time'] = pd.to_datetime(deals_df['time'], unit='s')
-        
-        entry_deals = deals_df[deals_df['entry'] == 0]
-        exit_deals = deals_df[deals_df['entry'] == 1]
+        deals_df = deals_df.sort_values(by='time', ascending=True)
+
+        # entry=0: "in" deals (buy/sell). entry=1: "out" deals (closing trades).
+        entry_deals = deals_df[deals_df['entry'] == 0].copy()
+        exit_deals = deals_df[deals_df['entry'] == 1].copy()
 
         if entry_deals.empty or exit_deals.empty:
+            logging.warning("Trade history formatting skipped: Missing entry or exit deals.")
             return None
 
+        # The true entry is the very first "in" deal
         entry_deal = entry_deals.iloc[0]
-        exit_deal = exit_deals.iloc[0]
-        
+        # The true exit is the very last "out" deal
+        exit_deal = exit_deals.iloc[-1]
+
         return pd.DataFrame([{
             'Ticket #': entry_deal['position_id'],
             'Symbol': entry_deal['symbol'],
@@ -101,20 +122,27 @@ class ExcelReporter:
             'Open Price': entry_deal['price'],
             'Close Time': exit_deal['time'].strftime('%Y-%m-%d %H:%M:%S'),
             'Close Price': exit_deal['price'],
-            'Volume': entry_deal['volume'],
+            'Volume': deals_df['volume'].sum() / 2, # Sum of all deals is 2x actual volume
             'Profit ($)': deals_df['profit'].sum(),
             'Commission ($)': deals_df['commission'].sum(),
             'Swap ($)': deals_df['swap'].sum(),
             'Comment': entry_deal['comment'],
-            # --- CRASH FIX: Changed 'deal' to 'ticket' which is the correct column name ---
-            'Deal #': entry_deal['ticket'] 
+            'Deal #': entry_deal['ticket']
         }])
 
     def _calculate_summary(self, history_df: pd.DataFrame):
         if history_df.empty: return pd.DataFrame()
-        history_df['Open Time'] = pd.to_datetime(history_df['Open Time'])
-        history_df['Month'] = history_df['Open Time'].dt.to_period('M')
-        summary = history_df.groupby('Month').agg(Total_Trades=('Ticket #', 'count'), Total_Profit=('Profit ($)', lambda x: x[x > 0].sum()), Total_Loss=('Profit ($)', lambda x: x[x <= 0].sum()), Total_Volume=('Volume', 'sum')).reset_index()
+        summary_df = history_df.copy()
+        summary_df['Open Time'] = pd.to_datetime(summary_df['Open Time'])
+        summary_df['Month'] = summary_df['Open Time'].dt.to_period('M')
+        
+        summary = summary_df.groupby('Month').agg(
+            Total_Trades=('Ticket #', 'count'),
+            Total_Profit=('Profit ($)', lambda x: x[x > 0].sum()),
+            Total_Loss=('Profit ($)', lambda x: x[x <= 0].sum()),
+            Total_Volume=('Volume', 'sum')
+        ).reset_index()
+        
         summary.columns = ['Month', 'Total Trades', 'Total Profit ($)', 'Total Loss ($)', 'Total Volume']
         summary['Month'] = summary['Month'].astype(str)
         summary['Net Profit/Loss ($)'] = summary['Total Profit ($)'] + summary['Total Loss ($)']
@@ -139,4 +167,5 @@ class ExcelHandler(logging.Handler):
     def emit(self, record: logging.LogRecord):
         try:
             self.reporter.log_activity(record.levelname, self.format(record))
-        except Exception: pass
+        except Exception:
+            pass
