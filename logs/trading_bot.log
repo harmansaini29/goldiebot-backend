@@ -19833,3 +19833,742 @@ ConnectionError: Failed to initialize MT5
 2025-09-11 16:28:55,444 - TradingBot - INFO - MT5 connection shut down.
 2025-09-11 16:28:55,447 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
 2025-09-11 16:28:59,261 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:29:14,268 - TradingBot - INFO - ==================================================
+2025-09-11 16:29:14,270 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:29:14,272 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:29:14,273 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:29:14,274 - TradingBot - INFO - ==================================================
+2025-09-11 16:29:15,260 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:29:15,291 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:29:15,291 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:29:15,427 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:29:15,433 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:29:16,811 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:29:23,350 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:29:25,248 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:29:31,978 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:29:33,575 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:29:40,470 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:29:42,210 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:29:48,414 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:29:49,633 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:29:55,773 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:29:56,992 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:30:03,167 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:30:04,773 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:30:06,132 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:30:07,460 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:30:07,460 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:30:09,820 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:30:24,836 - TradingBot - INFO - ==================================================
+2025-09-11 16:30:24,836 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:30:24,836 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:30:24,836 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:30:24,836 - TradingBot - INFO - ==================================================
+2025-09-11 16:30:25,773 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:30:25,773 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:30:25,773 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:30:25,789 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:30:25,789 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:30:27,148 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:30:33,429 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:30:34,710 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:30:40,898 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:30:41,976 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:30:48,117 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:30:49,320 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:30:55,538 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:30:56,804 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:31:03,070 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:31:04,367 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:31:10,632 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:31:11,960 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:31:13,148 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:31:14,320 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:31:14,320 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:31:16,429 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:31:31,445 - TradingBot - INFO - ==================================================
+2025-09-11 16:31:31,445 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:31:31,445 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:31:31,445 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:31:31,445 - TradingBot - INFO - ==================================================
+2025-09-11 16:31:32,367 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:31:32,382 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:31:32,382 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:31:32,492 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:31:32,492 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:31:33,804 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:31:39,913 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:31:41,039 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:31:47,226 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:31:48,382 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:31:54,711 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:31:55,804 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:32:02,148 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:32:03,523 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:32:09,710 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:32:10,945 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:32:17,242 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:32:19,632 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:32:21,163 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:32:22,445 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:32:22,445 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:32:25,085 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:32:40,085 - TradingBot - INFO - ==================================================
+2025-09-11 16:32:40,085 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:32:40,085 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:32:40,085 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:32:40,085 - TradingBot - INFO - ==================================================
+2025-09-11 16:32:41,023 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:32:41,085 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:32:41,085 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:32:41,273 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:32:41,273 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:32:42,726 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:32:49,117 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:32:50,913 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:32:57,663 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:32:58,929 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:33:05,273 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:33:06,695 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:33:13,054 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:33:14,383 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:33:20,961 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:33:22,523 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:33:28,898 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:33:32,539 - TradingBot - INFO - ==================================================
+2025-09-11 16:33:32,539 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:33:32,539 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:33:32,539 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:33:32,539 - TradingBot - INFO - ==================================================
+2025-09-11 16:33:33,523 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:33:35,726 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 16:33:38,039 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+2025-09-11 16:33:39,788 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
+2025-09-11 16:33:41,539 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:33:43,929 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:33:58,933 - TradingBot - INFO - ==================================================
+2025-09-11 16:33:58,933 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:33:58,933 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:33:58,933 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:33:58,933 - TradingBot - INFO - ==================================================
+2025-09-11 16:33:59,839 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:34:00,980 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 16:34:03,933 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+2025-09-11 16:34:05,901 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
+2025-09-11 16:34:07,449 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:34:09,808 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:34:24,823 - TradingBot - INFO - ==================================================
+2025-09-11 16:34:24,823 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:34:24,823 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:34:24,823 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:34:24,823 - TradingBot - INFO - ==================================================
+2025-09-11 16:34:25,761 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:34:30,464 - TradingBot - INFO - ==================================================
+2025-09-11 16:34:30,464 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:34:30,464 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:34:30,464 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:34:30,464 - TradingBot - INFO - ==================================================
+2025-09-11 16:34:31,464 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:34:31,636 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 16:34:33,370 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+2025-09-11 16:34:34,823 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
+2025-09-11 16:34:36,339 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:34:39,370 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:34:54,386 - TradingBot - INFO - ==================================================
+2025-09-11 16:34:54,386 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:34:54,386 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:34:54,386 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:34:54,386 - TradingBot - INFO - ==================================================
+2025-09-11 16:34:55,292 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:34:55,308 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:34:55,308 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:34:55,308 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:34:55,308 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:34:56,714 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:35:02,984 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:35:04,558 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:35:07,683 - TradingBot - INFO - ==================================================
+2025-09-11 16:35:07,683 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:35:07,683 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:35:07,683 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:35:07,683 - TradingBot - INFO - ==================================================
+2025-09-11 16:35:08,636 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:35:12,245 - TradingBot - INFO - ==================================================
+2025-09-11 16:35:12,261 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:35:12,261 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:35:12,261 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:35:12,261 - TradingBot - INFO - ==================================================
+2025-09-11 16:35:13,198 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:35:13,323 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 16:35:15,151 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+2025-09-11 16:35:16,667 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
+2025-09-11 16:35:17,980 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:35:20,183 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:35:35,198 - TradingBot - INFO - ==================================================
+2025-09-11 16:35:35,198 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:35:35,198 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:35:35,198 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:35:35,198 - TradingBot - INFO - ==================================================
+2025-09-11 16:35:36,104 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:35:37,292 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 16:35:39,386 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+2025-09-11 16:35:41,433 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
+2025-09-11 16:35:42,808 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:35:44,886 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:35:59,886 - TradingBot - INFO - ==================================================
+2025-09-11 16:35:59,886 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:35:59,886 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:35:59,886 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:35:59,886 - TradingBot - INFO - ==================================================
+2025-09-11 16:36:00,870 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:36:02,026 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 16:36:04,058 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+2025-09-11 16:36:07,308 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
+2025-09-11 16:36:08,901 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:36:11,136 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:36:26,151 - TradingBot - INFO - ==================================================
+2025-09-11 16:36:26,151 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:36:26,151 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:36:26,151 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:36:26,151 - TradingBot - INFO - ==================================================
+2025-09-11 16:36:27,058 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:36:27,073 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:36:27,073 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:36:27,073 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:36:27,073 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:36:45,026 - TradingBot - INFO - ==================================================
+2025-09-11 16:36:45,026 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:36:45,026 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:36:45,042 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:36:45,042 - TradingBot - INFO - ==================================================
+2025-09-11 16:36:45,979 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:36:46,699 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 16:36:48,245 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+2025-09-11 16:36:49,902 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
+2025-09-11 16:36:51,323 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:36:53,511 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:37:08,511 - TradingBot - INFO - ==================================================
+2025-09-11 16:37:08,511 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:37:08,511 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:37:08,511 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:37:08,511 - TradingBot - INFO - ==================================================
+2025-09-11 16:37:09,417 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:37:09,417 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:37:09,417 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:37:09,417 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:37:09,417 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:37:10,901 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:37:17,183 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:37:18,277 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:37:24,620 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:37:26,039 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:37:32,402 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:37:33,745 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:37:40,151 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:37:41,354 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:37:47,542 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:37:48,745 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:37:54,964 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:37:56,355 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:37:57,448 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:37:58,636 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:37:58,636 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:38:00,777 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:38:15,808 - TradingBot - INFO - ==================================================
+2025-09-11 16:38:15,808 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:38:15,808 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:38:15,808 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:38:15,808 - TradingBot - INFO - ==================================================
+2025-09-11 16:38:16,823 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:38:16,823 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:38:16,823 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:38:16,823 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:38:16,823 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:38:18,026 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:38:24,214 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:38:25,698 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:38:31,933 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:38:33,198 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:38:39,386 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:38:40,651 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:38:46,902 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:38:48,186 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:38:54,355 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:38:55,652 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:39:01,839 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:39:03,574 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:39:04,823 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:39:05,948 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:39:05,948 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:39:08,011 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:39:23,042 - TradingBot - INFO - ==================================================
+2025-09-11 16:39:23,042 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:39:23,042 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:39:23,042 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:39:23,042 - TradingBot - INFO - ==================================================
+2025-09-11 16:39:23,964 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:39:23,964 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:39:23,964 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:39:23,964 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:39:23,964 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:39:25,198 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:39:31,402 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:39:32,792 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:39:39,089 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:39:40,323 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:39:46,433 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:39:47,776 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:39:54,026 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:39:55,307 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:40:01,669 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:40:03,745 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:40:10,542 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:40:11,870 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:40:13,214 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:40:14,386 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:40:14,386 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:40:16,651 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:40:31,667 - TradingBot - INFO - ==================================================
+2025-09-11 16:40:31,667 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:40:31,667 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:40:31,667 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:40:31,667 - TradingBot - INFO - ==================================================
+2025-09-11 16:40:32,573 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:40:32,589 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:40:32,589 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:40:32,589 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:40:32,589 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:40:33,792 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:40:40,058 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:40:41,214 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:40:47,339 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:40:48,620 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:40:54,870 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:40:56,261 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:41:02,620 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:41:03,854 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:41:10,105 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:41:11,339 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:41:17,589 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:41:18,714 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:41:20,011 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:41:21,199 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:41:21,199 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:41:23,293 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:41:38,308 - TradingBot - INFO - ==================================================
+2025-09-11 16:41:38,308 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:41:38,308 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:41:38,308 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:41:38,308 - TradingBot - INFO - ==================================================
+2025-09-11 16:41:39,324 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:41:39,324 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:41:39,324 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:41:39,324 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:41:39,324 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:41:40,542 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:41:46,793 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:41:47,902 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:41:54,074 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:41:55,230 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:42:01,308 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:42:02,683 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:42:09,043 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:42:10,230 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:42:16,371 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:42:17,683 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:42:23,824 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:42:25,043 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:42:26,308 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:42:27,496 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:42:27,496 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:42:29,699 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:42:44,699 - TradingBot - INFO - ==================================================
+2025-09-11 16:42:44,699 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:42:44,699 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:42:44,699 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:42:44,699 - TradingBot - INFO - ==================================================
+2025-09-11 16:42:45,605 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:42:45,605 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:42:45,605 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:42:45,605 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:42:45,605 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:42:46,761 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:42:52,887 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:42:54,168 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:43:00,386 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:43:01,762 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:43:08,184 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:43:09,465 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:43:15,746 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:43:16,871 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:43:23,012 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:43:24,230 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:43:30,402 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:43:31,684 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:43:32,933 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:43:34,262 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:43:34,262 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:43:36,402 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:43:51,403 - TradingBot - INFO - ==================================================
+2025-09-11 16:43:51,403 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:43:51,403 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:43:51,403 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:43:51,403 - TradingBot - INFO - ==================================================
+2025-09-11 16:43:52,340 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:43:52,340 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:43:52,340 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:43:52,340 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:43:52,340 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:43:53,637 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:43:59,809 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:44:00,965 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:44:07,277 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:44:08,715 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:44:15,184 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:44:16,590 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:44:23,152 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:44:24,730 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:44:31,262 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:44:32,824 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:44:39,449 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:44:41,137 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:44:42,621 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:44:44,043 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:44:44,043 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:44:46,371 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:45:01,397 - TradingBot - INFO - ==================================================
+2025-09-11 16:45:01,397 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:45:01,403 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:45:01,403 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:45:01,403 - TradingBot - INFO - ==================================================
+2025-09-11 16:45:02,356 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:45:02,356 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:45:02,356 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:45:02,374 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:45:02,374 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:45:04,590 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:45:11,512 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:45:13,137 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:45:19,793 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:45:21,262 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:45:27,684 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:45:29,153 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:45:35,793 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:45:37,184 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:45:43,512 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:45:44,856 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:45:51,356 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:45:52,793 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:45:54,168 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:45:55,637 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:45:55,637 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:45:57,825 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:46:12,840 - TradingBot - INFO - ==================================================
+2025-09-11 16:46:12,840 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:46:12,840 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:46:12,840 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:46:12,840 - TradingBot - INFO - ==================================================
+2025-09-11 16:46:13,762 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:46:13,762 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:46:13,762 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:46:13,762 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:46:13,762 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:46:15,074 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:46:21,293 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:46:22,481 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:46:28,762 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:46:29,950 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:46:36,278 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:46:37,527 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:46:43,809 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:46:45,043 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:46:51,309 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:46:52,653 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:46:58,875 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:47:00,262 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:47:01,715 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:47:03,262 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:47:03,262 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:47:05,465 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:47:20,465 - TradingBot - INFO - ==================================================
+2025-09-11 16:47:20,465 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:47:20,465 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:47:20,465 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:47:20,465 - TradingBot - INFO - ==================================================
+2025-09-11 16:47:21,387 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:47:21,387 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:47:21,387 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:47:21,403 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:47:21,403 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:47:22,621 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:47:28,934 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:47:30,137 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:47:36,262 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:47:37,574 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:47:43,762 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:47:45,090 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:47:51,715 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:47:53,044 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:47:59,340 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:48:00,762 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:48:07,403 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:48:08,637 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:48:09,903 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:48:11,231 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:48:11,231 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:48:13,559 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:48:28,575 - TradingBot - INFO - ==================================================
+2025-09-11 16:48:28,575 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:48:28,575 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:48:28,575 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:48:28,575 - TradingBot - INFO - ==================================================
+2025-09-11 16:48:29,512 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:48:29,512 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:48:29,512 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:48:29,512 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:48:29,512 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:48:30,840 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:48:37,309 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:48:38,450 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:48:44,622 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:48:45,981 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:48:52,216 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:48:53,481 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:48:59,622 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:49:00,903 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:49:07,356 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:49:08,668 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:49:14,966 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:49:16,215 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:49:17,481 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:49:18,637 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:49:18,637 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:49:20,762 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:49:35,778 - TradingBot - INFO - ==================================================
+2025-09-11 16:49:35,778 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:49:35,778 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:49:35,778 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:49:35,778 - TradingBot - INFO - ==================================================
+2025-09-11 16:49:36,684 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:49:36,684 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:49:36,684 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:49:36,684 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:49:36,684 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:49:38,294 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:49:44,575 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:49:45,903 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:49:52,215 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:49:53,419 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:49:59,544 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:50:00,762 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:50:07,403 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:50:08,872 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:50:15,512 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:50:16,684 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:50:22,950 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:50:24,263 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:50:25,497 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:50:26,731 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:50:26,747 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:50:28,934 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:50:43,934 - TradingBot - INFO - ==================================================
+2025-09-11 16:50:43,934 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:50:43,934 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:50:43,934 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:50:43,934 - TradingBot - INFO - ==================================================
+2025-09-11 16:50:44,840 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:50:44,840 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:50:44,840 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:50:44,840 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:50:44,840 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:50:46,075 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:50:52,325 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:50:53,606 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:50:59,716 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:51:01,043 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:51:07,637 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:51:08,918 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:51:15,106 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:51:16,512 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:51:22,809 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:51:24,059 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:51:30,325 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:51:31,622 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:51:32,856 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:51:34,106 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:51:34,106 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:51:36,262 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:51:51,278 - TradingBot - INFO - ==================================================
+2025-09-11 16:51:51,278 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:51:51,278 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:51:51,278 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:51:51,278 - TradingBot - INFO - ==================================================
+2025-09-11 16:51:52,200 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:51:52,200 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:51:52,200 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:51:52,200 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:51:52,200 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:51:53,528 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:51:59,794 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:52:01,012 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:52:07,731 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:52:09,059 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:52:15,294 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:52:16,638 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:52:22,997 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:52:24,387 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:52:30,622 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:52:31,950 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:52:38,200 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:52:39,388 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:52:40,575 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:52:41,762 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:52:41,762 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:52:43,981 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:52:58,981 - TradingBot - INFO - ==================================================
+2025-09-11 16:52:58,981 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:52:58,981 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:52:58,981 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:52:58,981 - TradingBot - INFO - ==================================================
+2025-09-11 16:52:59,903 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:52:59,919 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:52:59,919 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:52:59,919 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:52:59,919 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:53:01,231 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:53:07,637 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:53:09,012 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:53:15,466 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:53:16,762 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:53:23,013 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:53:24,247 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:53:30,559 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:53:31,809 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:53:38,059 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:53:39,278 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:53:45,512 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:53:46,606 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:53:47,778 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:53:49,012 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:53:49,012 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:53:51,169 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:54:06,169 - TradingBot - INFO - ==================================================
+2025-09-11 16:54:06,169 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:54:06,169 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:54:06,169 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:54:06,169 - TradingBot - INFO - ==================================================
+2025-09-11 16:54:07,091 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:54:07,106 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:54:07,106 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:54:07,106 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:54:07,106 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:54:08,465 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:54:14,778 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:54:16,137 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:54:22,450 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:54:23,762 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:54:29,934 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:54:31,200 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:54:37,372 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:54:38,559 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:54:44,747 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:54:45,938 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:54:52,247 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:54:53,606 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:54:54,700 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:54:55,981 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:54:55,981 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:54:58,169 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:55:13,184 - TradingBot - INFO - ==================================================
+2025-09-11 16:55:13,184 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 16:55:13,184 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 16:55:13,184 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 16:55:13,184 - TradingBot - INFO - ==================================================
+2025-09-11 16:55:14,091 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 16:55:14,091 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 16:55:14,091 - TradingBot - INFO - Verifying connection health...
+2025-09-11 16:55:14,091 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 16:55:14,091 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:55:15,512 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 16:55:21,794 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:55:23,028 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 16:55:29,341 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:55:30,622 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 16:55:37,059 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:55:38,278 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 16:55:44,513 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:55:45,794 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 16:55:51,981 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:55:53,137 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 16:55:59,528 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 16:56:02,303 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 16:56:03,865 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 16:56:05,522 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 16:56:05,522 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 16:56:08,037 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 17:32:57,333 - TradingBot - INFO - ==================================================
+2025-09-11 17:32:57,333 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 17:32:57,333 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 17:32:57,333 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 17:32:57,333 - TradingBot - INFO - ==================================================
+2025-09-11 17:32:58,349 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 17:32:59,567 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 17:33:03,286 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+2025-09-11 17:33:04,942 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
+2025-09-11 17:33:06,490 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 17:33:08,896 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 17:33:23,911 - TradingBot - INFO - ==================================================
+2025-09-11 17:33:23,911 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 17:33:23,911 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 17:33:23,911 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 17:33:23,911 - TradingBot - INFO - ==================================================
+2025-09-11 17:33:24,880 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 17:33:24,880 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 17:33:24,880 - TradingBot - INFO - Verifying connection health...
+2025-09-11 17:33:24,880 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 17:33:24,880 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 17:33:26,161 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 17:33:32,349 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 17:33:33,614 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 17:33:39,818 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 17:33:41,239 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 3)
+2025-09-11 17:33:47,613 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 17:33:49,381 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 4)
+2025-09-11 17:33:55,785 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 17:33:57,332 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 5)
+2025-09-11 17:34:03,660 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 17:34:05,160 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 6)
+2025-09-11 17:34:11,457 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 17:34:12,864 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 7)
+2025-09-11 17:34:14,332 - TradingBot - CRITICAL - Connection lost for over 30 seconds. Forcing reconnect.
+2025-09-11 17:34:15,489 - TradingBot - INFO - MT5 connection shut down.
+2025-09-11 17:34:15,489 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 17:34:17,629 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 17:34:32,629 - TradingBot - INFO - ==================================================
+2025-09-11 17:34:32,629 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 17:34:32,629 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 17:34:32,629 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 17:34:32,629 - TradingBot - INFO - ==================================================
+2025-09-11 17:34:33,582 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 17:34:33,582 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 17:34:33,582 - TradingBot - INFO - Verifying connection health...
+2025-09-11 17:34:33,582 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 17:34:33,582 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 17:34:35,006 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
+2025-09-11 17:34:41,207 - TradingBot - WARNING - positions_get() returned None. The connection has been lost.
+2025-09-11 17:34:42,410 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 2)
+2025-09-11 17:36:40,488 - TradingBot - INFO - ==================================================
+2025-09-11 17:36:40,488 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 17:36:40,488 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 17:36:40,488 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 17:36:40,488 - TradingBot - INFO - ==================================================
+2025-09-11 17:36:41,410 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 17:36:47,004 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 17:36:47,004 - TradingBot - INFO - Verifying connection health...
+2025-09-11 17:36:47,004 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 17:36:47,004 - TradingBot - WARNING - positions_get() returned None (Attempt 1/3). Retrying in 2 seconds...
+2025-09-11 17:36:50,598 - TradingBot - WARNING - positions_get() returned None (Attempt 2/3). Retrying in 2 seconds...
+2025-09-11 17:36:53,770 - TradingBot - WARNING - positions_get() returned None (Attempt 3/3). Retrying in 2 seconds...
+2025-09-11 17:36:56,957 - TradingBot - ERROR - Failed to get open positions after 3 attempts. Assuming connection is lost.
+2025-09-11 17:36:58,160 - TradingBot - WARNING - Connection to MT5 lost. Retrying... (Attempt 1)
