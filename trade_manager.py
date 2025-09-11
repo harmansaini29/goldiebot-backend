@@ -1,4 +1,4 @@
-# FILE: trade_manager.py
+# FILE: trade_manager.py (Corrected with Connection Health Check)
 # =============================================================================
 #
 #   METATRADER 5 CONNECTION & EXECUTION ENGINE
@@ -21,9 +21,9 @@ class TradeManager:
         self._is_connected = False
 
     def __enter__(self):
-        """Context manager for establishing the MT5 connection."""
+        """Context manager for establishing and VERIFYING the MT5 connection."""
         try:
-            if not mt5.initialize(path=config.MT5_PATH, timeout=20):
+            if not mt5.initialize(path=config.MT5_PATH, timeout=30): # Increased timeout slightly
                 log.critical(f"MT5 initialize() failed, error code = {mt5.last_error()}")
                 raise ConnectionError("Failed to initialize MT5")
             
@@ -33,15 +33,31 @@ class TradeManager:
                 mt5.shutdown()
                 raise ConnectionError("Failed to connect to trading account")
 
-            self._is_connected = True
             log.info(f"MT5 initialized successfully on account #{account_info.login}")
             
-            # --- FIX: Add a 2-second pause to allow the terminal to sync ---
-            time.sleep(2)
+            # --- NEW: Robust Connection Health Check ---
+            log.info("Verifying connection health...")
+            max_retries = 5
+            for i in range(max_retries):
+                terminal_info = mt5.terminal_info()
+                if terminal_info:
+                    log.info("Connection health verified. Terminal is responsive.")
+                    self._is_connected = True
+                    break # Exit loop on success
+                else:
+                    log.warning(f"Connection not fully established. Retrying in 3 seconds... ({i+1}/{max_retries})")
+                    time.sleep(3)
+            
+            if not self._is_connected:
+                raise ConnectionError(f"Failed to verify terminal connection after {max_retries} retries.")
+            # --- End of New Logic ---
             
         except Exception as e:
             log.critical(f"An exception occurred during MT5 initialization: {e}", exc_info=True)
             self._is_connected = False
+            # Ensure shutdown happens on any error during __enter__
+            if mt5.terminal_info():
+                 mt5.shutdown()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -55,6 +71,7 @@ class TradeManager:
         return self._is_connected
 
     def get_symbol_info(self, symbol: str):
+        if not self._is_connected: return None
         try:
             info = mt5.symbol_info(symbol)
             if info is None:
@@ -67,6 +84,7 @@ class TradeManager:
 
     def fetch_ohlcv(self, timeframe: str, limit: int) -> pd.DataFrame:
         """Fetches OHLCV data and returns a pandas DataFrame."""
+        if not self._is_connected: return pd.DataFrame()
         try:
             tf_map = {
                 "1m": mt5.TIMEFRAME_M1, "5m": mt5.TIMEFRAME_M5, "15m": mt5.TIMEFRAME_M15,
@@ -91,10 +109,12 @@ class TradeManager:
 
     def get_open_positions(self, symbol: str = None, magic: int = None) -> list:
         """Retrieves all open positions, with optional filters."""
+        if not self._is_connected: return []
         try:
             positions = mt5.positions_get(symbol=symbol)
             if positions is None:
-                log.warning("positions_get() returned None. Possible connection issue.")
+                # This warning is now a more reliable indicator of a true connection drop
+                log.warning("positions_get() returned None. The connection may have been lost.")
                 return []
             if magic is not None:
                 return [p for p in positions if p.magic == magic]
@@ -102,9 +122,10 @@ class TradeManager:
         except Exception as e:
             log.error(f"Error getting open positions: {e}")
             return []
-
+    
+    # ... (the rest of the file remains the same) ...
     def get_current_price(self, signal: str) -> float | None:
-        """Gets the current ask for a BUY or bid for a SELL."""
+        if not self._is_connected: return None
         try:
             tick = mt5.symbol_info_tick(config.TRADING_PAIR)
             if tick:
@@ -116,7 +137,7 @@ class TradeManager:
             return None
 
     def open_trade(self, order_type, symbol, volume, price, sl, tp, comment):
-        """Places a new market order."""
+        if not self._is_connected: return None
         request = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
@@ -145,13 +166,13 @@ class TradeManager:
             return None
 
     def close_trade(self, ticket: int) -> bool:
-        """Closes a position by its ticket number."""
+        if not self._is_connected: return False
         try:
             positions = self.get_open_positions()
             position_to_close = next((p for p in positions if p.ticket == ticket), None)
             if not position_to_close:
                 log.warning(f"Attempted to close ticket #{ticket}, but it was not found.")
-                return True # Treat as success if already closed
+                return True
 
             order_type = mt5.ORDER_TYPE_SELL if position_to_close.type == mt5.ORDER_TYPE_BUY else mt5.ORDER_TYPE_BUY
             price = self.get_current_price('SELL' if order_type == mt5.ORDER_TYPE_SELL else 'BUY')
@@ -182,7 +203,7 @@ class TradeManager:
             return False
 
     def modify_sl_tp(self, ticket: int, new_sl: float, new_tp: float) -> bool:
-        """Modifies the SL and TP of an open position."""
+        if not self._is_connected: return False
         request = {
             "action": mt5.TRADE_ACTION_SLTP,
             "position": ticket,
@@ -202,9 +223,8 @@ class TradeManager:
             return False
             
     def get_trade_history_for_position(self, position_id: int) -> pd.DataFrame | None:
-        """Fetches all historical deals related to a specific position ID."""
+        if not self._is_connected: return None
         try:
-            # Fetch deals from the last 90 days, which should be sufficient
             from_date = datetime.now(tz=pytz.timezone("Etc/UTC")) - pd.Timedelta(days=90)
             history_deals = mt5.history_deals_get(from_date, datetime.now(tz=pytz.timezone("Etc/UTC")))
             
@@ -213,7 +233,7 @@ class TradeManager:
                 return None
             
             if len(history_deals) == 0:
-                return pd.DataFrame() # Return empty DataFrame if no deals
+                return pd.DataFrame()
             
             deals_df = pd.DataFrame(list(history_deals), columns=history_deals[0]._asdict().keys())
             position_deals = deals_df[deals_df['position_id'] == position_id]

@@ -18750,3 +18750,103 @@ ConnectionError: Failed to initialize MT5
 2025-09-11 12:50:01,628 - TradingBot - INFO - Volatility Check: Current ATR = 61.53 pips, Required = 3.0 pips.
 2025-09-11 12:50:01,628 - TradingBot - INFO - Entry Signal Check: 'HOLD' | Trend Memory: 'BEARISH'
 2025-09-11 12:50:01,628 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 13:03:33,885 - TradingBot - INFO - ==================================================
+2025-09-11 13:03:33,885 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Refined)
+2025-09-11 13:03:33,885 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 13:03:33,885 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 13:03:33,885 - TradingBot - INFO - ==================================================
+2025-09-11 13:03:34,869 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 13:03:37,057 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 13:03:39,010 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Documents\GitHub\goldiebot-backend\trade_manager.py", line 28, in __enter__
+    raise ConnectionError("Failed to initialize MT5")
+ConnectionError: Failed to initialize MT5
+2025-09-11 13:03:40,557 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5. Shutting down.
+2025-09-11 13:03:43,541 - TradingBot - INFO - ==================================================
+2025-09-11 13:03:43,541 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Refined)
+2025-09-11 13:03:43,541 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 13:03:43,541 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 13:03:43,541 - TradingBot - INFO - ==================================================
+2025-09-11 13:03:44,510 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 13:03:44,510 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 13:03:46,510 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 13:03:47,744 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 13:03:48,885 - TradingBot - INFO - New 30m candle detected at 2025-09-11 10:30:00. Running strategy checks.
+2025-09-11 13:03:48,885 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 13:03:49,948 - TradingBot - INFO - Volatility Check: Current ATR = 48.23 pips, Required = 3.0 pips.
+2025-09-11 13:03:49,963 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-11 13:03:54,979 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 13:03:56,088 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 13:04:02,119 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 13:04:03,369 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 13:10:15,744 - TradingBot - INFO - ==================================================
+2025-09-11 13:10:15,744 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Refined)
+2025-09-11 13:10:15,744 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 13:10:15,744 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 13:10:15,744 - TradingBot - INFO - ==================================================
+2025-09-11 13:10:16,650 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 13:10:16,666 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 13:10:16,666 - TradingBot - INFO - Verifying connection health...
+2025-09-11 13:10:16,666 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 13:10:16,666 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:10:18,104 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:10:19,244 - TradingBot - INFO - New 30m candle detected at 2025-09-11 10:30:00. Running strategy checks.
+2025-09-11 13:10:19,244 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:10:20,416 - TradingBot - INFO - Volatility Check: Current ATR = 50.00 pips, Required = 3.0 pips.
+2025-09-11 13:10:20,432 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-11 13:10:25,447 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:10:26,666 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:10:32,807 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:10:33,901 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:10:39,932 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:10:41,151 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:10:47,307 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:10:48,385 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:10:54,385 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:10:55,463 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:11:01,541 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:11:02,760 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:11:08,890 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:11:10,531 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:11:16,816 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:11:17,925 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:11:24,050 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:11:25,144 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:11:31,238 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:11:32,238 - TradingBot - WARNING - positions_get() returned None. The connection may have been lost.
+2025-09-11 13:13:37,846 - TradingBot - INFO - ==================================================
+2025-09-11 13:13:37,846 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 13:13:37,846 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 13:13:37,846 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 13:13:37,846 - TradingBot - INFO - ==================================================
+2025-09-11 13:13:38,768 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 13:13:39,909 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 13:13:42,143 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Documents\GitHub\goldiebot-backend\trade_manager.py", line 28, in __enter__
+    raise ConnectionError("Failed to initialize MT5")
+ConnectionError: Failed to initialize MT5
+2025-09-11 13:13:43,596 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
+2025-09-11 13:13:44,955 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 13:13:47,049 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 13:14:02,065 - TradingBot - INFO - ==================================================
+2025-09-11 13:14:02,065 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 13:14:02,065 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 13:14:02,065 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 13:14:02,065 - TradingBot - INFO - ==================================================
+2025-09-11 13:15:03,643 - TradingBot - INFO - ==================================================
+2025-09-11 13:15:03,643 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 13:15:03,643 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 13:15:03,643 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 13:15:03,643 - TradingBot - INFO - ==================================================
+2025-09-11 13:15:04,581 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 13:15:05,768 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 13:15:08,471 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Documents\GitHub\goldiebot-backend\trade_manager.py", line 28, in __enter__
+    raise ConnectionError("Failed to initialize MT5")
+ConnectionError: Failed to initialize MT5
+2025-09-11 13:15:09,788 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5 on startup.
+2025-09-11 13:15:11,190 - TradingBot - WARNING - Main loop exited. Attempting to reconnect in 15 seconds...
+2025-09-11 13:15:13,190 - TradingBot - INFO - Telegram alert sent successfully.

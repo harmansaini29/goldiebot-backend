@@ -1,7 +1,7 @@
-# FILE: state_manager.py (Improved & Efficient)
+# FILE: state_manager.py (Corrected & Simplified)
 # =============================================================================
 #
-#   ROBUST & ATOMIC STATE MANAGEMENT ENGINE
+#   ROBUST & ATOMIC STATE MANAGEMENT FOR MANAGED TRADES
 #
 # =============================================================================
 
@@ -14,16 +14,19 @@ from logger import log
 
 # --- Constants ---
 STATE_FILE = Path("trade_state.json")
-# Use a threading lock to prevent race conditions during file access
 LOCK = threading.Lock()
 
 def _read_state_file() -> dict:
     """Safely reads the entire state file."""
     if not STATE_FILE.exists() or STATE_FILE.stat().st_size == 0:
-        return {}
+        return {'managed_trades': {}} # Return a valid empty structure
     try:
         with open(STATE_FILE, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            data = json.load(f)
+            # Ensure the core key exists for robustness
+            if 'managed_trades' not in data:
+                return {'managed_trades': {}}
+            return data
     except json.JSONDecodeError:
         log.critical(f"STATE CORRUPTION: '{STATE_FILE}' is corrupt. A backup will be attempted.")
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -35,10 +38,10 @@ def _read_state_file() -> dict:
                 log.info(f"Backed up corrupt state file to '{corrupt_backup_path}'. A new state file will be created.")
         except Exception as move_err:
             log.error(f"Could not back up corrupt state file: {move_err}")
-        return {}
+        return {'managed_trades': {}}
     except Exception as e:
         log.error(f"Failed to read state file '{STATE_FILE}': {e}", exc_info=True)
-        return {}
+        return {'managed_trades': {}}
         
 def _write_state_file(state_data: dict):
     """Atomically writes the entire state file."""
@@ -51,11 +54,9 @@ def _write_state_file(state_data: dict):
         log.critical(f"Failed to save state to '{STATE_FILE}': {e}", exc_info=True)
 
 def save_trade_state(ticket: int, data: dict):
-    """Atomically saves the state of a single trade to the JSON file."""
+    """Atomically saves the state of a single managed trade."""
     with LOCK:
         current_state = _read_state_file()
-        if 'managed_trades' not in current_state:
-            current_state['managed_trades'] = {}
         current_state['managed_trades'][str(ticket)] = data
         _write_state_file(current_state)
 
@@ -66,29 +67,15 @@ def get_trade_state(ticket: int) -> dict:
         return state.get('managed_trades', {}).get(str(ticket), {})
 
 def get_all_managed_trades() -> list[int]:
-    """Returns a list of all trade tickets currently being managed."""
+    """Returns a list of all trade tickets currently being managed by the bot."""
     with LOCK:
         state = _read_state_file()
         return [int(ticket) for ticket in state.get('managed_trades', {}).keys()]
 
 def clear_trade_state(ticket: int):
-    """Atomically removes a trade ticket from the state file."""
+    """Atomically removes a trade ticket from the state file after it's closed."""
     with LOCK:
         current_state = _read_state_file()
-        if 'managed_trades' in current_state and str(ticket) in current_state['managed_trades']:
+        if str(ticket) in current_state.get('managed_trades', {}):
             del current_state['managed_trades'][str(ticket)]
             _write_state_file(current_state)
-
-# --- NEW FUNCTIONS FOR TREND MEMORY ---
-def save_trend_state(trend: str):
-    """Saves the current overall trend state ('BULLISH' or 'BEARISH')."""
-    with LOCK:
-        current_state = _read_state_file()
-        current_state['trend_state'] = trend
-        _write_state_file(current_state)
-        
-def get_trend_state() -> str:
-    """Retrieves the current overall trend state."""
-    with LOCK:
-        state = _read_state_file()
-        return state.get('trend_state', 'NEUTRAL') # Default to NEUTRAL

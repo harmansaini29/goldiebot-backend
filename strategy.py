@@ -1,7 +1,12 @@
 ﻿# FILE: strategy.py
 # =============================================================================
+#
+#   STRATEGY ENGINE (REFINED & VERIFIED)
+#   - Generates entry and exit signals based on indicator data.
+#   - Decoupled from state management for superior logic.
+#
+# =============================================================================
 
-import time
 import MetaTrader5 as mt5
 import configs as config
 from logger import log
@@ -17,90 +22,78 @@ class TradingStrategy:
         if not self.symbol_info:
             raise ValueError("Strategy could not initialize: Failed to get symbol info.")
 
-    def _manage_open_trades(self):
-        """Checks all open bot positions for an exit signal."""
-        open_positions = self.tm.get_open_positions(magic=config.MAGIC_NUMBER)
-        if not open_positions:
-            return
-
-        # This logic still assumes the bot only manages one trade at a time.
-        position = open_positions[0] 
-        trade_type = 'BUY' if position.type == mt5.ORDER_TYPE_BUY else 'SELL'
-        log.info(f"Managing open {trade_type} position #{position.ticket}. Checking for exit.")
-
-        df_exit = ind.calculate_trend_levels(
-            self.tm.fetch_ohlcv(config.TIMEFRAME, limit=config.TREND_LEVELS_LENGTH + 5),
-            length=config.TREND_LEVELS_LENGTH
-        )
-        if df_exit.empty: return
-
-        exit_signal = df_exit['signal'].iloc[-1]
-        if (trade_type == 'BUY' and exit_signal == 'SELL') or \
-           (trade_type == 'SELL' and exit_signal == 'BUY'):
-            log.warning(f"EXIT SIGNAL DETECTED for {trade_type} #{position.ticket}. Closing.")
-            if self.tm.close_trade(position.ticket):
-                sm.save_trend_state('NEUTRAL')
-                time.sleep(config.REVERSAL_DELAY_SECONDS)
-
-    def _check_for_new_trades(self):
-        """Checks for a new entry signal if no bot trades are open."""
-        if self.tm.get_open_positions(magic=config.MAGIC_NUMBER):
-            return # Don't check for new trades if one is already open
-
-        log.info("No open bot trades. Checking for new entry signal.")
-        
+    def get_entry_signal(self) -> str:
+        """
+        Checks for a new entry signal (BUY, SELL, or HOLD).
+        This is the primary logic for initiating a new trade.
+        """
         # --- ATR Volatility Filter ---
         if config.USE_ATR_FILTER:
             ohlcv_for_atr = self.tm.fetch_ohlcv(config.TIMEFRAME, limit=config.ATR_PERIOD + 5)
+            if ohlcv_for_atr.empty:
+                return 'HOLD' # Not enough data
+            
             current_atr = ind.calculate_atr(ohlcv_for_atr, config.ATR_PERIOD, self.symbol_info.point)
             log.info(f"Volatility Check: Current ATR = {current_atr:.2f} pips, Required = {config.ATR_THRESHOLD_PIPS} pips.")
             if current_atr < config.ATR_THRESHOLD_PIPS:
                 log.info("Trade filtered: Market volatility is too low.")
-                return
+                return 'HOLD'
 
+        # --- EMA Crossover Entry Signal ---
         df_entry = ind.calculate_ema_crossover_signal(
             self.tm.fetch_ohlcv(config.TIMEFRAME, limit=100),
             fast=config.EMA_FAST_PERIOD, medium=config.EMA_MEDIUM_PERIOD,
             slow=config.EMA_SLOW_PERIOD, point=self.symbol_info.point
         )
-        if df_entry.empty: return
+        if df_entry.empty:
+            return 'HOLD'
 
         entry_signal = df_entry['signal'].iloc[-1]
-        current_trend = sm.get_trend_state()
-        log.info(f"Entry Signal Check: '{entry_signal}' | Trend Memory: '{current_trend}'")
+        log.info(f"Entry Signal Check: EMA Crossover signal is '{entry_signal}'.")
+        return entry_signal
 
-        if entry_signal == 'BUY' and current_trend != 'BULLISH':
-            log.info(">>>>>>>>> Valid BUY signal detected. Entering trade. <<<<<<<<<")
-            if self.execute_trade('BUY'):
-                sm.save_trend_state('BULLISH')
-        elif entry_signal == 'SELL' and current_trend != 'BEARISH':
-            log.info(">>>>>>>>> Valid SELL signal detected. Entering trade. <<<<<<<<<")
-            if self.execute_trade('SELL'):
-                sm.save_trend_state('BEARISH')
+    def get_exit_signal(self) -> str:
+        """
+        Checks for an exit signal based on the Trend Levels indicator.
+        This is used to close an existing trade.
+        """
+        df_exit = ind.calculate_trend_levels(
+            self.tm.fetch_ohlcv(config.TIMEFRAME, limit=config.TREND_LEVELS_LENGTH + 5),
+            length=config.TREND_LEVELS_LENGTH
+        )
+        if df_exit.empty:
+            return 'HOLD'
 
-    def check_and_execute(self):
-        """The main strategy function with decoupled professional logic."""
-        log.info("Strategy: Running main cycle...")
-        self._manage_open_trades()
-        self._check_for_new_trades()
+        exit_signal = df_exit['signal'].iloc[-1]
+        log.info(f"Exit Signal Check: Trend Reversal signal is '{exit_signal}'.")
+        return exit_signal
 
     def execute_trade(self, signal: str) -> bool:
-        """Calculates SL/TP and sends the trade order."""
+        """Calculates SL/TP and sends the trade order to the TradeManager."""
         price = self.tm.get_current_price(signal)
-        if price is None: return False
+        if price is None:
+            return False
 
+        # Calculate SL and TP based on configuration
         sl_distance = config.STOP_LOSS_PIPS * config.POINTS_PER_PIP * self.symbol_info.point
         tp_distance = config.TAKE_PROFIT_PIPS * config.POINTS_PER_PIP * self.symbol_info.point
+        
         order_type = mt5.ORDER_TYPE_BUY if signal == 'BUY' else mt5.ORDER_TYPE_SELL
         stop_loss = price - sl_distance if signal == 'BUY' else price + sl_distance
         take_profit = price + tp_distance if signal == 'BUY' else price - tp_distance
 
+        # Open the trade via the trade manager
         result = self.tm.open_trade(
             order_type=order_type, symbol=config.TRADING_PAIR, volume=config.LOT_SIZE,
             price=price, sl=stop_loss, tp=take_profit, comment="GoldBot vPRO"
         )
-        if result:
+        
+        if result and result.order > 0:
             log.info(f"Trade executed successfully. Ticket: #{result.order}")
+            # Save the new trade to our state file immediately
+            sm.save_trade_state(result.order, {
+                'entry_price': price, 'signal': signal, 'entry_type': 'EMA_Crossover'
+            })
             send_telegram_alert(
                 f"🚀 <b>NEW TRADE OPENED ({signal})</b> 🚀\n\n"
                 f"<b>Symbol:</b> {config.TRADING_PAIR}\n<b>Price:</b> ${price:,.2f}\n"

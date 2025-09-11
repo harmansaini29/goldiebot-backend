@@ -1,7 +1,7 @@
-﻿# FILE: main.py
+﻿# FILE: main.py (Final Version with Self-Healing Logic)
 # =============================================================================
 #
-#   MAIN TRADING BOT EXECUTABLE (FINAL & VERIFIED)
+#   MAIN TRADING BOT EXECUTABLE (REFINED & VERIFIED)
 #
 # =============================================================================
 
@@ -10,6 +10,7 @@ from datetime import datetime
 import traceback
 import os
 import MetaTrader5 as mt5
+import pandas as pd
 
 # --- Core Application Imports ---
 from logger import log, EXCEL_REPORTER
@@ -20,44 +21,48 @@ from notifier import send_telegram_alert
 import risk_manager as rm
 from strategy import TradingStrategy
 
-def initial_cleanup():
-    """Cleans up the state file on first run if no trades are open to prevent ghost trades."""
-    if os.path.exists(sm.STATE_FILE):
-        return
-    try:
-        with TradeManager() as tm:
-            if tm.is_connected() and not tm.get_open_positions():
-                log.info("Initial cleanup: No open trades found. Clearing state file.")
-                if os.path.exists(sm.STATE_FILE):
-                    os.remove(sm.STATE_FILE)
-    except Exception as e:
-        log.warning(f"Could not perform initial cleanup: {e}")
+# (All functions before main_loop remain the same: get_timeframe_seconds, is_market_open, etc.)
+def get_timeframe_seconds(tf_string: str) -> int:
+    """Converts timeframe string to seconds."""
+    unit = tf_string[-1].lower()
+    value = int(tf_string[:-1])
+    if unit == 'm':
+        return value * 60
+    elif unit == 'h':
+        return value * 3600
+    return 30 * 60 # Default
 
 def is_market_open() -> bool:
-    """A simple check to avoid trading on weekends (Friday=4, Saturday=5, Sunday=6)."""
+    """A simple check to avoid trading on weekends (Saturday=5, Sunday=6)."""
     return datetime.utcnow().weekday() < 5
 
 def sync_positions_with_state(tm: TradeManager):
-    """Adopts new manual trades and logs trades that were closed on the terminal."""
+    """Adopts new manual trades and processes trades closed manually on the terminal."""
     try:
         open_positions = tm.get_open_positions()
+        # --- Self-Healing Check ---
+        if open_positions is None: # Indicates a connection drop
+            return None # Propagate the error up
+
         managed_tickets = sm.get_all_managed_trades()
-        
-        open_tickets = [p.ticket for p in open_positions]
-        closed_tickets = [t for t in managed_tickets if t not in open_tickets]
-        for ticket in closed_tickets:
+        open_tickets = {p.ticket for p in open_positions}
+        closed_on_terminal = [t for t in managed_tickets if t not in open_tickets]
+        for ticket in closed_on_terminal:
+            log.warning(f"Managed trade #{ticket} was closed outside the bot. Processing closure.")
             log_closed_trade(tm, ticket)
 
         for pos in open_positions:
-            if pos.ticket not in managed_tickets and pos.magic == 0:
+            if pos.ticket not in managed_tickets:
                 adopt_manual_trade(tm, pos)
+        
+        return True # Success
     except Exception as e:
         log.error(f"Error during position sync: {e}", exc_info=True)
-
+        return False # Failure
 
 def adopt_manual_trade(tm: TradeManager, position):
     """Adds a manually opened trade to the state file and sets a default SL/TP."""
-    log.info(f"ADOPTING MANUAL TRADE: Found unmanaged manual trade #{position.ticket}.")
+    log.info(f"ADOPTING MANUAL TRADE: Found unmanaged trade #{position.ticket}.")
     trade_type = 'BUY' if position.type == mt5.ORDER_TYPE_BUY else 'SELL'
     
     if position.sl == 0.0 or position.tp == 0.0:
@@ -66,24 +71,21 @@ def adopt_manual_trade(tm: TradeManager, position):
         if not symbol_info:
             log.error(f"Cannot set SL/TP for #{position.ticket}: Could not get symbol info.")
             return
-
         point, price = symbol_info.point, position.price_open
         sl_distance = config.STOP_LOSS_PIPS * config.POINTS_PER_PIP * point
         tp_distance = config.TAKE_PROFIT_PIPS * config.POINTS_PER_PIP * point
-        
         stop_loss = price - sl_distance if trade_type == 'BUY' else price + sl_distance
         take_profit = price + tp_distance if trade_type == 'BUY' else price - tp_distance
         tm.modify_sl_tp(position.ticket, new_sl=stop_loss, new_tp=take_profit)
     
     sm.save_trade_state(position.ticket, {
         'entry_price': position.price_open, 'signal': trade_type, 
-        'entry_type': 'Manual/Adopted', 'tp_level': position.tp, 'sl_level': position.sl
+        'entry_type': 'Manual/Adopted'
     })
     send_telegram_alert(f"🤖 <b>ADOPTED MANUAL TRADE</b> 🤖\n\nNow managing ticket #{position.ticket} with full risk management.")
 
-
 def log_closed_trade(tm: TradeManager, ticket: int):
-    """Fetches history for a closed trade, logs it, and sends alerts."""
+    """Fetches history for a closed trade, logs it, and cleans up its state."""
     if ticket in EXCEL_REPORTER.get_logged_tickets():
         sm.clear_trade_state(ticket)
         return
@@ -114,10 +116,12 @@ def log_closed_trade(tm: TradeManager, ticket: int):
         log.info(f"Cleared state for closed ticket #{ticket}.")
     else:
         log.error(f"Failed to retrieve complete history for #{ticket}. State not cleared, will retry.")
-        
+
 def main_loop(tm: TradeManager):
-    """The main execution loop."""
+    """The main execution loop with self-healing connection logic."""
     strategy = TradingStrategy(tm)
+    last_candle_time = None
+    connection_lost_counter = 0 # NEW: Circuit breaker counter
     
     while True:
         try:
@@ -126,47 +130,99 @@ def main_loop(tm: TradeManager):
                 time.sleep(3600)
                 continue
 
-            sync_positions_with_state(tm)
+            # 1. Sync state and check connection health
+            sync_result = sync_positions_with_state(tm)
+            if sync_result is None: # A None return means connection was lost
+                connection_lost_counter += 1
+                log.warning(f"Connection to MT5 lost. Retrying... (Attempt {connection_lost_counter})")
+                if connection_lost_counter > (30 / config.MAIN_LOOP_SLEEP_SECONDS): # ~30 seconds of failures
+                    log.critical("Connection lost for over 30 seconds. Forcing reconnect.")
+                    return # Exit the loop to trigger the 'with' context manager to reconnect
+                time.sleep(config.MAIN_LOOP_SLEEP_SECONDS)
+                continue
             
-            # --- FINAL LOGIC: Execute strategy and risk management every cycle ---
-            strategy.check_and_execute()
+            connection_lost_counter = 0 # Reset counter on successful sync
             
+            # Continue with normal logic
             managed_positions = [p for p in tm.get_open_positions() if p.ticket in sm.get_all_managed_trades()]
             if managed_positions:
                 rm.manage_trailing_stop_loss(tm, managed_positions)
+
+            # 2. Check for a new candle before running strategy logic
+            latest_candle = tm.fetch_ohlcv(config.TIMEFRAME, limit=1)
+            if latest_candle.empty:
+                time.sleep(config.MAIN_LOOP_SLEEP_SECONDS)
+                continue
+
+            current_candle_time = latest_candle['time'].iloc[0]
+            if current_candle_time == last_candle_time:
+                time.sleep(config.MAIN_LOOP_SLEEP_SECONDS)
+                continue
+            
+            log.info(f"New {config.TIMEFRAME} candle detected at {current_candle_time}. Running strategy checks.")
+            last_candle_time = current_candle_time
+
+            # 3. Check for exit signals
+            if managed_positions:
+                exit_signal = strategy.get_exit_signal()
+                for pos in managed_positions:
+                    trade_type = 'BUY' if pos.type == mt5.ORDER_TYPE_BUY else 'SELL'
+                    if (trade_type == 'BUY' and exit_signal == 'SELL') or \
+                       (trade_type == 'SELL' and exit_signal == 'BUY'):
+                        log.warning(f"EXIT SIGNAL DETECTED for {trade_type} #{pos.ticket}. Closing trade.")
+                        tm.close_trade(pos.ticket)
+                        time.sleep(config.REVERSAL_DELAY_SECONDS)
+            
+            # 4. Check for new entry signal
+            bot_positions = tm.get_open_positions(magic=config.MAGIC_NUMBER)
+            if not bot_positions:
+                entry_signal = strategy.get_entry_signal()
+                if entry_signal in ['BUY', 'SELL']:
+                    log.info(f">>>>>>> Valid {entry_signal} signal detected. Executing trade. <<<<<<<")
+                    strategy.execute_trade(entry_signal)
+            else:
+                log.info("A bot-managed trade is already open. Skipping new entry check.")
 
             time.sleep(config.MAIN_LOOP_SLEEP_SECONDS)
 
         except Exception as e:
             log.critical(f"An unexpected error occurred in the main loop: {e}", exc_info=True)
             error_details = traceback.format_exc()
-            send_telegram_alert(f"🚨 <b>BOT LOOP ERROR</b> 🚨\n\n<pre>{error_details[-1000:]}</pre>")
+            send_telegram_alert(f"🚨 <b>BOT CRITICAL ERROR</b> 🚨\n\n<pre>{error_details[-1000:]}</pre>")
             time.sleep(30)
 
+
 def main():
-    """The main entry point of the trading bot."""
-    try:
-        initial_cleanup()
-        log.info("="*50)
-        log.info("STARTING PROFESSIONAL TRADING BOT (vPRO)")
-        log.info(f"Strategy: {config.TIMEFRAME} EMA Crossover w/ ATR Filter")
-        log.info(f"Trailing SL: {'ENABLED' if config.USE_TRAILING_STOP else 'DISABLED'}")
-        log.info("="*50)
-        send_telegram_alert("✅ <b>GoldBot vPRO Started Successfully</b> ✅")
+    """The main entry point, now with a reconnection loop."""
+    while True: # NEW: Loop to allow for automatic reconnection
+        try:
+            log.info("="*50)
+            log.info("STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)")
+            log.info(f"Strategy: {config.TIMEFRAME} EMA Crossover w/ ATR Filter & Trend Reversal Exit")
+            log.info(f"Trailing SL: {'ENABLED' if config.USE_TRAILING_STOP else 'DISABLED'}")
+            log.info("="*50)
+            send_telegram_alert("✅ <b>GoldBot vPRO (Self-Healing) Started Successfully</b> ✅")
 
-        with TradeManager() as tm:
-            if tm.is_connected():
-                main_loop(tm)
-            else:
-                log.critical("Could not establish connection to MetaTrader 5. Shutting down.")
+            with TradeManager() as tm:
+                if tm.is_connected():
+                    main_loop(tm) # Enter the main logic loop
+                else:
+                    log.critical("Could not establish connection to MetaTrader 5 on startup.")
+            
+            log.warning("Main loop exited. Attempting to reconnect in 15 seconds...")
+            send_telegram_alert("⚠️ <b>Connection Lost.</b> Attempting to reconnect... ⚠️")
+            time.sleep(15)
 
-    except KeyboardInterrupt:
-        log.info("Bot shutdown requested by user.")
-        send_telegram_alert("⚪️ <b>Bot Shut Down Manually</b> ⚪️")
-    except Exception as e:
-        log.critical(f"A fatal error occurred on startup: {e}", exc_info=True)
-        error_details = traceback.format_exc()
-        send_telegram_alert(f"❌ <b>FATAL STARTUP ERROR</b> ❌\n\n<pre>{error_details[-1000:]}</pre>")
+        except KeyboardInterrupt:
+            log.info("Bot shutdown requested by user.")
+            send_telegram_alert("⚪️ <b>Bot Shut Down Manually</b> ⚪️")
+            break # Exit the reconnection loop
+        except Exception as e:
+            log.critical(f"A fatal error occurred: {e}", exc_info=True)
+            error_details = traceback.format_exc()
+            send_telegram_alert(f"❌ <b>FATAL ERROR</b> ❌\n\n<pre>{error_details[-1000:]}</pre>")
+            log.info("Restarting after fatal error in 60 seconds...")
+            time.sleep(60)
 
 if __name__ == "__main__":
     main()
