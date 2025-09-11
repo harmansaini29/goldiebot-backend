@@ -1,8 +1,8 @@
-# FILE: indicators.py
+# FILE: indicators.py (Self-Contained Version)
 # =============================================================================
 
 import pandas as pd
-import pandas_ta as ta
+import numpy as np
 import warnings
 import configs as config
 
@@ -14,33 +14,42 @@ except ImportError:
     log.addHandler(logging.StreamHandler())
 
 # =============================================================================
-# 1. VOLATILITY INDICATOR (ATR) - NEW
+# 1. VOLATILITY INDICATOR (ATR) - Rewritten with pandas
 # =============================================================================
 def calculate_atr(df: pd.DataFrame, period: int, point: float) -> float:
-    """Calculates the current ATR value in pips."""
+    """Calculates the current ATR value in pips using pandas."""
     if df is None or df.empty or len(df) < period:
         return 0.0
+
+    high_low = df['high'] - df['low']
+    high_close = np.abs(df['high'] - df['close'].shift())
+    low_close = np.abs(df['low'] - df['close'].shift())
     
-    atr_values = ta.atr(df['high'], df['low'], df['close'], length=period)
-    if atr_values is None or atr_values.empty:
+    tr = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
+    atr_values = tr.ewm(alpha=1/period, adjust=False).mean()
+
+    if atr_values.empty:
         return 0.0
         
-    # Convert the raw ATR price value into pips
     current_atr_in_price = atr_values.iloc[-1]
     current_atr_in_pips = current_atr_in_price / (config.POINTS_PER_PIP * point)
     return current_atr_in_pips
 
 # =============================================================================
-# 2. STACKED EMA ENTRY SIGNAL
+# 2. STACKED EMA ENTRY SIGNAL - Rewritten with pandas
 # =============================================================================
+def _calculate_ema(series, span):
+    """Helper function to calculate EMA using pandas ewm."""
+    return series.ewm(span=span, adjust=False).mean()
+
 def calculate_ema_crossover_signal(df: pd.DataFrame, fast: int, medium: int, slow: int, point: float) -> pd.DataFrame:
     if df is None or df.empty or len(df) < slow:
         return pd.DataFrame()
 
     df_out = df.copy()
-    df_out[f'ema_{fast}'] = ta.ema(df_out['close'], length=fast)
-    df_out[f'ema_{medium}'] = ta.ema(df_out['close'], length=medium)
-    df_out[f'ema_{slow}'] = ta.ema(df_out['close'], length=slow)
+    df_out[f'ema_{fast}'] = _calculate_ema(df_out['close'], fast)
+    df_out[f'ema_{medium}'] = _calculate_ema(df_out['close'], medium)
+    df_out[f'ema_{slow}'] = _calculate_ema(df_out['close'], slow)
     df_out.dropna(inplace=True)
     if df_out.empty: return pd.DataFrame()
 
@@ -64,7 +73,7 @@ def calculate_ema_crossover_signal(df: pd.DataFrame, fast: int, medium: int, slo
     return df_out
 
 # =============================================================================
-# 3. TREND LEVELS REVERSAL SIGNAL
+# 3. TREND LEVELS REVERSAL SIGNAL (Unchanged)
 # =============================================================================
 def calculate_trend_levels(df: pd.DataFrame, length: int) -> pd.DataFrame:
     if df is None or df.empty or len(df) < length: return pd.DataFrame()

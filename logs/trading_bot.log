@@ -18393,3 +18393,101 @@ ConnectionError: Failed to initialize MT5
 2025-09-11 11:45:05,920 - TradingBot - INFO - MT5 connection shut down.
 2025-09-11 11:45:05,921 - TradingBot - INFO - Bot shutdown requested by user.
 2025-09-11 11:45:07,132 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 12:40:59,929 - TradingBot - INFO - ==================================================
+2025-09-11 12:40:59,929 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO)
+2025-09-11 12:40:59,929 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter
+2025-09-11 12:40:59,929 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 12:40:59,929 - TradingBot - INFO - ==================================================
+2025-09-11 12:41:00,897 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 12:41:04,991 - TradingBot - CRITICAL - MT5 initialize() failed, error code = (-10005, 'IPC timeout')
+2025-09-11 12:41:07,647 - TradingBot - CRITICAL - An exception occurred during MT5 initialization: Failed to initialize MT5
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Documents\GitHub\goldiebot-backend\trade_manager.py", line 28, in __enter__
+    raise ConnectionError("Failed to initialize MT5")
+ConnectionError: Failed to initialize MT5
+2025-09-11 12:41:08,960 - TradingBot - CRITICAL - Could not establish connection to MetaTrader 5. Shutting down.
+2025-09-11 12:41:12,694 - TradingBot - INFO - ==================================================
+2025-09-11 12:41:12,694 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO)
+2025-09-11 12:41:12,694 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter
+2025-09-11 12:41:12,694 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 12:41:12,694 - TradingBot - INFO - ==================================================
+2025-09-11 12:41:13,616 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 12:41:13,632 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 12:41:13,632 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:41:14,960 - TradingBot - INFO - Strategy: Running main cycle...
+2025-09-11 12:41:14,960 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:41:16,007 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:41:17,194 - TradingBot - INFO - No open bot trades. Checking for new entry signal.
+2025-09-11 12:41:17,225 - TradingBot - INFO - Volatility Check: Current ATR = 60.50 pips, Required = 3.0 pips.
+2025-09-11 12:41:17,241 - TradingBot - INFO - Entry Signal Check: 'HOLD' | Trend Memory: 'BEARISH'
+2025-09-11 12:41:17,241 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:41:23,397 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:41:24,475 - TradingBot - INFO - Strategy: Running main cycle...
+2025-09-11 12:41:24,475 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:41:25,585 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:41:26,616 - TradingBot - INFO - No open bot trades. Checking for new entry signal.
+2025-09-11 12:41:26,616 - TradingBot - INFO - Volatility Check: Current ATR = 60.50 pips, Required = 3.0 pips.
+2025-09-11 12:41:26,632 - TradingBot - INFO - Entry Signal Check: 'HOLD' | Trend Memory: 'BEARISH'
+2025-09-11 12:41:26,632 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:41:32,694 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:41:33,819 - TradingBot - INFO - Strategy: Running main cycle...
+2025-09-11 12:41:33,819 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:25,501 - TradingBot - INFO - ==================================================
+2025-09-11 12:43:25,501 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO)
+2025-09-11 12:43:25,501 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter
+2025-09-11 12:43:25,501 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 12:43:25,501 - TradingBot - INFO - ==================================================
+2025-09-11 12:43:26,454 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 12:43:26,454 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 12:43:26,454 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:27,829 - TradingBot - INFO - Strategy: Running main cycle...
+2025-09-11 12:43:27,829 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:28,907 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:29,907 - TradingBot - INFO - No open bot trades. Checking for new entry signal.
+2025-09-11 12:43:29,923 - TradingBot - INFO - Volatility Check: Current ATR = 60.50 pips, Required = 3.0 pips.
+2025-09-11 12:43:29,923 - TradingBot - INFO - Entry Signal Check: 'HOLD' | Trend Memory: 'BEARISH'
+2025-09-11 12:43:29,923 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:36,048 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:37,142 - TradingBot - INFO - Strategy: Running main cycle...
+2025-09-11 12:43:37,157 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:38,235 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:39,298 - TradingBot - INFO - No open bot trades. Checking for new entry signal.
+2025-09-11 12:43:39,313 - TradingBot - INFO - Volatility Check: Current ATR = 60.50 pips, Required = 3.0 pips.
+2025-09-11 12:43:39,329 - TradingBot - INFO - Entry Signal Check: 'HOLD' | Trend Memory: 'BEARISH'
+2025-09-11 12:43:39,329 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:45,423 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:46,516 - TradingBot - INFO - Strategy: Running main cycle...
+2025-09-11 12:43:46,516 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:47,610 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:48,735 - TradingBot - INFO - No open bot trades. Checking for new entry signal.
+2025-09-11 12:43:48,735 - TradingBot - INFO - Volatility Check: Current ATR = 60.50 pips, Required = 3.0 pips.
+2025-09-11 12:43:48,751 - TradingBot - INFO - Entry Signal Check: 'HOLD' | Trend Memory: 'BEARISH'
+2025-09-11 12:43:48,751 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:54,845 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:55,876 - TradingBot - INFO - Strategy: Running main cycle...
+2025-09-11 12:43:55,876 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:56,985 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:43:58,094 - TradingBot - INFO - No open bot trades. Checking for new entry signal.
+2025-09-11 12:43:58,110 - TradingBot - INFO - Volatility Check: Current ATR = 60.50 pips, Required = 3.0 pips.
+2025-09-11 12:43:58,110 - TradingBot - INFO - Entry Signal Check: 'HOLD' | Trend Memory: 'BEARISH'
+2025-09-11 12:43:58,126 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:44:04,266 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:44:05,407 - TradingBot - INFO - Strategy: Running main cycle...
+2025-09-11 12:44:05,407 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:44:06,579 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:44:07,704 - TradingBot - INFO - No open bot trades. Checking for new entry signal.
+2025-09-11 12:44:07,720 - TradingBot - INFO - Volatility Check: Current ATR = 60.50 pips, Required = 3.0 pips.
+2025-09-11 12:44:07,720 - TradingBot - INFO - Entry Signal Check: 'HOLD' | Trend Memory: 'BEARISH'
+2025-09-11 12:44:07,720 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:44:13,860 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:44:14,896 - TradingBot - INFO - Strategy: Running main cycle...
+2025-09-11 12:44:14,896 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:44:16,028 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:44:17,149 - TradingBot - INFO - No open bot trades. Checking for new entry signal.
+2025-09-11 12:44:17,164 - TradingBot - INFO - Volatility Check: Current ATR = 60.50 pips, Required = 3.0 pips.
+2025-09-11 12:44:17,180 - TradingBot - INFO - Entry Signal Check: 'HOLD' | Trend Memory: 'BEARISH'
+2025-09-11 12:44:17,180 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:44:23,194 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:44:24,442 - TradingBot - INFO - Strategy: Running main cycle...
+2025-09-11 12:44:24,442 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.
+2025-09-11 12:44:26,191 - TradingBot - WARNING - positions_get() returned None. Possible connection issue.

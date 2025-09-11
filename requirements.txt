@@ -1,8 +1,8 @@
 MetaTrader5
 pandas
 numpy
-pandas-ta
 openpyxl
 python-dotenv
 requests
 pytz
+pywin32
