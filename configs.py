@@ -6,9 +6,6 @@
 # =============================================================================
 
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # =============================================================================
 # SECTION 1: CORE TRADING PARAMETERS
@@ -51,7 +48,7 @@ TRAILING_STOP_PIPS = 35
 CHECK_MARKET_HOURS = True
 EXCEL_REPORT_FILENAME = "trading_report.xlsx"
 REVERSAL_DELAY_SECONDS = 2
-MAIN_LOOP_SLEEP_SECONDS = 5 # Main loop runs every 5 seconds
+MAIN_LOOP_SLEEP_SECONDS = 3 # Main loop runs every 5 seconds
 
 # =============================================================================
 # SECTION 4: NOTIFICATIONS

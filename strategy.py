@@ -1,10 +1,4 @@
-﻿# FILE: strategy.py
-# =============================================================================
-#
-#   STRATEGY ENGINE (REFINED & VERIFIED)
-#   - Generates entry and exit signals based on indicator data.
-#   - Decoupled from state management for superior logic.
-#
+﻿# FILE: strategy.py (Corrected to work with the improved TradeManager)
 # =============================================================================
 
 import MetaTrader5 as mt5
@@ -18,20 +12,22 @@ from notifier import send_telegram_alert
 class TradingStrategy:
     def __init__(self, tm: TradeManager):
         self.tm = tm
-        self.symbol_info = self.tm.get_symbol_info(config.TRADING_PAIR)
+        # --- THIS IS THE FIX ---
+        # Access the property directly instead of calling a method
+        self.symbol_info = self.tm.symbol_info
+        # ---------------------
         if not self.symbol_info:
-            raise ValueError("Strategy could not initialize: Failed to get symbol info.")
+            raise ValueError("Strategy could not initialize: Failed to get symbol info from TradeManager.")
 
     def get_entry_signal(self) -> str:
         """
         Checks for a new entry signal (BUY, SELL, or HOLD).
-        This is the primary logic for initiating a new trade.
         """
         # --- ATR Volatility Filter ---
         if config.USE_ATR_FILTER:
             ohlcv_for_atr = self.tm.fetch_ohlcv(config.TIMEFRAME, limit=config.ATR_PERIOD + 5)
             if ohlcv_for_atr.empty:
-                return 'HOLD' # Not enough data
+                return 'HOLD'
             
             current_atr = ind.calculate_atr(ohlcv_for_atr, config.ATR_PERIOD, self.symbol_info.point)
             log.info(f"Volatility Check: Current ATR = {current_atr:.2f} pips, Required = {config.ATR_THRESHOLD_PIPS} pips.")
@@ -55,7 +51,6 @@ class TradingStrategy:
     def get_exit_signal(self) -> str:
         """
         Checks for an exit signal based on the Trend Levels indicator.
-        This is used to close an existing trade.
         """
         df_exit = ind.calculate_trend_levels(
             self.tm.fetch_ohlcv(config.TIMEFRAME, limit=config.TREND_LEVELS_LENGTH + 5),
@@ -74,29 +69,26 @@ class TradingStrategy:
         if price is None:
             return False
 
-        # Calculate SL and TP based on configuration
         sl_distance = config.STOP_LOSS_PIPS * config.POINTS_PER_PIP * self.symbol_info.point
         tp_distance = config.TAKE_PROFIT_PIPS * config.POINTS_PER_PIP * self.symbol_info.point
         
         order_type = mt5.ORDER_TYPE_BUY if signal == 'BUY' else mt5.ORDER_TYPE_SELL
         stop_loss = price - sl_distance if signal == 'BUY' else price + sl_distance
-        take_profit = price + tp_distance if signal == 'BUY' else price - tp_distance
+        take_profit = price + tp_distance if signal == 'BUY' else price - take_profit
 
-        # Open the trade via the trade manager
         result = self.tm.open_trade(
-            order_type=order_type, symbol=config.TRADING_PAIR, volume=config.LOT_SIZE,
+            order_type=order_type, symbol=self.tm.trading_pair, volume=config.LOT_SIZE,
             price=price, sl=stop_loss, tp=take_profit, comment="GoldBot vPRO"
         )
         
         if result and result.order > 0:
             log.info(f"Trade executed successfully. Ticket: #{result.order}")
-            # Save the new trade to our state file immediately
             sm.save_trade_state(result.order, {
                 'entry_price': price, 'signal': signal, 'entry_type': 'EMA_Crossover'
             })
             send_telegram_alert(
                 f"🚀 <b>NEW TRADE OPENED ({signal})</b> 🚀\n\n"
-                f"<b>Symbol:</b> {config.TRADING_PAIR}\n<b>Price:</b> ${price:,.2f}\n"
+                f"<b>Symbol:</b> {self.tm.trading_pair}\n<b>Price:</b> ${price:,.2f}\n"
                 f"<b>Ticket:</b> #{result.order}"
             )
             return True

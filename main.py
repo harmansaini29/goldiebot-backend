@@ -1,4 +1,4 @@
-﻿# FILE: main.py (Fully Corrected)
+﻿# FILE: main.py (Final Corrected Version)
 # =============================================================================
 import time
 from datetime import datetime
@@ -6,19 +6,13 @@ import traceback
 import MetaTrader5 as mt5
 from typing import Optional
 
-# --- Core Application Imports ---
 from logger import log, EXCEL_REPORTER
 import configs as config
 from trade_manager import TradeManager
 import state_manager as sm
 from notifier import send_telegram_alert
-import risk_manager as rm
 from strategy import TradingStrategy
-
-def get_timeframe_seconds(tf_string: str) -> int:
-    unit = tf_string[-1].lower()
-    value = int(tf_string[:-1])
-    return value * 60 if unit == 'm' else value * 3600
+from risk_manager import manage_trailing_stop_loss
 
 def is_market_open() -> bool:
     return datetime.utcnow().weekday() < 5
@@ -26,8 +20,7 @@ def is_market_open() -> bool:
 def sync_positions_with_state(tm: TradeManager) -> Optional[bool]:
     try:
         open_positions = tm.get_open_positions()
-        if open_positions is None: 
-            return None
+        if open_positions is None: return None
 
         managed_tickets = sm.get_all_managed_trades()
         open_tickets = {p.ticket for p in open_positions}
@@ -39,7 +32,6 @@ def sync_positions_with_state(tm: TradeManager) -> Optional[bool]:
         for pos in open_positions:
             if pos.ticket not in managed_tickets:
                 adopt_manual_trade(tm, pos)
-        
         return True
     except Exception as e:
         log.error(f"Error during position sync: {e}", exc_info=True)
@@ -48,10 +40,15 @@ def sync_positions_with_state(tm: TradeManager) -> Optional[bool]:
 def adopt_manual_trade(tm: TradeManager, position):
     log.info(f"ADOPTING MANUAL TRADE: Found unmanaged trade #{position.ticket}.")
     trade_type = 'BUY' if position.type == mt5.ORDER_TYPE_BUY else 'SELL'
-    
+
     if position.sl == 0.0 or position.tp == 0.0:
         log.info(f"Manual trade #{position.ticket} is missing SL/TP. Setting defaults.")
-        symbol_info = tm.get_symbol_info(config.TRADING_PAIR)
+        
+        # --- THIS IS THE FIX ---
+        # Access the property from the TradeManager instead of calling the old method
+        symbol_info = tm.symbol_info
+        # ---------------------
+
         if not symbol_info:
             log.error(f"Cannot set SL/TP for #{position.ticket}: Could not get symbol info.")
             return
@@ -61,7 +58,7 @@ def adopt_manual_trade(tm: TradeManager, position):
         stop_loss = price - sl_distance if trade_type == 'BUY' else price + sl_distance
         take_profit = price + tp_distance if trade_type == 'BUY' else price - sl_distance
         tm.modify_sl_tp(position.ticket, new_sl=stop_loss, new_tp=take_profit)
-    
+
     sm.save_trade_state(position.ticket, {'entry_price': position.price_open, 'signal': trade_type, 'entry_type': 'Manual/Adopted'})
     send_telegram_alert(f"🤖 <b>ADOPTED MANUAL TRADE</b> 🤖\n\nNow managing ticket #{position.ticket}.")
 
@@ -95,7 +92,7 @@ def main_loop(tm: TradeManager):
     strategy = TradingStrategy(tm)
     last_candle_time = None
     connection_lost_counter = 0
-    
+
     while True:
         try:
             if config.CHECK_MARKET_HOURS and not is_market_open():
@@ -107,8 +104,8 @@ def main_loop(tm: TradeManager):
             if sync_result is None:
                 connection_lost_counter += 1
                 log.warning(f"Connection to MT5 lost. Retrying... (Attempt {connection_lost_counter})")
-                if connection_lost_counter > (30 / config.MAIN_LOOP_SLEEP_SECONDS):
-                    log.critical("Connection lost for over 30 seconds. Forcing reconnect.")
+                if connection_lost_counter > 5:
+                    log.critical("Connection lost for over threshold. Forcing reconnect.")
                     return
                 time.sleep(config.MAIN_LOOP_SLEEP_SECONDS)
                 continue
@@ -120,8 +117,9 @@ def main_loop(tm: TradeManager):
                 continue
 
             managed_positions = [p for p in open_positions if p.ticket in sm.get_all_managed_trades()]
+            
             if managed_positions:
-                rm.manage_trailing_stop_loss(tm, managed_positions)
+                manage_trailing_stop_loss(tm, managed_positions)
 
             latest_candle = tm.fetch_ohlcv(config.TIMEFRAME, limit=1)
             if latest_candle.empty:
@@ -140,9 +138,11 @@ def main_loop(tm: TradeManager):
                         if (trade_type == 'BUY' and exit_signal == 'SELL') or (trade_type == 'SELL' and exit_signal == 'BUY'):
                             log.warning(f"EXIT SIGNAL DETECTED for {trade_type} #{pos.ticket}. Closing trade.")
                             tm.close_trade(pos.ticket)
-                            time.sleep(config.REVERSAL_DELAY_SECONDS)
 
-                bot_positions = [p for p in open_positions if p.magic == config.MAGIC_NUMBER]
+                open_positions = tm.get_open_positions()
+                if open_positions is None: continue
+                
+                bot_positions = [p for p in open_positions if p.magic == config.MAGIC_NUMBER and p.ticket in sm.get_all_managed_trades()]
                 if not bot_positions:
                     entry_signal = strategy.get_entry_signal()
                     if entry_signal in ['BUY', 'SELL']:
@@ -174,7 +174,7 @@ def main():
                     main_loop(tm)
                 else:
                     log.critical("Could not establish connection to MetaTrader 5 on startup.")
-            
+
             log.warning("Main loop exited. Attempting to reconnect in 15 seconds...")
             send_telegram_alert("⚠️ <b>Connection Lost.</b> Attempting to reconnect... ⚠️")
             time.sleep(15)
