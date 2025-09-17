@@ -1,9 +1,3 @@
 {
-    "managed_trades": {
-        "5895858": {
-            "entry_price": 3635.36,
-            "signal": "BUY",
-            "entry_type": "EMA_Crossover"
-        }
-    }
+    "managed_trades": {}
 }

@@ -20966,3 +20966,531 @@ AttributeError: 'TradeManager' object has no attribute 'get_symbol_info'
 2025-09-11 20:01:48,057 - TradingBot - INFO - Attempt 1: Successfully fetched complete history for #5895948.
 2025-09-11 20:01:50,628 - TradingBot - INFO - Telegram alert sent successfully.
 2025-09-11 20:01:50,640 - TradingBot - INFO - Cleared state for closed ticket #5895948.
+2025-09-11 20:06:23,602 - TradingBot - INFO - ==================================================
+2025-09-11 20:06:23,602 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 20:06:23,602 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 20:06:23,602 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 20:06:23,602 - TradingBot - INFO - ==================================================
+2025-09-11 20:06:24,540 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 20:06:30,212 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 20:06:30,212 - TradingBot - INFO - Successfully prepared symbol 'XAUUSD.d'.
+2025-09-11 20:06:30,212 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 20:06:30,212 - TradingBot - WARNING - Managed trade #5895858 was closed outside the bot. Processing closure.
+2025-09-11 20:06:32,556 - TradingBot - INFO - Processing closed trade for ticket #5895858. Fetching history...
+2025-09-11 20:06:32,556 - TradingBot - WARNING - Attempt 1: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:06:35,961 - TradingBot - WARNING - Attempt 2: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:06:39,274 - TradingBot - WARNING - Attempt 3: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:06:42,493 - TradingBot - WARNING - Attempt 4: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:06:45,790 - TradingBot - WARNING - Attempt 5: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:06:49,009 - TradingBot - ERROR - Failed to retrieve complete history for #5895858. State not cleared.
+2025-09-11 20:06:50,258 - TradingBot - INFO - New 30m candle detected at 2025-09-11 17:30:00. Running strategy checks.
+2025-09-11 20:06:50,258 - TradingBot - INFO - Volatility Check: Current ATR = 100.86 pips, Required = 3.0 pips.
+2025-09-11 20:06:50,274 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-11 20:06:53,274 - TradingBot - WARNING - Managed trade #5895858 was closed outside the bot. Processing closure.
+2025-09-11 20:06:55,133 - TradingBot - INFO - Processing closed trade for ticket #5895858. Fetching history...
+2025-09-11 20:06:55,149 - TradingBot - WARNING - Attempt 1: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:06:58,633 - TradingBot - WARNING - Attempt 2: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:07:01,946 - TradingBot - WARNING - Attempt 3: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:07:05,524 - TradingBot - WARNING - Attempt 4: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:07:08,883 - TradingBot - WARNING - Attempt 5: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:07:12,180 - TradingBot - ERROR - Failed to retrieve complete history for #5895858. State not cleared.
+2025-09-11 20:07:16,524 - TradingBot - WARNING - Managed trade #5895858 was closed outside the bot. Processing closure.
+2025-09-11 20:07:18,227 - TradingBot - INFO - Processing closed trade for ticket #5895858. Fetching history...
+2025-09-11 20:07:18,227 - TradingBot - WARNING - Attempt 1: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:07:21,399 - TradingBot - WARNING - Attempt 2: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:07:24,712 - TradingBot - WARNING - Attempt 3: History for #5895858 is incomplete. Retrying...
+2025-09-11 20:07:51,352 - TradingBot - INFO - ==================================================
+2025-09-11 20:07:51,352 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-11 20:07:51,352 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-11 20:07:51,352 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-11 20:07:51,352 - TradingBot - INFO - ==================================================
+2025-09-11 20:07:52,290 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 20:07:57,805 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-11 20:07:57,805 - TradingBot - INFO - Successfully prepared symbol 'XAUUSD.d'.
+2025-09-11 20:07:57,805 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-11 20:07:57,821 - TradingBot - INFO - New 30m candle detected at 2025-09-11 17:30:00. Running strategy checks.
+2025-09-11 20:07:57,821 - TradingBot - INFO - Volatility Check: Current ATR = 99.79 pips, Required = 3.0 pips.
+2025-09-11 20:07:57,837 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-11 20:08:39,962 - TradingBot - INFO - ADOPTING MANUAL TRADE: Found unmanaged trade #5896002.
+2025-09-11 20:08:39,962 - TradingBot - INFO - Manual trade #5896002 is missing SL/TP. Setting defaults.
+2025-09-11 20:08:41,118 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 20:09:50,337 - TradingBot - WARNING - Managed trade #5896002 was closed outside the bot. Processing closure.
+2025-09-11 20:09:52,430 - TradingBot - INFO - Processing closed trade for ticket #5896002. Fetching history...
+2025-09-11 20:09:52,430 - TradingBot - INFO - Attempt 1: Successfully fetched complete history for #5896002.
+2025-09-11 20:09:54,727 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-11 20:09:54,805 - TradingBot - INFO - Cleared state for closed ticket #5896002.
+2025-09-11 20:30:01,368 - TradingBot - INFO - New 30m candle detected at 2025-09-11 18:00:00. Running strategy checks.
+2025-09-11 20:30:01,368 - TradingBot - INFO - Volatility Check: Current ATR = 100.34 pips, Required = 3.0 pips.
+2025-09-11 20:30:01,384 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-11 21:00:00,644 - TradingBot - INFO - New 30m candle detected at 2025-09-11 18:30:00. Running strategy checks.
+2025-09-11 21:00:00,644 - TradingBot - INFO - Volatility Check: Current ATR = 86.50 pips, Required = 3.0 pips.
+2025-09-11 21:00:00,660 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-11 21:30:03,228 - TradingBot - INFO - New 30m candle detected at 2025-09-11 19:00:00. Running strategy checks.
+2025-09-11 21:30:03,243 - TradingBot - INFO - Volatility Check: Current ATR = 92.14 pips, Required = 3.0 pips.
+2025-09-11 21:30:03,257 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-11 22:00:02,726 - TradingBot - INFO - New 30m candle detected at 2025-09-11 19:30:00. Running strategy checks.
+2025-09-11 22:00:02,746 - TradingBot - INFO - Volatility Check: Current ATR = 84.11 pips, Required = 3.0 pips.
+2025-09-11 22:00:02,758 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-11 22:30:02,148 - TradingBot - INFO - New 30m candle detected at 2025-09-11 20:00:00. Running strategy checks.
+2025-09-11 22:30:02,164 - TradingBot - INFO - Volatility Check: Current ATR = 78.00 pips, Required = 3.0 pips.
+2025-09-11 22:30:02,164 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-11 23:00:01,570 - TradingBot - INFO - New 30m candle detected at 2025-09-11 20:30:00. Running strategy checks.
+2025-09-11 23:00:01,570 - TradingBot - INFO - Volatility Check: Current ATR = 76.67 pips, Required = 3.0 pips.
+2025-09-11 23:00:01,611 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-11 23:30:03,789 - TradingBot - INFO - New 30m candle detected at 2025-09-11 21:00:00. Running strategy checks.
+2025-09-11 23:30:03,804 - TradingBot - INFO - Volatility Check: Current ATR = 90.29 pips, Required = 3.0 pips.
+2025-09-11 23:30:03,804 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 00:00:03,190 - TradingBot - INFO - New 30m candle detected at 2025-09-11 21:30:00. Running strategy checks.
+2025-09-12 00:00:03,190 - TradingBot - INFO - Volatility Check: Current ATR = 71.91 pips, Required = 3.0 pips.
+2025-09-12 00:00:03,264 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 00:30:02,913 - TradingBot - INFO - New 30m candle detected at 2025-09-11 22:00:00. Running strategy checks.
+2025-09-12 00:30:02,929 - TradingBot - INFO - Volatility Check: Current ATR = 64.56 pips, Required = 3.0 pips.
+2025-09-12 00:30:02,944 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 01:00:02,257 - TradingBot - INFO - New 30m candle detected at 2025-09-11 22:30:00. Running strategy checks.
+2025-09-12 01:00:02,272 - TradingBot - INFO - Volatility Check: Current ATR = 65.45 pips, Required = 3.0 pips.
+2025-09-12 01:00:02,290 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 01:30:01,569 - TradingBot - INFO - New 30m candle detected at 2025-09-11 23:00:00. Running strategy checks.
+2025-09-12 01:30:01,569 - TradingBot - INFO - Volatility Check: Current ATR = 56.87 pips, Required = 3.0 pips.
+2025-09-12 01:30:01,585 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 02:00:00,960 - TradingBot - INFO - New 30m candle detected at 2025-09-11 23:30:00. Running strategy checks.
+2025-09-12 02:00:00,960 - TradingBot - INFO - Volatility Check: Current ATR = 63.69 pips, Required = 3.0 pips.
+2025-09-12 02:00:00,976 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 03:31:01,771 - TradingBot - INFO - New 30m candle detected at 2025-09-12 01:00:00. Running strategy checks.
+2025-09-12 03:31:01,771 - TradingBot - INFO - Volatility Check: Current ATR = 70.15 pips, Required = 3.0 pips.
+2025-09-12 03:31:01,787 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 04:00:01,226 - TradingBot - INFO - New 30m candle detected at 2025-09-12 01:30:00. Running strategy checks.
+2025-09-12 04:00:01,241 - TradingBot - INFO - Volatility Check: Current ATR = 120.67 pips, Required = 3.0 pips.
+2025-09-12 04:00:01,241 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 04:30:00,741 - TradingBot - INFO - New 30m candle detected at 2025-09-12 02:00:00. Running strategy checks.
+2025-09-12 04:30:00,757 - TradingBot - INFO - Volatility Check: Current ATR = 77.89 pips, Required = 3.0 pips.
+2025-09-12 04:30:00,757 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 05:00:02,975 - TradingBot - INFO - New 30m candle detected at 2025-09-12 02:30:00. Running strategy checks.
+2025-09-12 05:00:02,975 - TradingBot - INFO - Volatility Check: Current ATR = 70.55 pips, Required = 3.0 pips.
+2025-09-12 05:00:02,991 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 05:30:02,241 - TradingBot - INFO - New 30m candle detected at 2025-09-12 03:00:00. Running strategy checks.
+2025-09-12 05:30:02,269 - TradingBot - INFO - Volatility Check: Current ATR = 60.36 pips, Required = 3.0 pips.
+2025-09-12 05:30:02,281 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 06:00:01,622 - TradingBot - INFO - New 30m candle detected at 2025-09-12 03:30:00. Running strategy checks.
+2025-09-12 06:00:01,632 - TradingBot - INFO - Volatility Check: Current ATR = 50.47 pips, Required = 3.0 pips.
+2025-09-12 06:00:01,649 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 06:30:00,913 - TradingBot - INFO - New 30m candle detected at 2025-09-12 04:00:00. Running strategy checks.
+2025-09-12 06:30:00,913 - TradingBot - INFO - Volatility Check: Current ATR = 54.16 pips, Required = 3.0 pips.
+2025-09-12 06:30:00,931 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 07:00:00,648 - TradingBot - INFO - New 30m candle detected at 2025-09-12 04:30:00. Running strategy checks.
+2025-09-12 07:00:00,648 - TradingBot - INFO - Volatility Check: Current ATR = 48.41 pips, Required = 3.0 pips.
+2025-09-12 07:00:00,663 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 07:30:00,335 - TradingBot - INFO - New 30m candle detected at 2025-09-12 05:00:00. Running strategy checks.
+2025-09-12 07:30:00,335 - TradingBot - INFO - Volatility Check: Current ATR = 53.30 pips, Required = 3.0 pips.
+2025-09-12 07:30:00,351 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 08:00:02,477 - TradingBot - INFO - New 30m candle detected at 2025-09-12 05:30:00. Running strategy checks.
+2025-09-12 08:00:02,491 - TradingBot - INFO - Volatility Check: Current ATR = 44.69 pips, Required = 3.0 pips.
+2025-09-12 08:00:02,491 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 08:30:01,617 - TradingBot - INFO - New 30m candle detected at 2025-09-12 06:00:00. Running strategy checks.
+2025-09-12 08:30:01,617 - TradingBot - INFO - Volatility Check: Current ATR = 42.75 pips, Required = 3.0 pips.
+2025-09-12 08:30:01,617 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 09:00:01,226 - TradingBot - INFO - New 30m candle detected at 2025-09-12 06:30:00. Running strategy checks.
+2025-09-12 09:00:01,241 - TradingBot - INFO - Volatility Check: Current ATR = 40.00 pips, Required = 3.0 pips.
+2025-09-12 09:00:01,241 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 09:30:01,100 - TradingBot - INFO - New 30m candle detected at 2025-09-12 07:00:00. Running strategy checks.
+2025-09-12 09:30:01,116 - TradingBot - INFO - Volatility Check: Current ATR = 43.55 pips, Required = 3.0 pips.
+2025-09-12 09:30:01,116 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 10:00:00,648 - TradingBot - INFO - New 30m candle detected at 2025-09-12 07:30:00. Running strategy checks.
+2025-09-12 10:00:00,663 - TradingBot - INFO - Volatility Check: Current ATR = 37.90 pips, Required = 3.0 pips.
+2025-09-12 10:00:00,663 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 10:30:06,616 - TradingBot - INFO - New 30m candle detected at 2025-09-12 08:00:00. Running strategy checks.
+2025-09-12 10:30:06,632 - TradingBot - INFO - Volatility Check: Current ATR = 40.87 pips, Required = 3.0 pips.
+2025-09-12 10:30:06,648 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 11:00:00,648 - TradingBot - INFO - New 30m candle detected at 2025-09-12 08:30:00. Running strategy checks.
+2025-09-12 11:00:00,663 - TradingBot - INFO - Volatility Check: Current ATR = 36.18 pips, Required = 3.0 pips.
+2025-09-12 11:00:00,663 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 11:30:03,069 - TradingBot - INFO - New 30m candle detected at 2025-09-12 09:00:00. Running strategy checks.
+2025-09-12 11:30:03,085 - TradingBot - INFO - Volatility Check: Current ATR = 35.64 pips, Required = 3.0 pips.
+2025-09-12 11:30:03,102 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 12:00:03,163 - TradingBot - INFO - New 30m candle detected at 2025-09-12 09:30:00. Running strategy checks.
+2025-09-12 12:00:03,163 - TradingBot - INFO - Volatility Check: Current ATR = 35.46 pips, Required = 3.0 pips.
+2025-09-12 12:00:03,179 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 12:30:02,944 - TradingBot - INFO - New 30m candle detected at 2025-09-12 10:00:00. Running strategy checks.
+2025-09-12 12:30:02,960 - TradingBot - INFO - Volatility Check: Current ATR = 38.50 pips, Required = 3.0 pips.
+2025-09-12 12:30:02,960 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 13:00:01,060 - TradingBot - INFO - New 30m candle detected at 2025-09-12 10:30:00. Running strategy checks.
+2025-09-12 13:00:01,060 - TradingBot - INFO - Volatility Check: Current ATR = 39.26 pips, Required = 3.0 pips.
+2025-09-12 13:00:01,075 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 13:30:01,257 - TradingBot - INFO - New 30m candle detected at 2025-09-12 11:00:00. Running strategy checks.
+2025-09-12 13:30:01,273 - TradingBot - INFO - Volatility Check: Current ATR = 36.97 pips, Required = 3.0 pips.
+2025-09-12 13:30:01,288 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 14:00:06,772 - TradingBot - INFO - New 30m candle detected at 2025-09-12 11:30:00. Running strategy checks.
+2025-09-12 14:00:06,772 - TradingBot - INFO - Volatility Check: Current ATR = 43.06 pips, Required = 3.0 pips.
+2025-09-12 14:00:06,788 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 14:30:00,460 - TradingBot - INFO - New 30m candle detected at 2025-09-12 12:00:00. Running strategy checks.
+2025-09-12 14:30:00,460 - TradingBot - INFO - Volatility Check: Current ATR = 41.38 pips, Required = 3.0 pips.
+2025-09-12 14:30:00,475 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 15:00:00,413 - TradingBot - INFO - New 30m candle detected at 2025-09-12 12:30:00. Running strategy checks.
+2025-09-12 15:00:00,413 - TradingBot - INFO - Volatility Check: Current ATR = 55.22 pips, Required = 3.0 pips.
+2025-09-12 15:00:00,429 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 15:30:00,616 - TradingBot - INFO - New 30m candle detected at 2025-09-12 13:00:00. Running strategy checks.
+2025-09-12 15:30:00,616 - TradingBot - INFO - Volatility Check: Current ATR = 54.04 pips, Required = 3.0 pips.
+2025-09-12 15:30:00,632 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 16:00:00,804 - TradingBot - INFO - New 30m candle detected at 2025-09-12 13:30:00. Running strategy checks.
+2025-09-12 16:00:00,820 - TradingBot - INFO - Volatility Check: Current ATR = 47.64 pips, Required = 3.0 pips.
+2025-09-12 16:00:00,820 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'BUY'.
+2025-09-12 16:00:00,820 - TradingBot - INFO - >>>>>>> Valid BUY signal detected. Executing trade. <<<<<<<
+2025-09-12 16:00:01,054 - TradingBot - INFO - Trade executed successfully: ticket=#5906550, price=3650.95
+2025-09-12 16:00:01,054 - TradingBot - INFO - Trade executed successfully. Ticket: #5906550
+2025-09-12 16:00:02,306 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-12 16:30:00,931 - TradingBot - INFO - New 30m candle detected at 2025-09-12 14:00:00. Running strategy checks.
+2025-09-12 16:30:00,976 - TradingBot - INFO - Exit Signal Check: Trend Reversal signal is 'HOLD'.
+2025-09-12 16:30:00,976 - TradingBot - INFO - A bot-managed trade is already open. Skipping new entry check.
+2025-09-12 17:00:01,134 - TradingBot - INFO - New 30m candle detected at 2025-09-12 14:30:00. Running strategy checks.
+2025-09-12 17:00:01,149 - TradingBot - INFO - Exit Signal Check: Trend Reversal signal is 'HOLD'.
+2025-09-12 17:00:01,149 - TradingBot - INFO - A bot-managed trade is already open. Skipping new entry check.
+2025-09-12 17:30:01,775 - TradingBot - INFO - New 30m candle detected at 2025-09-12 15:00:00. Running strategy checks.
+2025-09-12 17:30:01,775 - TradingBot - INFO - Exit Signal Check: Trend Reversal signal is 'HOLD'.
+2025-09-12 17:30:01,775 - TradingBot - INFO - A bot-managed trade is already open. Skipping new entry check.
+2025-09-12 17:51:20,727 - TradingBot - WARNING - Managed trade #5906550 was closed outside the bot. Processing closure.
+2025-09-12 17:51:22,540 - TradingBot - INFO - Processing closed trade for ticket #5906550. Fetching history...
+2025-09-12 17:51:22,540 - TradingBot - INFO - Attempt 1: Successfully fetched complete history for #5906550.
+2025-09-12 17:51:25,149 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-12 17:51:25,165 - TradingBot - INFO - Cleared state for closed ticket #5906550.
+2025-09-12 18:00:02,948 - TradingBot - INFO - New 30m candle detected at 2025-09-12 15:30:00. Running strategy checks.
+2025-09-12 18:00:02,961 - TradingBot - INFO - Volatility Check: Current ATR = 42.70 pips, Required = 3.0 pips.
+2025-09-12 18:00:02,977 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 18:30:02,212 - TradingBot - INFO - New 30m candle detected at 2025-09-12 16:00:00. Running strategy checks.
+2025-09-12 18:30:02,227 - TradingBot - INFO - Volatility Check: Current ATR = 45.66 pips, Required = 3.0 pips.
+2025-09-12 18:30:02,243 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 19:00:02,196 - TradingBot - INFO - New 30m candle detected at 2025-09-12 16:30:00. Running strategy checks.
+2025-09-12 19:00:02,212 - TradingBot - INFO - Volatility Check: Current ATR = 44.83 pips, Required = 3.0 pips.
+2025-09-12 19:00:02,227 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 19:30:02,415 - TradingBot - INFO - New 30m candle detected at 2025-09-12 17:00:00. Running strategy checks.
+2025-09-12 19:30:02,430 - TradingBot - INFO - Volatility Check: Current ATR = 48.60 pips, Required = 3.0 pips.
+2025-09-12 19:30:02,430 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 20:00:02,712 - TradingBot - INFO - New 30m candle detected at 2025-09-12 17:30:00. Running strategy checks.
+2025-09-12 20:00:02,712 - TradingBot - INFO - Volatility Check: Current ATR = 48.54 pips, Required = 3.0 pips.
+2025-09-12 20:00:02,744 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 20:30:01,243 - TradingBot - INFO - New 30m candle detected at 2025-09-12 18:00:00. Running strategy checks.
+2025-09-12 20:30:01,243 - TradingBot - INFO - Volatility Check: Current ATR = 50.95 pips, Required = 3.0 pips.
+2025-09-12 20:30:01,259 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 21:00:00,852 - TradingBot - INFO - New 30m candle detected at 2025-09-12 18:30:00. Running strategy checks.
+2025-09-12 21:00:00,852 - TradingBot - INFO - Volatility Check: Current ATR = 50.05 pips, Required = 3.0 pips.
+2025-09-12 21:00:00,868 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 21:30:03,227 - TradingBot - INFO - New 30m candle detected at 2025-09-12 19:00:00. Running strategy checks.
+2025-09-12 21:30:03,243 - TradingBot - INFO - Volatility Check: Current ATR = 49.68 pips, Required = 3.0 pips.
+2025-09-12 21:30:03,262 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 22:00:02,509 - TradingBot - INFO - New 30m candle detected at 2025-09-12 19:30:00. Running strategy checks.
+2025-09-12 22:00:02,524 - TradingBot - INFO - Volatility Check: Current ATR = 50.18 pips, Required = 3.0 pips.
+2025-09-12 22:00:02,556 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-12 22:30:02,462 - TradingBot - INFO - New 30m candle detected at 2025-09-12 20:00:00. Running strategy checks.
+2025-09-12 22:30:02,477 - TradingBot - INFO - Volatility Check: Current ATR = 58.70 pips, Required = 3.0 pips.
+2025-09-12 22:30:02,493 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'BUY'.
+2025-09-12 22:30:02,493 - TradingBot - INFO - >>>>>>> Valid BUY signal detected. Executing trade. <<<<<<<
+2025-09-12 22:30:02,711 - TradingBot - INFO - Trade executed successfully: ticket=#5912514, price=3649.56
+2025-09-12 22:30:02,728 - TradingBot - INFO - Trade executed successfully. Ticket: #5912514
+2025-09-12 22:30:04,368 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-12 23:00:00,929 - TradingBot - INFO - New 30m candle detected at 2025-09-12 20:30:00. Running strategy checks.
+2025-09-12 23:00:00,929 - TradingBot - INFO - Exit Signal Check: Trend Reversal signal is 'HOLD'.
+2025-09-12 23:00:00,929 - TradingBot - INFO - A bot-managed trade is already open. Skipping new entry check.
+2025-09-12 23:30:00,991 - TradingBot - INFO - New 30m candle detected at 2025-09-12 21:00:00. Running strategy checks.
+2025-09-12 23:30:00,991 - TradingBot - INFO - Exit Signal Check: Trend Reversal signal is 'HOLD'.
+2025-09-12 23:30:01,007 - TradingBot - INFO - A bot-managed trade is already open. Skipping new entry check.
+2025-09-13 00:00:00,507 - TradingBot - INFO - New 30m candle detected at 2025-09-12 21:30:00. Running strategy checks.
+2025-09-13 00:00:00,522 - TradingBot - INFO - Exit Signal Check: Trend Reversal signal is 'HOLD'.
+2025-09-13 00:00:00,522 - TradingBot - INFO - A bot-managed trade is already open. Skipping new entry check.
+2025-09-13 00:30:01,053 - TradingBot - INFO - New 30m candle detected at 2025-09-12 22:00:00. Running strategy checks.
+2025-09-13 00:30:01,069 - TradingBot - INFO - Exit Signal Check: Trend Reversal signal is 'HOLD'.
+2025-09-13 00:30:01,084 - TradingBot - INFO - A bot-managed trade is already open. Skipping new entry check.
+2025-09-13 01:00:01,350 - TradingBot - INFO - New 30m candle detected at 2025-09-12 22:30:00. Running strategy checks.
+2025-09-13 01:00:01,366 - TradingBot - INFO - Exit Signal Check: Trend Reversal signal is 'HOLD'.
+2025-09-13 01:00:01,366 - TradingBot - INFO - A bot-managed trade is already open. Skipping new entry check.
+2025-09-13 01:30:01,616 - TradingBot - INFO - New 30m candle detected at 2025-09-12 23:00:00. Running strategy checks.
+2025-09-13 01:30:01,632 - TradingBot - INFO - Exit Signal Check: Trend Reversal signal is 'HOLD'.
+2025-09-13 01:30:01,632 - TradingBot - INFO - A bot-managed trade is already open. Skipping new entry check.
+2025-09-13 01:38:45,210 - TradingBot - WARNING - Managed trade #5912514 was closed outside the bot. Processing closure.
+2025-09-13 01:38:46,835 - TradingBot - INFO - Processing closed trade for ticket #5912514. Fetching history...
+2025-09-13 01:38:46,835 - TradingBot - INFO - Attempt 1: Successfully fetched complete history for #5912514.
+2025-09-13 01:38:48,928 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-13 01:38:48,944 - TradingBot - INFO - Cleared state for closed ticket #5912514.
+2025-09-13 02:00:01,976 - TradingBot - INFO - New 30m candle detected at 2025-09-12 23:30:00. Running strategy checks.
+2025-09-13 02:00:01,976 - TradingBot - INFO - Volatility Check: Current ATR = 33.40 pips, Required = 3.0 pips.
+2025-09-13 02:00:02,007 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-13 05:30:00,372 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 06:30:00,382 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 07:30:00,382 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 08:30:00,401 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 09:30:00,413 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 10:30:00,429 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 11:30:00,429 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 12:30:00,444 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 13:30:00,446 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 14:30:00,460 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 15:30:00,464 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 16:30:00,460 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 17:30:00,460 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 18:30:00,475 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 19:30:00,491 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 20:30:00,491 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 21:30:00,492 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 22:30:00,507 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-13 23:30:00,522 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-14 00:30:00,522 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-14 01:30:00,538 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-14 02:30:00,538 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-14 03:30:00,538 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-14 04:30:00,538 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-14 05:30:00,554 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-14 06:30:00,554 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-14 07:30:00,569 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-14 08:30:00,585 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-14 09:30:00,586 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-14 10:30:00,601 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-14 11:30:00,601 - TradingBot - INFO - Market is closed. Sleeping.
+2025-09-15 21:33:44,142 - TradingBot - INFO - ==================================================
+2025-09-15 21:33:44,142 - TradingBot - INFO - STARTING PROFESSIONAL TRADING BOT (vPRO - Self-Healing)
+2025-09-15 21:33:44,142 - TradingBot - INFO - Strategy: 30m EMA Crossover w/ ATR Filter & Trend Reversal Exit
+2025-09-15 21:33:44,142 - TradingBot - INFO - Trailing SL: ENABLED
+2025-09-15 21:33:44,142 - TradingBot - INFO - ==================================================
+2025-09-15 21:33:45,157 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-15 21:33:53,626 - TradingBot - INFO - MT5 initialized successfully on account #521097
+2025-09-15 21:33:53,626 - TradingBot - INFO - Successfully prepared symbol 'XAUUSD.d'.
+2025-09-15 21:33:53,626 - TradingBot - INFO - Connection health verified. Terminal is responsive.
+2025-09-15 21:33:53,706 - TradingBot - INFO - New 30m candle detected at 2025-09-12 23:30:00. Running strategy checks.
+2025-09-15 21:33:53,736 - TradingBot - INFO - Volatility Check: Current ATR = 34.97 pips, Required = 3.0 pips.
+2025-09-15 21:33:53,751 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-15 21:33:56,767 - TradingBot - INFO - New 30m candle detected at 2025-09-15 19:00:00. Running strategy checks.
+2025-09-15 21:33:56,767 - TradingBot - INFO - Volatility Check: Current ATR = 66.12 pips, Required = 3.0 pips.
+2025-09-15 21:33:56,782 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-15 22:00:01,673 - TradingBot - INFO - New 30m candle detected at 2025-09-15 19:30:00. Running strategy checks.
+2025-09-15 22:00:01,688 - TradingBot - INFO - Volatility Check: Current ATR = 75.68 pips, Required = 3.0 pips.
+2025-09-15 22:00:01,688 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-15 22:30:00,829 - TradingBot - INFO - New 30m candle detected at 2025-09-15 20:00:00. Running strategy checks.
+2025-09-15 22:30:00,829 - TradingBot - INFO - Volatility Check: Current ATR = 66.12 pips, Required = 3.0 pips.
+2025-09-15 22:30:00,845 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-15 23:00:03,204 - TradingBot - INFO - New 30m candle detected at 2025-09-15 20:30:00. Running strategy checks.
+2025-09-15 23:00:03,220 - TradingBot - INFO - Volatility Check: Current ATR = 65.72 pips, Required = 3.0 pips.
+2025-09-15 23:00:03,240 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-15 23:30:02,970 - TradingBot - INFO - New 30m candle detected at 2025-09-15 21:00:00. Running strategy checks.
+2025-09-15 23:30:02,985 - TradingBot - INFO - Volatility Check: Current ATR = 65.90 pips, Required = 3.0 pips.
+2025-09-15 23:30:02,985 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 00:00:02,205 - TradingBot - INFO - New 30m candle detected at 2025-09-15 21:30:00. Running strategy checks.
+2025-09-16 00:00:02,205 - TradingBot - INFO - Volatility Check: Current ATR = 64.02 pips, Required = 3.0 pips.
+2025-09-16 00:00:02,205 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 00:30:01,189 - TradingBot - INFO - New 30m candle detected at 2025-09-15 22:00:00. Running strategy checks.
+2025-09-16 00:30:01,189 - TradingBot - INFO - Volatility Check: Current ATR = 60.06 pips, Required = 3.0 pips.
+2025-09-16 00:30:01,204 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 01:00:00,579 - TradingBot - INFO - New 30m candle detected at 2025-09-15 22:30:00. Running strategy checks.
+2025-09-16 01:00:00,579 - TradingBot - INFO - Volatility Check: Current ATR = 63.48 pips, Required = 3.0 pips.
+2025-09-16 01:00:00,595 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 01:30:02,768 - TradingBot - INFO - New 30m candle detected at 2025-09-15 23:00:00. Running strategy checks.
+2025-09-16 01:30:02,784 - TradingBot - INFO - Volatility Check: Current ATR = 60.39 pips, Required = 3.0 pips.
+2025-09-16 01:30:02,800 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 02:00:02,078 - TradingBot - INFO - New 30m candle detected at 2025-09-15 23:30:00. Running strategy checks.
+2025-09-16 02:00:02,097 - TradingBot - INFO - Volatility Check: Current ATR = 52.14 pips, Required = 3.0 pips.
+2025-09-16 02:00:02,110 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 03:31:03,095 - TradingBot - INFO - New 30m candle detected at 2025-09-16 01:00:00. Running strategy checks.
+2025-09-16 03:31:03,095 - TradingBot - INFO - Volatility Check: Current ATR = 57.19 pips, Required = 3.0 pips.
+2025-09-16 03:31:03,110 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 04:00:02,141 - TradingBot - INFO - New 30m candle detected at 2025-09-16 01:30:00. Running strategy checks.
+2025-09-16 04:00:02,141 - TradingBot - INFO - Volatility Check: Current ATR = 70.78 pips, Required = 3.0 pips.
+2025-09-16 04:00:02,163 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 04:30:04,547 - TradingBot - INFO - New 30m candle detected at 2025-09-16 02:00:00. Running strategy checks.
+2025-09-16 04:30:04,547 - TradingBot - INFO - Volatility Check: Current ATR = 52.12 pips, Required = 3.0 pips.
+2025-09-16 04:30:04,563 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 05:00:09,845 - TradingBot - INFO - New 30m candle detected at 2025-09-16 02:30:00. Running strategy checks.
+2025-09-16 05:00:09,845 - TradingBot - INFO - Volatility Check: Current ATR = 61.15 pips, Required = 3.0 pips.
+2025-09-16 05:00:09,861 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 05:30:03,126 - TradingBot - INFO - New 30m candle detected at 2025-09-16 03:00:00. Running strategy checks.
+2025-09-16 05:30:03,142 - TradingBot - INFO - Volatility Check: Current ATR = 47.79 pips, Required = 3.0 pips.
+2025-09-16 05:30:03,142 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 06:00:02,504 - TradingBot - INFO - New 30m candle detected at 2025-09-16 03:30:00. Running strategy checks.
+2025-09-16 06:00:02,504 - TradingBot - INFO - Volatility Check: Current ATR = 49.18 pips, Required = 3.0 pips.
+2025-09-16 06:00:02,532 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 06:30:01,782 - TradingBot - INFO - New 30m candle detected at 2025-09-16 04:00:00. Running strategy checks.
+2025-09-16 06:30:01,798 - TradingBot - INFO - Volatility Check: Current ATR = 43.09 pips, Required = 3.0 pips.
+2025-09-16 06:30:01,813 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 07:00:00,907 - TradingBot - INFO - New 30m candle detected at 2025-09-16 04:30:00. Running strategy checks.
+2025-09-16 07:00:00,907 - TradingBot - INFO - Volatility Check: Current ATR = 75.65 pips, Required = 3.0 pips.
+2025-09-16 07:00:00,923 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 07:30:03,127 - TradingBot - INFO - New 30m candle detected at 2025-09-16 05:00:00. Running strategy checks.
+2025-09-16 07:30:03,141 - TradingBot - INFO - Volatility Check: Current ATR = 51.61 pips, Required = 3.0 pips.
+2025-09-16 07:30:03,141 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 08:00:02,454 - TradingBot - INFO - New 30m candle detected at 2025-09-16 05:30:00. Running strategy checks.
+2025-09-16 08:00:02,474 - TradingBot - INFO - Volatility Check: Current ATR = 59.63 pips, Required = 3.0 pips.
+2025-09-16 08:00:02,485 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 08:30:01,532 - TradingBot - INFO - New 30m candle detected at 2025-09-16 06:00:00. Running strategy checks.
+2025-09-16 08:30:01,532 - TradingBot - INFO - Volatility Check: Current ATR = 40.86 pips, Required = 3.0 pips.
+2025-09-16 08:30:01,548 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 09:00:00,876 - TradingBot - INFO - New 30m candle detected at 2025-09-16 06:30:00. Running strategy checks.
+2025-09-16 09:00:00,876 - TradingBot - INFO - Volatility Check: Current ATR = 40.69 pips, Required = 3.0 pips.
+2025-09-16 09:00:00,891 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 09:30:00,267 - TradingBot - INFO - New 30m candle detected at 2025-09-16 07:00:00. Running strategy checks.
+2025-09-16 09:30:00,267 - TradingBot - INFO - Volatility Check: Current ATR = 43.51 pips, Required = 3.0 pips.
+2025-09-16 09:30:00,282 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 10:00:02,548 - TradingBot - INFO - New 30m candle detected at 2025-09-16 07:30:00. Running strategy checks.
+2025-09-16 10:00:02,548 - TradingBot - INFO - Volatility Check: Current ATR = 43.26 pips, Required = 3.0 pips.
+2025-09-16 10:00:02,579 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 10:30:02,001 - TradingBot - INFO - New 30m candle detected at 2025-09-16 08:00:00. Running strategy checks.
+2025-09-16 10:30:02,001 - TradingBot - INFO - Volatility Check: Current ATR = 41.86 pips, Required = 3.0 pips.
+2025-09-16 10:30:02,033 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 11:00:01,563 - TradingBot - INFO - New 30m candle detected at 2025-09-16 08:30:00. Running strategy checks.
+2025-09-16 11:00:01,579 - TradingBot - INFO - Volatility Check: Current ATR = 38.36 pips, Required = 3.0 pips.
+2025-09-16 11:00:01,579 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 11:30:00,845 - TradingBot - INFO - New 30m candle detected at 2025-09-16 09:00:00. Running strategy checks.
+2025-09-16 11:30:00,845 - TradingBot - INFO - Volatility Check: Current ATR = 36.92 pips, Required = 3.0 pips.
+2025-09-16 11:30:00,860 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 12:00:03,079 - TradingBot - INFO - New 30m candle detected at 2025-09-16 09:30:00. Running strategy checks.
+2025-09-16 12:00:03,079 - TradingBot - INFO - Volatility Check: Current ATR = 38.02 pips, Required = 3.0 pips.
+2025-09-16 12:00:03,111 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 12:30:02,502 - TradingBot - INFO - New 30m candle detected at 2025-09-16 10:00:00. Running strategy checks.
+2025-09-16 12:30:02,502 - TradingBot - INFO - Volatility Check: Current ATR = 47.46 pips, Required = 3.0 pips.
+2025-09-16 12:30:02,502 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 13:00:01,767 - TradingBot - INFO - New 30m candle detected at 2025-09-16 10:30:00. Running strategy checks.
+2025-09-16 13:00:01,767 - TradingBot - INFO - Volatility Check: Current ATR = 39.53 pips, Required = 3.0 pips.
+2025-09-16 13:00:01,782 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 13:30:00,907 - TradingBot - INFO - New 30m candle detected at 2025-09-16 11:00:00. Running strategy checks.
+2025-09-16 13:30:00,907 - TradingBot - INFO - Volatility Check: Current ATR = 41.43 pips, Required = 3.0 pips.
+2025-09-16 13:30:00,922 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 14:00:03,314 - TradingBot - INFO - New 30m candle detected at 2025-09-16 11:30:00. Running strategy checks.
+2025-09-16 14:00:03,329 - TradingBot - INFO - Volatility Check: Current ATR = 46.59 pips, Required = 3.0 pips.
+2025-09-16 14:00:03,329 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 14:30:02,579 - TradingBot - INFO - New 30m candle detected at 2025-09-16 12:00:00. Running strategy checks.
+2025-09-16 14:30:02,579 - TradingBot - INFO - Volatility Check: Current ATR = 57.29 pips, Required = 3.0 pips.
+2025-09-16 14:30:02,610 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 15:00:01,955 - TradingBot - INFO - New 30m candle detected at 2025-09-16 12:30:00. Running strategy checks.
+2025-09-16 15:00:01,986 - TradingBot - INFO - Volatility Check: Current ATR = 49.93 pips, Required = 3.0 pips.
+2025-09-16 15:00:02,001 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 15:30:01,345 - TradingBot - INFO - New 30m candle detected at 2025-09-16 13:00:00. Running strategy checks.
+2025-09-16 15:30:01,345 - TradingBot - INFO - Volatility Check: Current ATR = 68.29 pips, Required = 3.0 pips.
+2025-09-16 15:30:01,345 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 16:00:00,567 - TradingBot - INFO - New 30m candle detected at 2025-09-16 13:30:00. Running strategy checks.
+2025-09-16 16:00:00,583 - TradingBot - INFO - Volatility Check: Current ATR = 45.72 pips, Required = 3.0 pips.
+2025-09-16 16:00:00,583 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 16:30:03,051 - TradingBot - INFO - New 30m candle detected at 2025-09-16 14:00:00. Running strategy checks.
+2025-09-16 16:30:03,070 - TradingBot - INFO - Volatility Check: Current ATR = 44.64 pips, Required = 3.0 pips.
+2025-09-16 16:30:03,082 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 17:00:02,500 - TradingBot - INFO - New 30m candle detected at 2025-09-16 14:30:00. Running strategy checks.
+2025-09-16 17:00:02,513 - TradingBot - INFO - Volatility Check: Current ATR = 50.22 pips, Required = 3.0 pips.
+2025-09-16 17:00:02,513 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 17:30:01,824 - TradingBot - INFO - New 30m candle detected at 2025-09-16 15:00:00. Running strategy checks.
+2025-09-16 17:30:01,840 - TradingBot - INFO - Volatility Check: Current ATR = 47.96 pips, Required = 3.0 pips.
+2025-09-16 17:30:01,857 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 18:00:01,106 - TradingBot - INFO - New 30m candle detected at 2025-09-16 15:30:00. Running strategy checks.
+2025-09-16 18:00:01,122 - TradingBot - INFO - Volatility Check: Current ATR = 42.80 pips, Required = 3.0 pips.
+2025-09-16 18:00:01,137 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 18:30:00,512 - TradingBot - INFO - New 30m candle detected at 2025-09-16 16:00:00. Running strategy checks.
+2025-09-16 18:30:00,512 - TradingBot - INFO - Volatility Check: Current ATR = 44.58 pips, Required = 3.0 pips.
+2025-09-16 18:30:00,528 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 19:00:03,091 - TradingBot - INFO - New 30m candle detected at 2025-09-16 16:30:00. Running strategy checks.
+2025-09-16 19:00:03,138 - TradingBot - INFO - Volatility Check: Current ATR = 53.86 pips, Required = 3.0 pips.
+2025-09-16 19:00:03,153 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 19:30:02,450 - TradingBot - INFO - New 30m candle detected at 2025-09-16 17:00:00. Running strategy checks.
+2025-09-16 19:30:02,465 - TradingBot - INFO - Volatility Check: Current ATR = 45.63 pips, Required = 3.0 pips.
+2025-09-16 19:30:02,482 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 20:00:02,122 - TradingBot - INFO - New 30m candle detected at 2025-09-16 17:30:00. Running strategy checks.
+2025-09-16 20:00:02,122 - TradingBot - INFO - Volatility Check: Current ATR = 55.94 pips, Required = 3.0 pips.
+2025-09-16 20:00:02,122 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 20:30:01,215 - TradingBot - INFO - New 30m candle detected at 2025-09-16 18:00:00. Running strategy checks.
+2025-09-16 20:30:01,231 - TradingBot - INFO - Volatility Check: Current ATR = 60.98 pips, Required = 3.0 pips.
+2025-09-16 20:30:01,247 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'SELL'.
+2025-09-16 20:30:01,247 - TradingBot - INFO - >>>>>>> Valid SELL signal detected. Executing trade. <<<<<<<
+2025-09-16 20:30:01,263 - TradingBot - CRITICAL - An unexpected error occurred in the main loop: local variable 'take_profit' referenced before assignment
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Documents\GitHub\goldiebot-backend\main.py", line 150, in main_loop
+    strategy.execute_trade(entry_signal)
+  File "C:\Users\Administrator\Documents\GitHub\goldiebot-backend\strategy.py", line 77, in execute_trade
+    take_profit = price + tp_distance if signal == 'BUY' else price - take_profit
+UnboundLocalError: local variable 'take_profit' referenced before assignment
+2025-09-16 20:30:06,575 - TradingBot - INFO - Telegram alert sent successfully.
+2025-09-16 21:00:02,796 - TradingBot - INFO - New 30m candle detected at 2025-09-16 18:30:00. Running strategy checks.
+2025-09-16 21:00:02,809 - TradingBot - INFO - Volatility Check: Current ATR = 74.20 pips, Required = 3.0 pips.
+2025-09-16 21:00:02,809 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 21:30:01,996 - TradingBot - INFO - New 30m candle detected at 2025-09-16 19:00:00. Running strategy checks.
+2025-09-16 21:30:01,996 - TradingBot - INFO - Volatility Check: Current ATR = 60.23 pips, Required = 3.0 pips.
+2025-09-16 21:30:02,061 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 22:00:01,168 - TradingBot - INFO - New 30m candle detected at 2025-09-16 19:30:00. Running strategy checks.
+2025-09-16 22:00:01,168 - TradingBot - INFO - Volatility Check: Current ATR = 63.98 pips, Required = 3.0 pips.
+2025-09-16 22:00:01,184 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 22:30:00,621 - TradingBot - INFO - New 30m candle detected at 2025-09-16 20:00:00. Running strategy checks.
+2025-09-16 22:30:00,621 - TradingBot - INFO - Volatility Check: Current ATR = 74.66 pips, Required = 3.0 pips.
+2025-09-16 22:30:00,637 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 23:00:02,841 - TradingBot - INFO - New 30m candle detected at 2025-09-16 20:30:00. Running strategy checks.
+2025-09-16 23:00:02,858 - TradingBot - INFO - Volatility Check: Current ATR = 55.81 pips, Required = 3.0 pips.
+2025-09-16 23:00:02,871 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-16 23:30:02,043 - TradingBot - INFO - New 30m candle detected at 2025-09-16 21:00:00. Running strategy checks.
+2025-09-16 23:30:02,059 - TradingBot - INFO - Volatility Check: Current ATR = 55.03 pips, Required = 3.0 pips.
+2025-09-16 23:30:02,059 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 00:00:01,486 - TradingBot - INFO - New 30m candle detected at 2025-09-16 21:30:00. Running strategy checks.
+2025-09-17 00:00:01,515 - TradingBot - INFO - Volatility Check: Current ATR = 51.34 pips, Required = 3.0 pips.
+2025-09-17 00:00:01,541 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 00:30:00,840 - TradingBot - INFO - New 30m candle detected at 2025-09-16 22:00:00. Running strategy checks.
+2025-09-17 00:30:00,840 - TradingBot - INFO - Volatility Check: Current ATR = 45.76 pips, Required = 3.0 pips.
+2025-09-17 00:30:00,840 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 01:00:03,182 - TradingBot - INFO - New 30m candle detected at 2025-09-16 22:30:00. Running strategy checks.
+2025-09-17 01:00:03,182 - TradingBot - INFO - Volatility Check: Current ATR = 48.99 pips, Required = 3.0 pips.
+2025-09-17 01:00:03,214 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 01:30:02,542 - TradingBot - INFO - New 30m candle detected at 2025-09-16 23:00:00. Running strategy checks.
+2025-09-17 01:30:02,558 - TradingBot - INFO - Volatility Check: Current ATR = 46.06 pips, Required = 3.0 pips.
+2025-09-17 01:30:02,573 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 02:00:01,684 - TradingBot - INFO - New 30m candle detected at 2025-09-16 23:30:00. Running strategy checks.
+2025-09-17 02:00:01,684 - TradingBot - INFO - Volatility Check: Current ATR = 52.93 pips, Required = 3.0 pips.
+2025-09-17 02:00:01,714 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 03:31:02,276 - TradingBot - INFO - New 30m candle detected at 2025-09-17 01:00:00. Running strategy checks.
+2025-09-17 03:31:02,276 - TradingBot - INFO - Volatility Check: Current ATR = 50.09 pips, Required = 3.0 pips.
+2025-09-17 03:31:02,292 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 04:00:01,339 - TradingBot - INFO - New 30m candle detected at 2025-09-17 01:30:00. Running strategy checks.
+2025-09-17 04:00:01,339 - TradingBot - INFO - Volatility Check: Current ATR = 48.19 pips, Required = 3.0 pips.
+2025-09-17 04:00:01,354 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 04:30:00,667 - TradingBot - INFO - New 30m candle detected at 2025-09-17 02:00:00. Running strategy checks.
+2025-09-17 04:30:00,667 - TradingBot - INFO - Volatility Check: Current ATR = 53.18 pips, Required = 3.0 pips.
+2025-09-17 04:30:00,683 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 05:00:02,870 - TradingBot - INFO - New 30m candle detected at 2025-09-17 02:30:00. Running strategy checks.
+2025-09-17 05:00:02,870 - TradingBot - INFO - Volatility Check: Current ATR = 44.21 pips, Required = 3.0 pips.
+2025-09-17 05:00:02,886 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 05:30:02,151 - TradingBot - INFO - New 30m candle detected at 2025-09-17 03:00:00. Running strategy checks.
+2025-09-17 05:30:02,151 - TradingBot - INFO - Volatility Check: Current ATR = 54.10 pips, Required = 3.0 pips.
+2025-09-17 05:30:02,167 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 06:00:01,339 - TradingBot - INFO - New 30m candle detected at 2025-09-17 03:30:00. Running strategy checks.
+2025-09-17 06:00:01,339 - TradingBot - INFO - Volatility Check: Current ATR = 50.07 pips, Required = 3.0 pips.
+2025-09-17 06:00:01,354 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 06:30:00,588 - TradingBot - INFO - New 30m candle detected at 2025-09-17 04:00:00. Running strategy checks.
+2025-09-17 06:30:00,588 - TradingBot - INFO - Volatility Check: Current ATR = 45.16 pips, Required = 3.0 pips.
+2025-09-17 06:30:00,604 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 07:00:02,886 - TradingBot - INFO - New 30m candle detected at 2025-09-17 04:30:00. Running strategy checks.
+2025-09-17 07:00:02,901 - TradingBot - INFO - Volatility Check: Current ATR = 44.21 pips, Required = 3.0 pips.
+2025-09-17 07:00:02,919 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 07:30:02,120 - TradingBot - INFO - New 30m candle detected at 2025-09-17 05:00:00. Running strategy checks.
+2025-09-17 07:30:02,120 - TradingBot - INFO - Volatility Check: Current ATR = 40.66 pips, Required = 3.0 pips.
+2025-09-17 07:30:02,135 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 08:00:01,526 - TradingBot - INFO - New 30m candle detected at 2025-09-17 05:30:00. Running strategy checks.
+2025-09-17 08:00:01,542 - TradingBot - INFO - Volatility Check: Current ATR = 40.73 pips, Required = 3.0 pips.
+2025-09-17 08:00:01,542 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 08:30:00,980 - TradingBot - INFO - New 30m candle detected at 2025-09-17 06:00:00. Running strategy checks.
+2025-09-17 08:30:00,980 - TradingBot - INFO - Volatility Check: Current ATR = 41.82 pips, Required = 3.0 pips.
+2025-09-17 08:30:00,995 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 09:00:00,620 - TradingBot - INFO - New 30m candle detected at 2025-09-17 06:30:00. Running strategy checks.
+2025-09-17 09:00:00,620 - TradingBot - INFO - Volatility Check: Current ATR = 38.34 pips, Required = 3.0 pips.
+2025-09-17 09:00:00,636 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 09:30:03,276 - TradingBot - INFO - New 30m candle detected at 2025-09-17 07:00:00. Running strategy checks.
+2025-09-17 09:30:03,276 - TradingBot - INFO - Volatility Check: Current ATR = 36.69 pips, Required = 3.0 pips.
+2025-09-17 09:30:03,295 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 10:00:02,433 - TradingBot - INFO - New 30m candle detected at 2025-09-17 07:30:00. Running strategy checks.
+2025-09-17 10:00:02,433 - TradingBot - INFO - Volatility Check: Current ATR = 34.50 pips, Required = 3.0 pips.
+2025-09-17 10:00:02,433 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 10:30:02,542 - TradingBot - INFO - New 30m candle detected at 2025-09-17 08:00:00. Running strategy checks.
+2025-09-17 10:30:02,557 - TradingBot - INFO - Volatility Check: Current ATR = 32.30 pips, Required = 3.0 pips.
+2025-09-17 10:30:02,574 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 11:00:02,011 - TradingBot - INFO - New 30m candle detected at 2025-09-17 08:30:00. Running strategy checks.
+2025-09-17 11:00:02,026 - TradingBot - INFO - Volatility Check: Current ATR = 36.68 pips, Required = 3.0 pips.
+2025-09-17 11:00:02,026 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 11:30:01,824 - TradingBot - INFO - New 30m candle detected at 2025-09-17 09:00:00. Running strategy checks.
+2025-09-17 11:30:01,840 - TradingBot - INFO - Volatility Check: Current ATR = 41.15 pips, Required = 3.0 pips.
+2025-09-17 11:30:01,856 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 12:00:01,604 - TradingBot - INFO - New 30m candle detected at 2025-09-17 09:30:00. Running strategy checks.
+2025-09-17 12:00:01,623 - TradingBot - INFO - Volatility Check: Current ATR = 42.62 pips, Required = 3.0 pips.
+2025-09-17 12:00:01,636 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 12:30:01,449 - TradingBot - INFO - New 30m candle detected at 2025-09-17 10:00:00. Running strategy checks.
+2025-09-17 12:30:01,465 - TradingBot - INFO - Volatility Check: Current ATR = 37.55 pips, Required = 3.0 pips.
+2025-09-17 12:30:01,480 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 13:00:00,963 - TradingBot - INFO - New 30m candle detected at 2025-09-17 10:30:00. Running strategy checks.
+2025-09-17 13:00:00,963 - TradingBot - INFO - Volatility Check: Current ATR = 41.32 pips, Required = 3.0 pips.
+2025-09-17 13:00:00,979 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
+2025-09-17 13:30:01,026 - TradingBot - INFO - New 30m candle detected at 2025-09-17 11:00:00. Running strategy checks.
+2025-09-17 13:30:01,041 - TradingBot - INFO - Volatility Check: Current ATR = 44.48 pips, Required = 3.0 pips.
+2025-09-17 13:30:01,041 - TradingBot - INFO - Entry Signal Check: EMA Crossover signal is 'HOLD'.
