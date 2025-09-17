@@ -1,4 +1,4 @@
-﻿# FILE: strategy.py (Corrected to work with the improved TradeManager)
+﻿# FILE: strategy.py (Corrected and Synchronized)
 # =============================================================================
 
 import MetaTrader5 as mt5
@@ -12,10 +12,7 @@ from notifier import send_telegram_alert
 class TradingStrategy:
     def __init__(self, tm: TradeManager):
         self.tm = tm
-        # --- THIS IS THE FIX ---
-        # Access the property directly instead of calling a method
         self.symbol_info = self.tm.symbol_info
-        # ---------------------
         if not self.symbol_info:
             raise ValueError("Strategy could not initialize: Failed to get symbol info from TradeManager.")
 
@@ -74,7 +71,12 @@ class TradingStrategy:
         
         order_type = mt5.ORDER_TYPE_BUY if signal == 'BUY' else mt5.ORDER_TYPE_SELL
         stop_loss = price - sl_distance if signal == 'BUY' else price + sl_distance
-        take_profit = price + tp_distance if signal == 'BUY' else price - take_profit
+        
+        # --- THIS IS THE FIX ---
+        # The original code had a typo `...else price - take_profit`, causing the crash.
+        # It has been corrected to use `tp_distance`.
+        take_profit = price + tp_distance if signal == 'BUY' else price - tp_distance
+        # ---------------------
 
         result = self.tm.open_trade(
             order_type=order_type, symbol=self.tm.trading_pair, volume=config.LOT_SIZE,

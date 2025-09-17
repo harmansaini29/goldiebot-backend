@@ -1,9 +1,4 @@
-# FILE: trade_manager.py (Final Version with FOK Filling Mode)
-# =============================================================================
-#
-#   RESILIENT METATRADER 5 TRADE MANAGER
-#   - Hardcoded FOK filling mode to override faulty broker API responses.
-#
+# FILE: trade_manager.py (Professionally Corrected)
 # =============================================================================
 
 from __future__ import annotations
@@ -122,14 +117,12 @@ class TradeManager:
         return df
 
     def open_trade(self, order_type, symbol, volume, price, sl, tp, comment) -> mt5.TradeResult | None:
-        """Sends a trade order to the MT5 terminal using the FOK filling mode."""
-        
         request = {
             "action": mt5.TRADE_ACTION_DEAL, "symbol": symbol, "volume": volume,
             "type": order_type, "price": price, "sl": sl, "tp": tp,
             "deviation": config.DEVIATION, "magic": config.MAGIC_NUMBER,
             "comment": comment, "type_time": mt5.ORDER_TIME_GTC,
-            "type_filling": mt5.ORDER_FILLING_FOK, # Explicitly use FOK
+            "type_filling": mt5.ORDER_FILLING_FOK,
         }
         
         result = mt5.order_send(request)
@@ -159,7 +152,7 @@ class TradeManager:
             "symbol": position_to_close.symbol, "volume": position_to_close.volume,
             "type": order_type, "price": price, "deviation": config.DEVIATION,
             "magic": config.MAGIC_NUMBER, "comment": "Closed by Bot",
-            "type_filling": mt5.ORDER_FILLING_FOK, # Also use FOK for closing
+            "type_filling": mt5.ORDER_FILLING_FOK,
         }
         result = mt5.order_send(request)
         if result and result.retcode == mt5.TRADE_RETCODE_DONE:
@@ -168,11 +161,28 @@ class TradeManager:
         log.error(f"Failed to close ticket #{ticket}: {result.comment if result else mt5.last_error()}")
         return False
 
-    def modify_sl_tp(self, ticket: int, new_sl: float = 0.0, new_tp: float = 0.0):
-        request = {"action": mt5.TRADE_ACTION_SLTP, "position": ticket, "sl": new_sl, "tp": new_tp}
+    # --- THIS FUNCTION HAS BEEN FIXED ---
+    def modify_sl_tp(self, ticket: int, new_sl: float = 0.0, new_tp: float = 0.0) -> bool:
+        """
+        Modifies the Stop Loss and/or Take Profit for an open position.
+        Returns True on success, False on failure.
+        """
+        request = {
+            "action": mt5.TRADE_ACTION_SLTP,
+            "position": ticket,
+            "sl": new_sl,
+            "tp": new_tp
+        }
         result = mt5.order_send(request)
-        if not result or result.retcode != mt5.TRADE_RETCODE_DONE:
-            log.error(f"modify_sl_tp failed for #{ticket}: {result.comment if result else mt5.last_error()}")
+        
+        # Check if the result is valid and the return code indicates success
+        if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+            return True
+        
+        # Log the error if the modification failed
+        log.error(f"modify_sl_tp failed for #{ticket}: {result.comment if result else mt5.last_error()}")
+        return False
+    # ------------------------------------
 
     def get_trade_history_for_position(self, position_id: int) -> pd.DataFrame | None:
         deals = mt5.history_deals_get(position=position_id)

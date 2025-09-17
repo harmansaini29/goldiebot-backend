@@ -1,4 +1,4 @@
-# FILE: risk_manager.py (Corrected and Synchronized)
+# FILE: risk_manager.py (Professionally Corrected)
 # =============================================================================
 
 import configs as config
@@ -9,16 +9,13 @@ import MetaTrader5 as mt5
 
 def manage_trailing_stop_loss(tm: TradeManager, open_positions: List[Any]):
     """
-    Manages a dynamic trailing stop-loss for all managed positions.
+    Manages a dynamic trailing stop-loss for all managed positions,
+    now with confirmation checks to ensure the SL was modified.
     """
     if not config.USE_TRAILING_STOP or not open_positions:
         return
 
-    # --- THIS IS THE FIX ---
-    # Access the property directly instead of calling the old method
     symbol_info = tm.symbol_info
-    # ---------------------
-    
     if not symbol_info:
         log.error("Risk Manager: Could not get symbol info for trailing stop.")
         return
@@ -60,10 +57,22 @@ def manage_trailing_stop_loss(tm: TradeManager, open_positions: List[Any]):
             if trade_type == mt5.ORDER_TYPE_BUY:
                 new_sl = current_price_bid - trailing_distance_points
                 if new_sl > current_sl:
-                    log.info(f"TRAILING SL (BUY) #{pos.ticket}: Adjusting SL from {current_sl:.5f} to {new_sl:.5f}")
-                    tm.modify_sl_tp(pos.ticket, new_sl=new_sl)
+                    log.info(f"Attempting to trail SL for BUY #{pos.ticket} from {current_sl:.5f} to {new_sl:.5f}")
+                    # --- THIS LOGIC HAS BEEN FIXED ---
+                    success = tm.modify_sl_tp(pos.ticket, new_sl=new_sl)
+                    if success:
+                        log.info(f"--> SUCCESS: Trailing SL for #{pos.ticket} confirmed.")
+                    else:
+                        log.warning(f"--> FAILED: Could not trail SL for #{pos.ticket}. Check terminal logs.")
+                    # ---------------------------------
             else: # SELL
                 new_sl = current_price_ask + trailing_distance_points
                 if new_sl < current_sl or current_sl == 0:
-                    log.info(f"TRAILING SL (SELL) #{pos.ticket}: Adjusting SL from {current_sl:.5f} to {new_sl:.5f}")
-                    tm.modify_sl_tp(pos.ticket, new_sl=new_sl)
+                    log.info(f"Attempting to trail SL for SELL #{pos.ticket} from {current_sl:.5f} to {new_sl:.5f}")
+                    # --- THIS LOGIC HAS BEEN FIXED ---
+                    success = tm.modify_sl_tp(pos.ticket, new_sl=new_sl)
+                    if success:
+                        log.info(f"--> SUCCESS: Trailing SL for #{pos.ticket} confirmed.")
+                    else:
+                        log.warning(f"--> FAILED: Could not trail SL for #{pos.ticket}. Check terminal logs.")
+                    # ---------------------------------
