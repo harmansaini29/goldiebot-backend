@@ -13,7 +13,7 @@ import os
 MT5_PATH = "C:\\Program Files\\MetaTrader 5\\terminal64.exe"
 TRADING_PAIR = "XAUUSD.d"
 TIMEFRAME = "30m"
-LOT_SIZE = 1.00
+LOT_SIZE = 0.01
 MAGIC_NUMBER = 234000
 DEVIATION = 20
 
